@@ -1,0 +1,386 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.dashboard-container {
+    display: flex;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #333;
+    color: #fff;
+    padding-top: 20px;
+    position: fixed;
+    height: 100%;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 15px;
+    text-align: center;
+}
+
+.sidebar ul li a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+}
+
+.sidebar ul li a:hover {
+    background-color: #575757;
+}
+
+.main-content {
+    margin-left: 250px;
+    padding: 20px;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+section {
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #333;
+}
+
+/* Staff Management Styles */
+#staff {
+    margin-top: 20px;
+}
+
+#staff h3 {
+    margin-bottom: 10px;
+}
+
+#staff form {
+    margin-bottom: 20px;
+}
+
+#staff form input, #staff form textarea {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+#staff form button {
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+#staff form button:hover {
+    background-color: #575757;
+}
+
+#staff-list table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#staff-list table, #staff-list th, #staff-list td {
+    border: 1px solid #ddd;
+}
+
+#staff-list th, #staff-list td {
+    padding: 10px;
+    text-align: left;
+}
+
+#staff-list th {
+    background-color: #f4f4f4;
+}
+
+#staff-list td button {
+    padding: 5px 10px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+#staff-list td button:hover {
+    background-color: #575757;
+}
+
+/* ICP Services Management Styles */
+#icp-services {
+    margin-top: 20px;
+}
+
+#icp-services h3 {
+    margin-bottom: 10px;
+}
+
+#icp-services form {
+    margin-bottom: 20px;
+}
+
+#icp-services form input, #icp-services form textarea {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+#icp-services form button {
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+#icp-services form button:hover {
+    background-color: #575757;
+}
+
+#icp-list table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#icp-list table, #icp-list th, #icp-list td {
+    border: 1px solid #ddd;
+}
+
+#icp-list th, #icp-list td {
+    padding: 10px;
+    text-align: left;
+}
+
+#icp-list th {
+    background-color: #f4f4f4;
+}
+
+#icp-list td button {
+    padding: 5px 10px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+#icp-list td button:hover {
+    background-color: #575757;
+}
+
+/* Gallery Management Styles */
+#gallery {
+    margin-top: 20px;
+}
+
+#gallery h3 {
+    margin-bottom: 10px;
+}
+
+#gallery form {
+    margin-bottom: 20px;
+}
+
+#gallery form input, #gallery form textarea {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+#gallery form button {
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+#gallery form button:hover {
+    background-color: #575757;
+}
+
+#picture-list table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#picture-list table, #picture-list th, #picture-list td {
+    border: 1px solid #ddd;
+}
+
+#picture-list th, #picture-list td {
+    padding: 10px;
+    text-align: left;
+}
+
+#picture-list th {
+    background-color: #f4f4f4;
+}
+
+#picture-list td button {
+    padding: 5px 10px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+#picture-list td button:hover {
+    background-color: #575757;
+}
+
+.small-image {
+    width: 5px; 
+    height: 70px; 
+    object-fit: cover;
+    border-radius: 10%;
+  }
+
+/* Customer Support Management Styles */
+#customer-support {
+    margin-top: 20px;
+}
+
+#customer-support h3 {
+    margin-bottom: 10px;
+}
+
+#customer-support form {
+    margin-bottom: 20px;
+}
+
+#customer-support form input, #customer-support form textarea {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+#customer-support form button {
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+#customer-support form button:hover {
+    background-color: #575757;
+}
+
+#message-list table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#message-list table, #message-list th, #message-list td {
+    border: 1px solid #ddd;
+}
+
+#message-list th, #message-list td {
+    padding: 10px;
+    text-align: left;
+}
+
+#message-list th {
+    background-color: #f4f4f4;
+}
+
+#message-list td button {
+    padding: 5px 10px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+#message-list td button:hover {
+    background-color: #575757;
+}
+
+/* Certificate Management Styles */
+#certificates {
+    margin-top: 20px;
+}
+
+#certificates h3 {
+    margin-bottom: 10px;
+}
+
+#certificates form {
+    margin-bottom: 20px;
+}
+
+#certificates form input {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+#certificates form button {
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+#certificates form button:hover {
+    background-color: #575757;
+}
+
+#certificate-list table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#certificate-list table, #certificate-list th, #certificate-list td {
+    border: 1px solid #ddd;
+}
+
+#certificate-list th, #certificate-list td {
+    padding: 10px;
+    text-align: left;
+}
+
+#certificate-list th {
+    background-color: #f4f4f4;
+}
+
+#certificate-list td button {
+    padding: 5px 10px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+#certificate-list td button:hover {
+    background-color: #575757;
+}

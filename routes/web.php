@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ICPServiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +15,9 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::get('/', [UserController::class, 'index']);
-Route::get('/admin', [UserController::class, 'login']);
+Route::get('/', [ICPServiceController::class, 'getAllICP_frontend']);
+Route::post('/create/service', [ICPServiceController::class, 'createICP']);
+Route::get('all/services/', [ICPServiceController::class, 'getAllICP']);
+Route::get('/services', [ICPServiceController::class, 'getDashboard']);
+
+
