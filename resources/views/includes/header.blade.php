@@ -27,6 +27,7 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/frontend/css/style.css" rel="stylesheet">
+  
 </head>
 
 <body>

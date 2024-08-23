@@ -21,9 +21,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const staffList = document.getElementById('staff-tbody');
     const createStaffForm = document.getElementById('create-staff-form');
 
-     // Handle delete staff
-     window.deleteStaff = function (id) {
-        fetch(`http://127.0.0.1:8000/api/delete/staff`, { // Adjust this URL based on your routes
+    // Handle delete staff
+    window.deleteStaff = function (id) {
+        fetch(`http://127.0.0.1:8000/staff/delete`, { // Adjust this URL based on your routes
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -85,9 +85,9 @@ document.addEventListener('DOMContentLoaded', function () {
         // Implement the edit logic
     };
 
-   
 
-    
+
+
 });
 
 // this is for ICP Services
@@ -104,9 +104,9 @@ document.addEventListener('DOMContentLoaded', function () {
     // for edit form
     const editICPForm = document.getElementById('edit-icp-form');
 
-     // Handle delete ICP service
-     window.deleteICP = function (id) {
-        fetch(`http://127.0.0.1:8000/api/delete/service`, { // Adjust this URL based on your routes
+    // Handle delete ICP service
+    window.deleteICP = function (id) {
+        fetch(`http://127.0.0.1:8000/icp-services/delete`, { // Adjust this URL based on your routes
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const title = document.getElementById('edit-service-title').value;
         const description = document.getElementById('edit-service-description').value;
 
-        fetch('http://127.0.0.1:8000/api/update/service', {
+        fetch('http://127.0.0.1:8000/icp-services/update', {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -207,7 +207,7 @@ document.addEventListener('DOMContentLoaded', function () {
         editICPForm.style.display = 'none';
     });
 
-   
+
 
     // Initial fetch of ICP services
     fetchICP();
@@ -247,7 +247,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const formData = new FormData(createGalleryFormButton);
 
-        fetch('http://127.0.0.1:8000/gallery', { 
+        fetch('http://127.0.0.1:8000/gallery', {
             method: 'POST',
             body: formData,
         })
@@ -286,7 +286,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const allTabContent = document.getElementById('all'); // The "All" tab content
 
     function fetchPictures() {
-        fetch('http://127.0.0.1:8000/api/all/gallery') // Adjust this URL based on your routes
+        fetch('http://127.0.0.1:8000/gallery/all') // Adjust this URL based on your routes
             .then(response => response.json())
             .then(data => {
                 tabList.innerHTML = ''; // Clear existing tabs, except "All"
@@ -360,28 +360,44 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-
-
-
 // This is for Customer Support
 
 document.addEventListener('DOMContentLoaded', function () {
     const messageList = document.getElementById('message-tbody');
     const createMessageForm = document.getElementById('create-message-form');
 
+    // Handle delete message
+    window.deleteMessage = function (id) {
+        fetch(`http://127.0.0.1:8000/customer-support/delete`, { // Adjust this URL based on your routes
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({ id: id }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                fetchMessages(); // Refresh the messages list
+            });
+    };
+
     // Fetch all messages and display them
     function fetchMessages() {
-        fetch('/customer-support') // Adjust this URL based on your routes
+        fetch('http://127.0.0.1:8000/customer/support') // Adjust this URL based on your routes
             .then(response => response.json())
             .then(data => {
                 messageList.innerHTML = '';
                 data.forEach(message => {
                     const row = document.createElement('tr');
                     row.innerHTML = `
-                        <td>${message.subject}</td>
-                        <td>${message.message}</td>
+                        <td>${message.Full_name}</td>
+                        <td>${message.Email}</td>
+                        <td>${message.Subject}</td>
+                        <td>${message.Message}</td>
                         <td>
-                            <button onclick="editMessage(${message.id})">Edit</button>
+                            
                             <button onclick="deleteMessage(${message.id})">Delete</button>
                         </td>
                     `;
@@ -390,9 +406,13 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     }
 
+    fetchMessages();
+
     // Handle create message
     createMessageForm.addEventListener('submit', function (event) {
-        event.preventDefault();
+        // event.preventDefault();
+
+        // alert("hgdgjs")
 
         const formData = new FormData(createMessageForm);
 
@@ -409,17 +429,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Handle edit message (implementation can be added)
     window.editMessage = function (id) {
         // Implement the edit logic
-    };
-
-    // Handle delete message
-    window.deleteMessage = function (id) {
-        fetch(`/customer-support/delete/${id}`, { // Adjust this URL based on your routes
-            method: 'DELETE',
-        })
-            .then(response => response.json())
-            .then(data => {
-                fetchMessages(); // Refresh the messages list
-            });
     };
 
     // Initial fetch of messages

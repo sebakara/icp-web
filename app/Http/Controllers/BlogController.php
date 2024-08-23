@@ -21,7 +21,7 @@ class BlogController extends Controller
     }
 
     // Store a newly created blog in the database
-    public function store(Request $request)
+    public function createBlog(Request $request)
     {
         $request->validate([
             'title' => 'required|string|max:255',
@@ -39,20 +39,29 @@ class BlogController extends Controller
         }
 
         // Create the blog post
-        Blog::create([
+        $newBlog = Blog::create([
             'title' => $request->input('title'),
             'content' => $request->input('content'),
             'image' => $image,
         ]);
 
-        return redirect()->route('blogs.index')->with('success', 'Blog created successfully.');
+        // return redirect()->route('blogs.index')->with('success', 'Blog created successfully.');
+        return response()->json($newBlog);
     }
 
     // Display the specified blog
     public function show($id)
     {
         $blog = Blog::findOrFail($id);
-        return view('blogs.show', compact('blog'));
+        // $otherBlogs = Blog::where('id', '!=', $id)->limit(5)->get(); 
+        return view('admin.singleBlog', compact('blog'));
+        
+    }
+
+
+    public function showAllBlog()
+    {
+        return view('admin.front-page');
     }
 
     // Show the form for editing the specified blog
@@ -105,4 +114,3 @@ class BlogController extends Controller
         return redirect()->route('blogs.index')->with('success', 'Blog deleted successfully.');
     }
 }
-

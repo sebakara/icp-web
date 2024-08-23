@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Service;
 use App\Models\Gallery;
 use App\Models\Staff;
-use App\Models\Certificate;
-use App\Models\Customer_Support;
+use App\Models\Blog;
+
 use Illuminate\Http\Request;
 
 class ICPServiceController extends Controller
@@ -53,6 +53,7 @@ class ICPServiceController extends Controller
 
     public function showAllServices(){
         return view('admin.all-services');
+        
     }
 
     public function getAllICP()
@@ -67,13 +68,14 @@ class ICPServiceController extends Controller
         $services = Service::all();
         $pictures = Gallery::all();
         $staffs = Staff::all();
+        $blogs = Blog::all();
 
 
         return view('client.index', [
             'services' => $services,
             'pictures' => $pictures,
             'staffs' => $staffs,
-
+            'blogs'=>$blogs,
         ]);
     }
 

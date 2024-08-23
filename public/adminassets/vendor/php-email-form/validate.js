@@ -72,6 +72,9 @@
       }
     })
     .catch((error) => {
+      alert("Error")
+      console.log(error);
+      
       displayError(thisForm, error);
     });
   }

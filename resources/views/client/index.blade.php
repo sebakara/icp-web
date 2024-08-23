@@ -65,8 +65,36 @@
     </div>
   </section><!-- End About Us Section -->
 
-  <!-- ======= Why Us Section ======= -->
-  <!-- End Skills Section -->
+  <!-- ======= Blog Section ======= -->
+  <section id="blog" class="blog">
+    <div class="container" data-aos="fade-up">
+
+      <div class="section-title">
+        <h2>Latest Blogs</h2>
+        <p>Stay updated with the latest news, insights, and updates from our team.</p>
+      </div>
+
+      <div class="row">
+        @foreach($blogs as $blog)
+        <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
+          <div class="blog-item">
+          <div class="blog-item">
+              <img src="{{ asset($blog->image) }}" class="img-fluid"  alt="{{ $blog->title }}"  style="width: 55%; height: 60%;">
+            </div>
+            <div class="card-body">
+              <h4 class="card-title">{{ $blog->title }}</h4>
+              
+              <p class="card-text">{{ Str::limit($blog->content, 100) }}</p>
+              <a href="{{ route('blogs.show', $blog->id) }}" class="btn btn-primary">Read More</a>
+            </div>
+          </div>
+        </div>
+        @endforeach
+      </div>
+
+    </div>
+  </section><!-- End Blog Section -->
+
 
   <!-- ======= Services Section ======= -->
   <section id="services" class="services section-bg">
@@ -213,7 +241,7 @@
             {{ session('success') }}
           </div>
           @endif -->
-          <form action="api/create/message" method="post" role="form" class="php-email-form">
+          <form action="/customer-support" method="post" role="form" class="php-email-form">
             @csrf
             <div class="row">
               <div class="form-group col-md-6">
@@ -237,7 +265,7 @@
               @if(session('success'))
               <div class="sent-message">{{ session('success') }}</div>
               @endif
-              <div class="loading">Loading</div>
+              <div class="loading">Loading</div> 
               <div class="error-message"></div>
               <div class="sent-message">Your message has been sent. Thank you!</div>
             </div>
@@ -251,5 +279,6 @@
   </section><!-- End Contact Section -->
 
 </main><!-- End #main -->
+
 
 @include('includes.footer')

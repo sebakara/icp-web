@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Forms / Elements - ICP RWANDA</title>
+  <title>Components / Modal - ICP RWANDA </title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -269,101 +269,101 @@
 
   </header><!-- End Header -->
 
-  <!-- ======= Sidebar ======= -->
-  <aside id="sidebar" class="sidebar">
+ <!-- ======= Sidebar ======= -->
+ <aside id="sidebar" class="sidebar">
 
-    <ul class="sidebar-nav" id="sidebar-nav">
+<ul class="sidebar-nav" id="sidebar-nav">
 
-      <li class="nav-item">
-        <a class="nav-link " href="{{ route('showAllBlog') }}">
-          <i class="bi bi-grid"></i>
-          <span>Dashboard</span>
+  <li class="nav-item">
+    <a class="nav-link " href="{{ route('showAllBlog') }}">
+      <i class="bi bi-grid"></i>
+      <span>Dashboard</span>
+    </a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+      <i class="bi bi-journal-text"></i><span>Modify Web</span><i class="bi bi-chevron-down ms-auto"></i>
+    </a>
+    <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+      <li>
+        <a href="{{ route('showCreateForm') }}">
+          <i class="bi bi-circle"></i><span>Create ICP Service</span>
+        </a>
+      </li>
+      <li>
+        <a href="{{ route('showStaffCreateForm') }}">
+          <i class="bi bi-circle"></i><span>Add Staff Member</span>
+        </a>
+      </li>
+      <li>
+        <a href="{{ route('showGalleryCreateForm') }}">
+          <i class="bi bi-circle"></i><span>Add Image to Gallery</span>
+        </a>
+      </li>
+      <li>
+        <a href="{{ route('showCerticateCreateForm') }}">
+          <i class="bi bi-circle"></i><span>Generate Certificate</span>
+        </a>
+      </li>
+    </ul>
+  </li><!-- End Forms Nav -->
+
+  <li class="nav-item">
+    <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+      <i class="bi bi-layout-text-window-reverse"></i><span>View Data</span><i class="bi bi-chevron-down ms-auto"></i>
+    </a>
+    <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+      <li>
+        <a href="{{ route('showMessageForm') }}">
+          <i class="bi bi-circle"></i><span>User's Messages</span>
         </a>
       </li>
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-journal-text"></i><span>Modify Web</span><i class="bi bi-chevron-down ms-auto"></i>
+      <li>
+        <a href="{{ route('showAllServices') }}">
+          <i class="bi bi-circle"></i><span>View All Services</span>
         </a>
-        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="{{ route('showCreateForm') }}">
-              <i class="bi bi-circle"></i><span>Create ICP Service</span>
-            </a>
-          </li>
-          <li>
-            <a href="{{ route('showStaffCreateForm') }}">
-              <i class="bi bi-circle"></i><span>Add Staff Member</span>
-            </a>
-          </li>
-          <li>
-            <a href="{{ route('showGalleryCreateForm') }}">
-              <i class="bi bi-circle"></i><span>Add Image to Gallery</span>
-            </a>
-          </li>
-          <li>
-            <a href="{{ route('showCerticateCreateForm') }}">
-              <i class="bi bi-circle"></i><span>Generate Certificate</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Forms Nav -->
+      </li>
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-layout-text-window-reverse"></i><span>View Data</span><i class="bi bi-chevron-down ms-auto"></i>
+      <li>
+        <a href="{{ route('showAllStaff') }}">
+          <i class="bi bi-circle"></i><span>View All Team members</span>
         </a>
-        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="{{ route('showMessageForm') }}">
-              <i class="bi bi-circle"></i><span>User's Messages</span>
-            </a>
-          </li>
+      </li>
 
-          <li>
-            <a href="{{ route('showAllServices') }}">
-              <i class="bi bi-circle"></i><span>View All Services</span>
-            </a>
-          </li>
-
-          <li>
-            <a href="{{ route('showAllStaff') }}">
-              <i class="bi bi-circle"></i><span>View All Team members</span>
-            </a>
-          </li>
-
-          <li>
-            <a href="{{ route('ShowAllGallery') }}">
-              <i class="bi bi-circle"></i><span>Gallery</span>
-            </a>
-          </li>
-
-        </ul>
-      </li><!-- End Tables Nav -->
-
-      <li class="nav-heading">Pages</li>
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="users-profile.html">
-          <i class="bi bi-person"></i>
-          <span>Profile</span>
+      <li>
+        <a href="{{ route('ShowAllGallery') }}">
+          <i class="bi bi-circle"></i><span>Gallery</span>
         </a>
-      </li><!-- End Profile Page Nav -->
+      </li>
 
-      
     </ul>
+  </li><!-- End Tables Nav -->
 
-  </aside><!-- End Sidebar-->
+  <li class="nav-heading">Pages</li>
+
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="users-profile.html">
+      <i class="bi bi-person"></i>
+      <span>Profile</span>
+    </a>
+  </li><!-- End Profile Page Nav -->
+
+  
+</ul>
+
+</aside><!-- End Sidebar-->
 
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Form Elements</h1>
+      <h1>ICP ADMIN DASHBOARD</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Forms</li>
-          <li class="breadcrumb-item active">Elements</li>
+          <li class="breadcrumb-item">Components</li>
+          <li class="breadcrumb-item active">Modal</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -374,40 +374,68 @@
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Create New ICP Service</h5>
+              <h5 class="card-title">What we Do</h5>
+              <p>Welcome to ICP Rwanda, a pioneering tech community based in Rwanda, dedicated to empowering individuals and businesses in the dynamic realm of web3 development.</p>
 
-              <!-- General Form Elements -->
-              <form id="create-icp-form" action="{{ route('icp.create') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="row mb-3">
-                  <label for="inputText" class="col-sm-2 col-form-label">Service title</label>
-                  <div class="col-sm-10">
-                    <input type="text" name="Service_title" placeholder="Service Name" required>
+              <!-- Basic Modal -->
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal">
+                Edit
+              </button>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal">
+                Delete
+              </button>
+              <!-- <div class="modal fade" id="basicModal" tabindex="-1">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Basic Modal</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      Non omnis incidunt qui sed occaecati magni asperiores est mollitia. Soluta at et reprehenderit. Placeat autem numquam et fuga numquam. Tempora in facere consequatur sit dolor ipsum. Consequatur nemo amet incidunt est facilis. Dolorem neque recusandae quo sit molestias sint dignissimos.
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
                   </div>
                 </div>
+              </div> -->
 
-                <div class="row mb-3">
-                  <label for="inputPassword" class="col-sm-2 col-form-label">Service description</label>
-                  <div class="col-sm-10">
-                    <textarea name="Service_description" placeholder="Service Description" class="form-control" style="height: 100px" required></textarea>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Our Mission</h5>
+              <p>Our mission is to democratize access to web3 technologies, empower individuals with the knowledge and skills needed to thrive in the digital economy, and drive sustainable growth and innovation in Rwanda and beyond. We are committed to providing a supportive and inclusive environment where aspiring and existing web3 developers can learn, collaborate, and succeed.</p>
+
+              <!-- Scrolling Modal -->
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#scrollingModal">
+                Edit
+              </button>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#scrollingModal">
+                Delete              </button>
+              <!-- <div class="modal fade" id="scrollingModal" tabindex="-1">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Scrolling Modal</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" style="min-height: 1500px;">
+                      Non omnis incidunt qui sed occaecati magni asperiores est mollitia. Soluta at et reprehenderit. Placeat autem numquam et fuga numquam. Tempora in facere consequatur sit dolor ipsum. Consequatur nemo amet incidunt est facilis. Dolorem neque recusandae quo sit molestias sint dignissimos.
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
                   </div>
                 </div>
+              </div> -->
 
-                <div class="row mb-3">
-                  <label for="inputNumber" class="col-sm-2 col-form-label">File Upload</label>
-                  <div class="col-sm-10">
-                    <input class="form-control" type="file" id="formFile" name="Icon" required>
-                  </div>
-                </div>
-                
-                <div class="row mb-3">
-                  <label class="col-sm-2 col-form-label">Create ICP Service</label>
-                  <div class="col-sm-10" id="hahaha">
-                    <button type="submit"  class="btn btn-primary">Create</button>
-                  </div>
-                </div>
-
-              </form><!-- End General Form Elements -->
+              <!-- Modal Dialog Scrollable -->
+  
 
             </div>
           </div>
@@ -416,121 +444,59 @@
 
         <div class="col-lg-6">
 
-          <!-- <div class="card">
+          <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Advanced Form Elements</h5>
+              <h5 class="card-title">Our Vision</h5>
+              <p>Our vision is to position Rwanda as a hub for web3 innovation and entrepreneurship, driving economic growth, social impact, and technological advancement. We envision a future where individuals and businesses harness the full potential of decentralized technologies to create positive change and build a more inclusive and equitable society.</p>
 
               
-              <form>
-                <div class="row mb-5">
-                  <label class="col-sm-2 col-form-label">Switches</label>
-                  <div class="col-sm-10">
-                    <div class="form-check form-switch">
-                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                      <label class="form-check-label" for="flexSwitchCheckDefault">Default switch checkbox input</label>
+              <!-- Large Modal -->
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#largeModal">
+                Edit
+              </button>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#largeModal">
+                Delete
+              </button>
+
+              <!-- <div class="modal fade" id="largeModal" tabindex="-1">
+                <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Large Modal</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="form-check form-switch">
-                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
-                      <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
+                    <div class="modal-body">
+                      Non omnis incidunt qui sed occaecati magni asperiores est mollitia. Soluta at et reprehenderit. Placeat autem numquam et fuga numquam. Tempora in facere consequatur sit dolor ipsum. Consequatur nemo amet incidunt est facilis. Dolorem neque recusandae quo sit molestias sint dignissimos.
                     </div>
-                    <div class="form-check form-switch">
-                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDisabled" disabled>
-                      <label class="form-check-label" for="flexSwitchCheckDisabled">Disabled switch checkbox input</label>
-                    </div>
-                    <div class="form-check form-switch">
-                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" checked disabled>
-                      <label class="form-check-label" for="flexSwitchCheckCheckedDisabled">Disabled checked switch checkbox input</label>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary">Save changes</button>
                     </div>
                   </div>
                 </div>
-
-                <div class="row mb-5">
-                  <label class="col-sm-2 col-form-label">Ranges</label>
-                  <div class="col-sm-10">
-                    <div>
-                      <label for="customRange1" class="form-label">Example range</label>
-                      <input type="range" class="form-range" id="customRange1">
-                    </div>
-                    <div>
-                      <label for="disabledRange" class="form-label">Disabled range</label>
-                      <input type="range" class="form-range" id="disabledRange" disabled>
-                    </div>
-                    <div>
-                      <label for="customRange2" class="form-label">Min and max with steps</label>
-                      <input type="range" class="form-range" min="0" max="5" step="0.5" id="customRange2">
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row mb-3">
-                  <label class="col-sm-2 col-form-label">Floating labels</label>
-                  <div class="col-sm-10">
-                    <div class="form-floating mb-3">
-                      <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                      <label for="floatingInput">Email address</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                      <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                      <label for="floatingPassword">Password</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                      <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height: 100px;"></textarea>
-                      <label for="floatingTextarea">Comments</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                      <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                        <option selected>Open this select menu</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </select>
-                      <label for="floatingSelect">Works with selects</label>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row mb-5">
-                  <label class="col-sm-2 col-form-label">Input groups</label>
-                  <div class="col-sm-10">
-                    <div class="input-group mb-3">
-                      <span class="input-group-text" id="basic-addon1">@</span>
-                      <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-                    </div>
-
-                    <div class="input-group mb-3">
-                      <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                      <span class="input-group-text" id="basic-addon2">@example.com</span>
-                    </div>
-
-                    <label for="basic-url" class="form-label">Your vanity URL</label>
-                    <div class="input-group mb-3">
-                      <span class="input-group-text" id="basic-addon3">https://example.com/users/</span>
-                      <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
-                    </div>
-
-                    <div class="input-group mb-3">
-                      <span class="input-group-text">$</span>
-                      <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-                      <span class="input-group-text">.00</span>
-                    </div>
-
-                    <div class="input-group mb-3">
-                      <input type="text" class="form-control" placeholder="Username" aria-label="Username">
-                      <span class="input-group-text">@</span>
-                      <input type="text" class="form-control" placeholder="Server" aria-label="Server">
-                    </div>
-
-                    <div class="input-group">
-                      <span class="input-group-text">With textarea</span>
-                      <textarea class="form-control" aria-label="With textarea"></textarea>
-                    </div>
-                  </div>
-                </div>
-
-              </form>
+              </div> -->
 
             </div>
-          </div> -->
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">What we Do</h5>
+              
+              <ul>
+                <li><i class="ri-check-double-line"></i> <b>Education:</b> We offer a range of educational programs, workshops, and resources designed to equip individuals</li>
+                <li><i class="ri-check-double-line"></i> <b>Community Building:</b> We foster a vibrant and inclusive community of web3 developers, enthusiasts, and experts through networking events, meetups, and online forums.</li>
+                <li><i class="ri-check-double-line"></i> <b>Advocacy and Awareness:</b> We actively promote awareness and adoption of web3 technologies through advocacy campaigns, outreach initiatives, and partnerships with industry stakeholders. </li>
+              </ul>
+
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#largeModal">
+                Edit
+              </button>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#largeModal">
+                Delete
+              </button>
+            </div>
+          </div>
 
         </div>
       </div>

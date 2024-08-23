@@ -60,6 +60,7 @@ Route::delete('/staff/delete', [StaffController::class, 'deleteStaff'])->name('s
 // Route::get('/dashboard', [StaffController::class, 'dashboard'])->name('staff.dashboard');
 
 Route::get('/gallery-all', [GalleryController::class, 'showAllGallery'])->name('ShowAllGallery');
+Route::get('/gallery/all', [GalleryController::class, 'getAllPicture'])->name('getAllPicture');
 Route::get('/create-gallery', [GalleryController::class, 'showCreateForm'])->name('showGalleryCreateForm');
 Route::post('/gallery', [GalleryController::class, 'createPicture'])->name('gallery.create');
 Route::put('/gallery/{id}', [GalleryController::class, 'updatePicture'])->name('gallery.update');
@@ -76,13 +77,14 @@ Route::get('/certificates/{id}', [CertificateController::class, 'getOneCertifica
 
 Route::get('/get-messages', [CustomerSupportCustomer::class, 'showMessageForm'])->name('showMessageForm');
 Route::post('/customer-support', [CustomerSupportCustomer::class, 'createMessage'])->name('customer-support.create');
-Route::get('/customer-support', [CustomerSupportCustomer::class, 'allMessages'])->name('customer-support.all');
+Route::get('/customer/support', [CustomerSupportCustomer::class, 'allMessages'])->name('customer-support.all');
 Route::get('/customer-support/{id}', [CustomerSupportCustomer::class, 'findMessage'])->name('customer-support.find');
-Route::delete('/customer-support/{id}', [CustomerSupportCustomer::class, 'deleteMessage'])->name('customer-support.delete');
+Route::delete('/customer-support/delete', [CustomerSupportCustomer::class, 'deleteMessage'])->name('customer-support.delete');
 
 
-
-Route::resource('blogs', BlogController::class);
+Route::get('/get-dashboard', [BlogController::class, 'showAllBlog'])->name('showAllBlog');
+Route::post('/store/blog', [BlogController::class, 'createBlog'])->name('storeBlog');
+Route::get('/blog-frontend/{id}', [BlogController::class, 'show'])->name('blogs.show');
 
 
 

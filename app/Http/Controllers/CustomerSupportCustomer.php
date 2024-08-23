@@ -37,7 +37,9 @@ class CustomerSupportCustomer extends Controller
             'Message' => $request->input('Message'),
         ]);
 
-        return redirect()->back()->with('success', 'Your message has been sent. Thank you!');
+        return response()->json($message);
+
+       
     }
 
     public function findMessage($id)
@@ -46,10 +48,10 @@ class CustomerSupportCustomer extends Controller
         return response()->json($message);
     }
 
-    public function deleteMessage($id)
+    public function deleteMessage(Request $request)
     {
-        $message = Customer_Support::findOrFail($id);
-        $message->delete();
+        $message = new Customer_Support();
+        $message->destroy($request->input('id'));
 
         return redirect()->back()->with('success', 'Message Deleted successfully');
     }
