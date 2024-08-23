@@ -1108,7 +1108,7 @@ h6 {
   font-weight: 600;
 }
 
-.contact .php-email-form .loading {
+/* .contact .php-email-form .loading {
   display: none;
   background: #fff;
   text-align: center;
@@ -1126,7 +1126,7 @@ h6 {
   border: 3px solid #18d26e;
   border-top-color: #eee;
   animation: animate-loading 1s linear infinite;
-}
+} */
 
 .contact .php-email-form input,
 .contact .php-email-form textarea {

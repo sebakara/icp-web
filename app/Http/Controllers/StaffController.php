@@ -3,57 +3,112 @@
 namespace App\Http\Controllers;
 
 use App\Models\Staff;
-use App\Packages\Application\Staff\All\GetAllStaffService;
-use App\Packages\Application\Staff\Create\CreateStaffRequest;
-use App\Packages\Application\Staff\Create\CreateStaffService;
-use App\Packages\Application\Staff\Find\GetOneStaffService;
-use App\Packages\Application\Staff\Update\UpdateStaffRequest;
-use App\Packages\Application\Staff\Update\UpdateStaffService;
-use App\Packages\Application\ICP_Services\GetOneService\GetServiceRequest;
-use App\Packages\Application\Staff\Delete\DeleteStaffService;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Http\FormRequest;
 
 class StaffController extends Controller
 {
-    
-    public function createStaff(CreateStaffService $createStaffService)
+
+    public function showCreateForm()
     {
-        
-        return $createStaffService->createStaff();
+        return view('admin.create-staff');
     }
 
-    public function getAllStaff(GetAllStaffService $getAllStaffService){
-        
-        return $getAllStaffService->getAllStaff();
+    public function createStaff(Request $request)
+    {
+        // Validation
+        $request->validate([
+            'Full_name' => 'required|string|max:255',
+            'Position' => 'nullable|string|max:255',
+            'Profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'Biography_description' => 'nullable|string',
+        ]);
 
+        // Handle file upload
+        $profile_image = null;
+        if ($request->hasFile('Profile_image')) {
+            $image = $request->file('Profile_image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('assets/img'), $imageName);
+            $profile_image = 'assets/img/' . $imageName;
+        }
+
+        // Create Staff
+        $staff = Staff::create([
+            'Full_name' => $request->input('Full_name'),
+            'Position' => $request->input('Position'),
+            'Profile_image' => $profile_image,
+            'Biography_description' => $request->input('Biography_description'),
+        ]);
+
+        // Return back to the dashboard view with a success message
+        return redirect()->back()->with('success', 'ICP Service created successfully');
     }
 
-    public function getAllStafffrontend(){
-
+    public function getAllStaff()
+    {
         $staffs = Staff::all();
+        return response()->json($staffs);
+    }
 
+    public function showAllStaff(){
+        return view('admin.all-staff');
+    }
+
+    public function getAllStafffrontend()
+    {
+        $staffs = Staff::all();
         return view('client.index', compact('staffs'));
     }
 
-    public function getOneStaff(Request $request, GetOneStaffService $getOneStaffService){
+    public function dashboard()
+    {
+        $team = Staff::all(); 
 
-        $staffRequest = new GetServiceRequest($request);
-        return $getOneStaffService->findOneStaff($staffRequest);
-
+        return view('client.dashboard', ['team'=>$team]);
     }
 
-    public function updateStaff(Request $request, UpdateStaffService $updateStaffService){
-
-        $staffRequest = new UpdateStaffRequest($request);
-        return $updateStaffService->updateBiograph($staffRequest);
-
+    public function getOneStaff(Request $request, $id)
+    {
+        $staff = Staff::findOrFail($id);
+        return response()->json($staff);
     }
 
-    public function deleteStaff(Request $request, DeleteStaffService $deleteStaffService){
+    public function updateStaff(Request $request)
+    {
+        // Validation
+        $request->validate([
+            'Full_name' => 'required|string|max:255',
+            'Position' => 'nullable|string|max:255',
+            'Biography_description' => 'nullable|string',
+        ]);
 
-        $staffRequest = new GetServiceRequest($request);
-        return $deleteStaffService->deleteStaff($staffRequest);
+        // Handle file upload
+        $profile_image = null;
+        if ($request->hasFile('Profile_image')) {
+            $image = $request->file('Profile_image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('assets/img'), $imageName);
+            $profile_image = 'assets/img/' . $imageName;
+        }
+
+        // Update Staff
+        $staff = Staff::findOrFail($request->input('id'));
+        $staff->update([
+            'Full_name' => $request->input('Full_name'),
+            'Position' => $request->input('Position'),
+            'Profile_image' => $profile_image ?? $staff->Profile_image,
+            'Biography_description' => $request->input('Biography_description'),
+        ]);
+
+        return redirect()->back()->with('success', 'Staff Service updated successfully');
+    }
+
+    public function deleteStaff(Request $request)
+    {
+        $staff = new Staff();
+        $staff->destroy($request->input('id'));
+
+        return redirect()->back()->with('success', 'Staff Service deleted successfully');
     }
 }
-
-

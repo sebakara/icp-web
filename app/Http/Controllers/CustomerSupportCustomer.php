@@ -2,34 +2,55 @@
 
 namespace App\Http\Controllers;
 
-use App\Packages\Application\CustomerSupport\All\AllMessages;
-use App\Packages\Application\CustomerSupport\Create\CreateMessageRequest;
-use App\Packages\Application\CustomerSupport\Create\CreateMessageService;
-use App\Packages\Application\CustomerSupport\Delete\DeleteMessageService;
-use App\Packages\Application\CustomerSupport\Find\FindOneMessageService;
-use App\Packages\Application\ICP_Services\GetOneService\GetServiceRequest;
+use App\Models\Customer_Support;
 use Illuminate\Http\Request;
 
 class CustomerSupportCustomer extends Controller
 {
-    public function allMessages(AllMessages $allMessages){
-        return $allMessages->getAllMessages();
+
+    public function showMessageForm()
+    {
+        return view('admin.customer-support');
     }
 
-    public function createMessage(Request $request, CreateMessageService $createMessageService){
-        $messageRequest = new CreateMessageRequest($request);
-        $createMessageService->createMessage($messageRequest);
-
-        return response('OK', 200);
+    public function allMessages()
+    {
+        $messages = Customer_Support::all();
+        return response()->json($messages);
     }
 
-    public function findMessage(Request $request, FindOneMessageService $findOneMessageService){
-        $messageRequest = new GetServiceRequest($request);
-        return  $findOneMessageService->findOneMessage($messageRequest);
+    public function createMessage(Request $request)
+    {
+        // Validation
+        $request->validate([
+            'Full_name' => 'required|string|max:255',
+            'Email' => 'required|string|email|max:255',
+            'Subject' => 'required|string|max:255',
+            'Message' => 'required|string|max:5000',
+        ]);
+
+        // Create Message
+        $message = Customer_Support::create([
+            'Full_name' => $request->input('Full_name'),
+            'Email' => $request->input('Email'),
+            'Subject' => $request->input('Subject'),
+            'Message' => $request->input('Message'),
+        ]);
+
+        return redirect()->back()->with('success', 'Your message has been sent. Thank you!');
     }
 
-    public function deleteMessage(Request $request, DeleteMessageService $deleteMessageService){
-        $messageRequest = new GetServiceRequest($request);
-        return $deleteMessageService->deleteMessage($messageRequest);
+    public function findMessage($id)
+    {
+        $message = Customer_Support::findOrFail($id);
+        return response()->json($message);
+    }
+
+    public function deleteMessage($id)
+    {
+        $message = Customer_Support::findOrFail($id);
+        $message->delete();
+
+        return redirect()->back()->with('success', 'Message Deleted successfully');
     }
 }

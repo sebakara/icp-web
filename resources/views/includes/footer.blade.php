@@ -89,7 +89,7 @@
 <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
 
 <!-- Template Main JS File -->
-<script src="assets/js/main.js"></script>
+<script src="assets/frontend/js/main.js"></script>
 
 </body>
 

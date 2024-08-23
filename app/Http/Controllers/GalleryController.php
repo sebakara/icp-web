@@ -3,57 +3,99 @@
 namespace App\Http\Controllers;
 
 use App\Models\Gallery;
-use App\Packages\Application\Gallery\Create\CreatePictureRequest;
-use App\Packages\Application\Gallery\Create\CreatePictureService;
-use App\Packages\Application\Gallery\All\GetAllPictures;
-use App\Packages\Application\Gallery\Find\GetOnePictureService;
-use App\Packages\Application\ICP_Services\GetOneService\GetServiceRequest;
-use App\Packages\Application\Gallery\Update\UpdatePictureRequest;
-use App\Packages\Application\Gallery\Update\UpdatePictureService;
-use App\Packages\Application\Gallery\Delete\DeletePictureService;
 use Illuminate\Http\Request;
 
 class GalleryController extends Controller
 {
-    
-    public function createPicture(Request $request, CreatePictureService $createPictureService){
 
-        return $createPictureService->createPicture();
-
+    public function showCreateForm()
+    {
+        return view('admin.create-gallery');
     }
 
-    public function getAllPicture(GetAllPictures $getAllPictures){
-        
-        return $getAllPictures->getAllPicture();
+    public function createPicture(Request $request)
+    {
+        // Validation
+        $request->validate([
+            'Image_category' => 'required|string|max:255',
+            'Image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
 
+        // Handle file upload
+        $image = null;
+        if ($request->hasFile('Image')) {
+            $file = $request->file('Image');
+            $imageName = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('assets/img'), $imageName);
+            $image = 'assets/img/' . $imageName;
+        }
+
+        // Create Picture
+        $picture = Gallery::create([
+            'Image_category' => $request->input('Image_category'),
+            'Image' => $image,
+        ]);
+
+        // Return back to the dashboard view with a success message
+        return redirect()->back()->with('success', 'ICP Service created successfully');
     }
 
-    public function getAllPicture_frontend(){
+    public function showAllGallery()
+    {
+        return view('admin.gallery');
+    }
 
+    public function getAllPicture()
+    {
         $pictures = Gallery::all();
+        $groupedPictures = $pictures->groupBy('Image_category'); // Group by category
+        return response()->json($groupedPictures);
+    }
 
+    public function getAllPictureFrontend()
+    {
+        $pictures = Gallery::all();
         return view('client.index', compact('pictures'));
     }
 
-    public function getOnePicture(Request $request, GetOnePictureService $getOnePictureService){
-
-        $pictureRequest = new GetServiceRequest($request);
-        return $getOnePictureService->findOnePicture($pictureRequest);
-
+    public function getOnePicture($id)
+    {
+        $picture = Gallery::findOrFail($id);
+        return response()->json($picture);
     }
 
-    public function updatePicture(Request $request, UpdatePictureService $updatePictureService){
+    public function updatePicture(Request $request, $id)
+    {
+        // Validation
+        $request->validate([
+            'Image_category' => 'required|string|max:255',
+            'Image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
 
-        $pictureRequest = new UpdatePictureRequest($request);
-        return $updatePictureService->updatePictures($pictureRequest);
+        // Handle file upload
+        $image = null;
+        if ($request->hasFile('Image')) {
+            $file = $request->file('Image');
+            $imageName = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('assets/img'), $imageName);
+            $image = 'assets/img/' . $imageName;
+        }
 
+        // Update Picture
+        $picture = Gallery::findOrFail($id);
+        $picture->update([
+            'Image_category' => $request->input('Image_category'),
+            'Image' => $image ?? $picture->Image,
+        ]);
+
+        return redirect()->back()->with('success', 'Picture updated successfully');
     }
 
-    public function deletePicture(Request $request, DeletePictureService $deletePictureService){
+    public function deletePicture($id)
+    {
+        $picture = Gallery::findOrFail($id);
+        $picture->delete();
 
-        $pictureRequest = new GetServiceRequest($request);
-        return $deletePictureService->deletePicture($pictureRequest);
+        return redirect()->back()->with('success', 'Picture updated successfully');
     }
 }
-
-

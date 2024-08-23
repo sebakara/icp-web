@@ -14,6 +14,12 @@ use Illuminate\Support\Facades\Log;
 
 class CertificateController extends Controller
 {
+
+    public function showCreateForm()
+    {
+        return view('admin.create-certificate');
+    }
+
     public function generate(Request $request)
     {
         ini_set('memory_limit', '256M');
@@ -106,6 +112,6 @@ class CertificateController extends Controller
         Storage::disk('public')->delete($certificate->qr_code_path);
         $certificate->delete();
 
-        return response()->json(['message' => 'Certificate deleted successfully']);
+        return redirect()->back()->with('success', 'Certificate updated successfully');
     }
 }

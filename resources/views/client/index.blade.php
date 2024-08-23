@@ -30,7 +30,6 @@
 
       <div class="section-title">
         <h2>About Us</h2>
-        <a href="/services">ffffffffff</a>
       </div>
 
       <div class="row content">
@@ -244,29 +243,6 @@
             </div>
             <div class="text-center"><button type="submit">Send Message</button></div>
           </form>
-
-          <p>
-          <h3>If you wwant your certificate</h3>
-          </p><br>
-
-          <form action="api/generate/certificate" method="POST">
-            @csrf
-            <div class="form-group">
-              <label for="name">Name:</label>
-              <input type="text" name="name" id="name" required>
-            </div>
-            <div class="form-group">
-              <label for="program">Program:</label>
-              <input type="text" name="program" id="program" required>
-            </div>
-            <div class="form-group">
-            <label for="date">Date:</label>
-            <input type="date" name="date" id="date" required>
-            </div>
-            <button type="submit">Generate Certificate</button>
-          </form>
-
-
         </div>
 
       </div>

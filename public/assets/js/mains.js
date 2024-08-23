@@ -21,15 +21,31 @@ document.addEventListener('DOMContentLoaded', function () {
     const staffList = document.getElementById('staff-tbody');
     const createStaffForm = document.getElementById('create-staff-form');
 
+     // Handle delete staff
+     window.deleteStaff = function (id) {
+        fetch(`http://127.0.0.1:8000/api/delete/staff`, { // Adjust this URL based on your routes
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({ id: id }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                fetchStaff(); // Refresh the staff list
+            });
+    };
+
     // Fetch all staff members and display them
     function fetchStaff() {
-        fetch('http://127.0.0.1:8000/api/all/staff') // Adjust this URL based on your routes
+        fetch('http://127.0.0.1:8000/staff/all') // Adjust this URL based on your routes
             .then(response => response.json())
             .then(data => {
                 staffList.innerHTML = '';
                 data.forEach(staff => {
                     const row = document.createElement('tr');
-
                     row.innerHTML = `
                         <td><img src="${staff.Profile_image}" alt="${staff.Full_name}'s Profile" class="small-image"></td>
                         <td>${staff.Full_name}</td>
@@ -44,6 +60,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
             });
     }
+
+    // Initial fetch of staff members
+    fetchStaff();
 
     // Handle create staff
     createStaffForm.addEventListener('submit', function (event) {
@@ -66,24 +85,9 @@ document.addEventListener('DOMContentLoaded', function () {
         // Implement the edit logic
     };
 
-    // Handle delete staff
-    window.deleteStaff = function (id) {
-        fetch(`http://127.0.0.1:8000/delete/staff`, { // Adjust this URL based on your routes
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            },
-            body: JSON.stringify({ id: id }),
-        })
-            .then(response => response.json())
-            .then(data => {
-                fetchStaff(); // Refresh the staff list
-            });
-    };
+   
 
-    // Initial fetch of staff members
-    fetchStaff();
+    
 });
 
 // this is for ICP Services
@@ -92,15 +96,34 @@ document.addEventListener('DOMContentLoaded', function () {
     // const icpList = document.getElementById('icp-tbody');
     const createICPForm = document.getElementById('create-icp-form');
 
+    const createICPFormButton = document.getElementById('hahaha');
+
     // Fetch all ICP services and display them
     const icpList = document.getElementById('icp-tbody');
 
     // for edit form
     const editICPForm = document.getElementById('edit-icp-form');
 
+     // Handle delete ICP service
+     window.deleteICP = function (id) {
+        fetch(`http://127.0.0.1:8000/api/delete/service`, { // Adjust this URL based on your routes
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({ id: id }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                fetchICP(); // Refresh the ICP services list
+            });
+    };
+
     // Fetch all ICP services and display them
     function fetchICP() {
-        fetch('http://127.0.0.1:8000/all/services') // Adjust this URL based on your API routes
+        fetch('http://127.0.0.1:8000/icp-services/all') // Adjust this URL based on your API routes
             .then(response => response.json())
             .then(data => {
                 icpList.innerHTML = ''; // Clear existing content
@@ -130,12 +153,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     // Handle create ICP service
-    createICPForm.addEventListener('submit', function (event) {
+    createICPFormButton.addEventListener('submit', function (event) {
         event.preventDefault();
 
-        const formData = new FormData(createICPForm);
+        const formData = new FormData(createICPFormButton);
 
-        fetch('http://127.0.0.1:8000/api/create/service', { // Adjust this URL based on your routes
+        fetch('http://127.0.0.1:8000/icp-services/create', { // Adjust this URL based on your routes
             method: 'POST',
             body: formData,
         })
@@ -184,21 +207,7 @@ document.addEventListener('DOMContentLoaded', function () {
         editICPForm.style.display = 'none';
     });
 
-    // Handle delete ICP service
-    window.deleteICP = function (id) {
-        fetch(`http://127.0.0.1:8000/api/delete/service`, { // Adjust this URL based on your routes
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            },
-            body: JSON.stringify({ id: id }),
-        })
-            .then(response => response.json())
-            .then(data => {
-                fetchICP(); // Refresh the ICP services list
-            });
-    };
+   
 
     // Initial fetch of ICP services
     fetchICP();
@@ -209,10 +218,11 @@ document.addEventListener('DOMContentLoaded', function () {
 document.addEventListener('DOMContentLoaded', function () {
     const pictureList = document.getElementById('picture-tbody');
     const createPictureForm = document.getElementById('create-picture-form');
+    const createGalleryFormButton = document.getElementById('hahaha');
 
     // Fetch all pictures and display them
     function fetchPictures() {
-        fetch('/gallery') // Adjust this URL based on your routes
+        fetch('') // Adjust this URL based on your routes
             .then(response => response.json())
             .then(data => {
                 pictureList.innerHTML = '';
@@ -232,12 +242,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Handle create picture
-    createPictureForm.addEventListener('submit', function (event) {
+    createGalleryFormButton.addEventListener('submit', function (event) {
         event.preventDefault();
 
-        const formData = new FormData(createPictureForm);
+        const formData = new FormData(createGalleryFormButton);
 
-        fetch('/gallery/create', { // Adjust this URL based on your routes
+        fetch('http://127.0.0.1:8000/gallery', { 
             method: 'POST',
             body: formData,
         })
@@ -266,6 +276,92 @@ document.addEventListener('DOMContentLoaded', function () {
     // Initial fetch of pictures
     fetchPictures();
 });
+
+
+// This is for Gallery on Backend
+
+document.addEventListener('DOMContentLoaded', function () {
+    const tabList = document.getElementById('myTab');
+    const tabContent = document.getElementById('myTabContent');
+    const allTabContent = document.getElementById('all'); // The "All" tab content
+
+    function fetchPictures() {
+        fetch('http://127.0.0.1:8000/api/all/gallery') // Adjust this URL based on your routes
+            .then(response => response.json())
+            .then(data => {
+                tabList.innerHTML = ''; // Clear existing tabs, except "All"
+                tabContent.innerHTML = ''; // Clear existing content, except "All"
+
+                let allImages = []; // Array to hold all images across categories
+
+                // Create the "All" tab manually since it's the first tab
+                const allTab = document.createElement('li');
+                allTab.classList.add('nav-item');
+                allTab.role = 'presentation';
+                allTab.innerHTML = `
+                    <button class="nav-link active" id="all-tab" data-bs-toggle="tab" data-bs-target="#all" type="button" role="tab" aria-controls="all" aria-selected="true">All</button>`;
+                tabList.appendChild(allTab);
+
+                // Add content to the "All" tab (Initially empty, will populate with images later)
+                const allContent = document.createElement('div');
+                allContent.classList.add('tab-pane', 'fade', 'show', 'active');
+                allContent.id = 'all';
+                allContent.role = 'tabpanel';
+                allContent.ariaLabelledby = 'all-tab';
+                tabContent.appendChild(allContent);
+
+                // Loop through each category
+                Object.keys(data).forEach((category, index) => {
+                    // Add to allImages array
+                    allImages = allImages.concat(data[category]);
+
+                    // Create tab for each category
+                    const tab = document.createElement('li');
+                    tab.classList.add('nav-item');
+                    tab.role = 'presentation';
+                    tab.innerHTML = `
+                        <button class="nav-link" id="${category}-tab" data-bs-toggle="tab" data-bs-target="#${category}" type="button" role="tab" aria-controls="${category}" aria-selected="false">
+                            ${category}
+                        </button>`;
+                    tabList.appendChild(tab);
+
+                    // Create tab content for each category
+                    const content = document.createElement('div');
+                    content.classList.add('tab-pane', 'fade');
+                    content.id = category;
+                    content.role = 'tabpanel';
+                    content.ariaLabelledby = `${category}-tab`;
+
+                    data[category].forEach(picture => {
+                        const img = document.createElement('img');
+                        img.src = `/${picture.Image}`;
+                        img.alt = picture.Image_category;
+                        img.classList.add('img-fluid', 'm-2');
+                        content.appendChild(img);
+                    });
+
+                    tabContent.appendChild(content);
+                });
+
+                // Populate the "All" tab with all images
+                allImages.forEach(picture => {
+                    const img = document.createElement('img');
+                    img.src = `/${picture.Image}`;
+                    img.alt = picture.Image_category;
+                    img.classList.add('img-fluid', 'm-2');
+                    allTabContent.appendChild(img);
+                });
+            })
+            .catch(error => console.error('Error fetching pictures:', error));
+    }
+
+    // Fetch pictures on page load
+    fetchPictures();
+});
+
+
+
+
 
 // This is for Customer Support
 
