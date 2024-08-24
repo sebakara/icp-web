@@ -85,7 +85,7 @@
               <h4 class="card-title">{{ $blog->title }}</h4>
               
               <p class="card-text">{{ Str::limit($blog->content, 100) }}</p>
-              <a href="{{ route('blogs.show', $blog->id) }}" class="btn btn-primary">Read More</a>
+              <a href="#hero" class="btn btn-primary">Read More</a>
             </div>
           </div>
         </div>
