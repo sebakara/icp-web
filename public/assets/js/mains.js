@@ -435,6 +435,299 @@ document.addEventListener('DOMContentLoaded', function () {
     fetchMessages();
 });
 
+
+
+
+// This for Courses
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Select elements
+    const createCourseForm = document.getElementById('create-course-form');
+    const courseList = document.getElementById('course-tbody'); // Adjust this ID based on your table's body
+    const editCourseForm = document.getElementById('edit-course-form');
+    const createCourseFormButton = document.getElementById('hahaha');
+
+    // Handle delete course
+    window.deleteCourse = function (id) {
+        fetch(`http://127.0.0.1:8000/courses/delete`, { // Adjust this URL based on your routes
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({ id: id }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                fetchCourses(); // Refresh the course list
+            });
+    };
+
+    // Fetch all courses and display them
+    function fetchCourses() {
+        fetch('http://127.0.0.1:8000/courses/all') // Adjust this URL based on your API routes
+            .then(response => response.json())
+            .then(data => {
+                courseList.innerHTML = ''; // Clear existing content
+                data.forEach(course => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${course.name}</td>
+                        <td>${course.description}</td>
+                        <td>
+                            <button onclick="editCourse(${course.id}, '${course.name}', '${course.description}')">Edit</button>
+                            <button onclick="deleteCourse(${course.id})">Delete</button>
+                        </td>
+                    `;
+                    courseList.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Error fetching courses:', error));
+    }
+
+    // Call fetchCourses once to populate the table on page load
+    fetchCourses();
+
+    // Handle create course
+    createCourseFormButton.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const formData = new FormData(createCourseForm);
+
+        fetch('http://127.0.0.1:8000/create/course', { // Adjust this URL based on your routes
+            method: 'POST',
+            body: formData,
+        })
+            .then(response => response.json())
+            .then(data => {
+                fetchCourses(); // Refresh the course list
+                createCourseForm.reset(); // Clear the form after submission
+            });
+    });
+
+    // Handle edit course
+    window.editCourse = function (id, name, description) {
+        document.getElementById('edit-course-id').value = id;
+        document.getElementById('edit-course-name').value = name;
+        document.getElementById('edit-course-description').value = description;
+        editCourseForm.style.display = 'block';
+    };
+
+    // Handle update course
+    editCourseForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const id = document.getElementById('edit-course-id').value;
+        const name = document.getElementById('edit-course-name').value;
+        const description = document.getElementById('edit-course-description').value;
+
+        fetch('http://127.0.0.1:8000/courses/update', {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({
+                id: id,
+                name: name,
+                description: description,
+            }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                editCourseForm.style.display = 'none';
+                fetchCourses(); // Refresh the course list
+            });
+    });
+
+    // Cancel editing
+    document.getElementById('cancel-edit').addEventListener('click', function () {
+        editCourseForm.style.display = 'none';
+    });
+});
+
+
+// This is for Student
+
+document.addEventListener('DOMContentLoaded', function () {
+    // References to DOM elements
+    const createStudentForm = document.getElementById('create-student-form');
+    const studentList = document.getElementById('student-tbody');
+    const editStudentForm = document.getElementById('edit-student-form');
+    const courseSelect = document.getElementById('course-select');
+    const createCourseFormButton = document.getElementById('hahaha');
+
+    // Fetch all courses and populate the dropdown
+    function fetchCourses() {
+        fetch('http://127.0.0.1:8000/courses/all') // Adjust this URL based on your routes
+            .then(response => response.json())
+            .then(data => {
+                courseSelect.innerHTML = ''; // Clear existing options
+                data.forEach(course => {
+                    const option = document.createElement('option');
+                    option.value = course.id;
+                    option.text = course.name;
+                    courseSelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error fetching courses:', error));
+    }
+
+    // Fetch all students and display them
+    function fetchStudents() {
+        fetch('http://127.0.0.1:8000/all/students') // Adjust this URL based on your routes
+            .then(response => response.json())
+            .then(data => {
+                const studentList = document.getElementById('student-tbody');
+                studentList.innerHTML = ''; // Clear existing content
+                data.forEach(student => {
+                    const row = document.createElement('tr');
+
+                    // Combine course names into a single string
+                    const courses = student.courses.map(course => course.name).join('. ');
+
+                    row.innerHTML = `
+                    <td>${student.full_name}</td>
+                    <td>${student.email}</td>
+                    <td>${student.biography_description}</td>
+                    <td>${courses}</td>
+                    <td>
+                        <button onclick="editStudent(${student.id})">Edit</button>
+                        <button onclick="deleteStudent(${student.id})">Delete</button>
+                        <button onclick="generateCertificate(${student.id}, '${student.full_name}', '${courses}')">Generate Certificate</button>
+                    </td>
+                `;
+                    studentList.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Error fetching students:', error));
+    }
+
+    // Call fetchStudents to populate the table on page load
+    fetchStudents();
+
+    window.generateCertificate = function (studentId, studentName, studentProgram) {
+        // Prepare data for the certificate
+        const data = {
+            id: studentId,
+            name: studentName,
+            program: studentProgram,
+            date: new Date().toISOString().split('T')[0], // Today's date in YYYY-MM-DD format
+        };
+
+        // Send a POST request to generate the certificate
+        fetch(`/certificates/create`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then( errData =>{
+                        console.error('Server error:', errData);
+                        throw new Error('Failed to generate certificate');
+                    }); // Return the certificate PDF as a blob
+                } 
+                return response.blob();
+            })
+            .then(blob => {
+                // Create a URL for the PDF blob and open it in a new tab
+                const url = window.URL.createObjectURL(blob);
+                window.open(url);
+            })
+            .catch(error => console.error('Error generating certificate:', error));
+    }
+
+
+
+    // Handle delete student
+    window.deleteStudent = function (id) {
+        fetch(`http://127.0.0.1:8000/students/delete`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({ id: id }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                fetchStudents(); // Refresh the student list
+            });
+    };
+
+    // Handle create student
+    createCourseFormButton.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const formData = new FormData(createCourseFormButton);
+
+        fetch('http://127.0.0.1:8000/create/student', { // Adjust this URL based on your routes
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: formData,
+        })
+            .then(response => response.json())
+            .then(data => {
+                fetchStudents(); // Refresh the student list
+                createStudentForm.reset(); // Reset the form
+            });
+    });
+
+    // Handle edit student
+    window.editStudent = function (id, name, email, course_id) {
+        document.getElementById('edit-student-id').value = id;
+        document.getElementById('edit-student-name').value = name;
+        document.getElementById('edit-student-email').value = email;
+        document.getElementById('edit-course-select').value = course_id;
+        editStudentForm.style.display = 'block';
+    };
+
+    // Handle update student
+    editStudentForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const id = document.getElementById('edit-student-id').value;
+        const name = document.getElementById('edit-student-name').value;
+        const email = document.getElementById('edit-student-email').value;
+        const course_id = document.getElementById('edit-course-select').value;
+
+        fetch('http://127.0.0.1:8000/students/update', {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({
+                id: id,
+                name: name,
+                email: email,
+                course_id: course_id,
+            }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                editStudentForm.style.display = 'none';
+                fetchStudents(); // Refresh the student list
+            });
+    });
+
+    // Cancel editing
+    document.getElementById('cancel-edit').addEventListener('click', function () {
+        editStudentForm.style.display = 'none';
+    });
+
+    // Initial fetches
+    fetchCourses();
+    fetchStudents();
+});
+
+
 // This is for Certificate
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -464,37 +757,54 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Handle create certificate
-    createCertificateForm.addEventListener('submit', function (event) {
-        event.preventDefault();
+    function generateCertificate(studentId, studentName, studentProgram) {
 
-        const formData = new FormData(createCertificateForm);
+        // Prepare data for the certificate
+        const data = {
+            name: studentName,
+            program: studentProgram,
+            date: new Date().toISOString().split('T')[0], // Today's date in YYYY-MM-DD format
+        };
 
         fetch('/certificates/generate', { // Adjust this URL based on your routes
-            method: 'POST',
-            body: formData,
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify(data)
         })
-            .then(response => response.json())
-            .then(data => {
-                fetchCertificates(); // Refresh the certificates list
-            });
-    });
+            .then(response => {
+                if (response.ok) {
+                    return response.blob(); // Return the certificate PDF as a blob
+                } else {
+                    throw new Error('Failed to generate certificate');
+                }
+            })
+            .then(blob => {
+                // Create a URL for the PDF blob and open it in a new tab
+                const url = window.URL.createObjectURL(blob);
+                window.open(url);
+            })
+            .catch(error => console.error('Error generating certificate:', error));
 
-    // Handle edit certificate (implementation can be added)
-    window.editCertificate = function (id) {
-        // Implement the edit logic
-    };
+        // Handle edit certificate (implementation can be added)
+        window.editCertificate = function (id) {
+            // Implement the edit logic
+        };
 
-    // Handle delete certificate
-    window.deleteCertificate = function (id) {
-        fetch(`/certificates/delete/${id}`, { // Adjust this URL based on your routes
-            method: 'DELETE',
-        })
-            .then(response => response.json())
-            .then(data => {
-                fetchCertificates(); // Refresh the certificates list
-            });
-    };
+        // Handle delete certificate
+        window.deleteCertificate = function (id) {
+            fetch(`/certificates/delete/${id}`, { // Adjust this URL based on your routes
+                method: 'DELETE',
+            })
+                .then(response => response.json())
+                .then(data => {
+                    fetchCertificates(); // Refresh the certificates list
+                });
+        };
 
-    // Initial fetch of certificates
-    fetchCertificates();
+        // Initial fetch of certificates
+        fetchCertificates();
+    }
 });
+

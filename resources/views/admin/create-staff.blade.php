@@ -44,9 +44,9 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
-        <img src="assets/img/logo.png" alt="">
-        <span class="d-none d-lg-block">ICP RWANDA</span>
+      <a href="/dashboard" class="logo d-flex align-items-center">
+        <img src="assets/img/RW blck letter.png" alt="">
+        <!-- <span class="d-none d-lg-block">ICP RWANDA</span> -->
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -67,158 +67,19 @@
           </a>
         </li><!-- End Search Icon-->
 
-        <li class="nav-item dropdown">
 
-          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-            <i class="bi bi-bell"></i>
-            <span class="badge bg-primary badge-number">4</span>
-          </a><!-- End Notification Icon -->
-
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
-            <li class="dropdown-header">
-              You have 4 new notifications
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-exclamation-circle text-warning"></i>
-              <div>
-                <h4>Lorem Ipsum</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>30 min. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-x-circle text-danger"></i>
-              <div>
-                <h4>Atque rerum nesciunt</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>1 hr. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-check-circle text-success"></i>
-              <div>
-                <h4>Sit rerum fuga</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>2 hrs. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-info-circle text-primary"></i>
-              <div>
-                <h4>Dicta reprehenderit</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>4 hrs. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li class="dropdown-footer">
-              <a href="#">Show all notifications</a>
-            </li>
-
-          </ul><!-- End Notification Dropdown Items -->
-
-        </li><!-- End Notification Nav -->
-
-        <li class="nav-item dropdown">
-
-          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-            <i class="bi bi-chat-left-text"></i>
-            <span class="badge bg-success badge-number">3</span>
-          </a><!-- End Messages Icon -->
-
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
-            <li class="dropdown-header">
-              You have 3 new messages
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="message-item">
-              <a href="#">
-                <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
-                <div>
-                  <h4>Maria Hudson</h4>
-                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                  <p>4 hrs. ago</p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="message-item">
-              <a href="#">
-                <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
-                <div>
-                  <h4>Anna Nelson</h4>
-                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                  <p>6 hrs. ago</p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="message-item">
-              <a href="#">
-                <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
-                <div>
-                  <h4>David Muldon</h4>
-                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                  <p>8 hrs. ago</p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="dropdown-footer">
-              <a href="#">Show all messages</a>
-            </li>
-
-          </ul><!-- End Messages Dropdown Items -->
-
-        </li><!-- End Messages Nav -->
 
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+            <img src="assets/img/RW blck letter.png" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2">Icp User</span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>Kevin Anderson</h6>
-              <span>Web Designer</span>
+              <h6>ICP USER</h6>
+              <span>ADMIN</span>
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -255,7 +116,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" href="/signout">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
               </a>
@@ -269,91 +130,107 @@
 
   </header><!-- End Header -->
 
-<!-- ======= Sidebar ======= -->
-<aside id="sidebar" class="sidebar">
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
 
-<ul class="sidebar-nav" id="sidebar-nav">
+    <ul class="sidebar-nav" id="sidebar-nav">
 
-  <li class="nav-item">
-    <a class="nav-link " href="{{ route('showAllBlog') }}">
-      <i class="bi bi-grid"></i>
-      <span>Dashboard</span>
-    </a>
-  </li>
+      <li class="nav-item">
+        <a class="nav-link " href="{{ route('showAllBlog') }}">
+          <i class="bi bi-grid"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
 
-  <li class="nav-item">
-    <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-      <i class="bi bi-journal-text"></i><span>Modify Web</span><i class="bi bi-chevron-down ms-auto"></i>
-    </a>
-    <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-      <li>
-        <a href="{{ route('showCreateForm') }}">
-          <i class="bi bi-circle"></i><span>Create ICP Service</span>
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-journal-text"></i><span>Modify Web</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-      </li>
-      <li>
-        <a href="{{ route('showStaffCreateForm') }}">
-          <i class="bi bi-circle"></i><span>Add Staff Member</span>
+        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="{{ route('showCreateForm') }}">
+              <i class="bi bi-circle"></i><span>Create ICP Service</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ route('showStaffCreateForm') }}">
+              <i class="bi bi-circle"></i><span>Add Staff Member</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ route('showGalleryCreateForm') }}">
+              <i class="bi bi-circle"></i><span>Add Image to Gallery</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ route('showCerticateCreateForm') }}">
+              <i class="bi bi-circle"></i><span>Generate Certificate</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="{{ route('showCreateStudentForm') }}">
+              <i class="bi bi-circle"></i><span>Add New Student</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ route('showCreateCourseForm') }}">
+              <i class="bi bi-circle"></i><span>Add New Course</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Forms Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-layout-text-window-reverse"></i><span>View Data</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-      </li>
-      <li>
-        <a href="{{ route('showGalleryCreateForm') }}">
-          <i class="bi bi-circle"></i><span>Add Image to Gallery</span>
+        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="{{ route('showMessageForm') }}">
+              <i class="bi bi-circle"></i><span>User's Messages</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="{{ route('showAllServices') }}">
+              <i class="bi bi-circle"></i><span>View All Services</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="{{ route('students.all') }}">
+              <i class="bi bi-circle"></i><span>View All Students</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="{{ route('showAllStaff') }}">
+              <i class="bi bi-circle"></i><span>View All Team members</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="{{ route('ShowAllGallery') }}">
+              <i class="bi bi-circle"></i><span>Gallery</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Tables Nav -->
+
+      <li class="nav-heading">Pages</li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="users-profile.html">
+          <i class="bi bi-person"></i>
+          <span>Profile</span>
         </a>
-      </li>
-      <li>
-        <a href="{{ route('showCerticateCreateForm') }}">
-          <i class="bi bi-circle"></i><span>Generate Certificate</span>
-        </a>
-      </li>
+      </li><!-- End Profile Page Nav -->
+
+
     </ul>
-  </li><!-- End Forms Nav -->
 
-  <li class="nav-item">
-    <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-      <i class="bi bi-layout-text-window-reverse"></i><span>View Data</span><i class="bi bi-chevron-down ms-auto"></i>
-    </a>
-    <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-      <li>
-        <a href="{{ route('showMessageForm') }}">
-          <i class="bi bi-circle"></i><span>User's Messages</span>
-        </a>
-      </li>
-
-      <li>
-        <a href="{{ route('showAllServices') }}">
-          <i class="bi bi-circle"></i><span>View All Services</span>
-        </a>
-      </li>
-
-      <li>
-        <a href="{{ route('showAllStaff') }}">
-          <i class="bi bi-circle"></i><span>View All Team members</span>
-        </a>
-      </li>
-
-      <li>
-        <a href="{{ route('ShowAllGallery') }}">
-          <i class="bi bi-circle"></i><span>Gallery</span>
-        </a>
-      </li>
-
-    </ul>
-  </li><!-- End Tables Nav -->
-
-  <li class="nav-heading">Pages</li>
-
-  <li class="nav-item">
-    <a class="nav-link collapsed" href="users-profile.html">
-      <i class="bi bi-person"></i>
-      <span>Profile</span>
-    </a>
-  </li><!-- End Profile Page Nav -->
-
-  
-</ul>
-
-</aside><!-- End Sidebar-->
+  </aside><!-- End Sidebar-->
   <main id="main" class="main">
 
     <div class="pagetitle">
@@ -379,14 +256,14 @@
                 <div class="row mb-3">
                   <label for="inputText" class="col-sm-2 col-form-label">Full Names</label>
                   <div class="col-sm-10">
-                  <input type="text" name="Full_name" placeholder="Full name" required>
+                    <input type="text" name="Full_name" placeholder="Full name" required>
                   </div>
                 </div>
 
                 <div class="row mb-3">
                   <label for="inputText" class="col-sm-2 col-form-label">Position</label>
                   <div class="col-sm-10">
-                  <input type="text" name="Position" placeholder="Position" required>
+                    <input type="text" name="Position" placeholder="Position" required>
                   </div>
                 </div>
 
@@ -403,7 +280,7 @@
                     <input class="form-control" type="file" id="formFile" name="Profile_image" required>
                   </div>
                 </div>
-                
+
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">Add a Member</label>
                   <div class="col-sm-10">

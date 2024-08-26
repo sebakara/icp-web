@@ -5,9 +5,11 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Dashboard - ICP RWANDA </title>
+  <title>Tables / General - ICP RWANDA</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
 
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
@@ -18,16 +20,16 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
-  <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
-  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+  <link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/vendor/quill/quill.snow.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/vendor/quill/quill.bubble.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/vendor/remixicon/remixicon.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/vendor/simple-datatables/style.css') }}" rel="stylesheet">
 
   <!-- Template Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 
   <!-- =======================================================
   * Template Name: NiceAdmin
@@ -45,7 +47,7 @@
 
     <div class="d-flex align-items-center justify-content-between">
       <a href="/dashboard" class="logo d-flex align-items-center">
-        <img src="assets/img/RW blck letter.png" alt="">
+        <img src="{{ asset('assets/img/RW blck letter.png') }}" alt="">
         <!-- <span class="d-none d-lg-block">ICP RWANDA</span> -->
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -67,12 +69,12 @@
           </a>
         </li><!-- End Search Icon-->
 
-        
+
 
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="assets/img/RW blck letter.png" alt="Profile" class="rounded-circle">
+            <img src="{{ asset('assets/img/RW blck letter.png') }}" alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2">Icp User</span>
           </a><!-- End Profile Iamge Icon -->
 
@@ -227,7 +229,7 @@
         </a>
       </li><!-- End Profile Page Nav -->
 
-      
+
     </ul>
 
   </aside><!-- End Sidebar-->
@@ -235,12 +237,12 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>ICP ADMIN DASHBOARD</h1>
+      <h1>ICP Students</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Components</li>
-          <li class="breadcrumb-item active">Modal</li>
+          <li class="breadcrumb-item">Tables</li>
+          <li class="breadcrumb-item active">General</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -248,88 +250,34 @@
     <section class="section">
       <div class="row">
         <div class="col-lg-6">
+          <div class="card">
+            <div class="card-body" id="student-list">
+              <h5 class="card-title">All Students</h5>
 
-          <div class="card" style="width: 500px;">
-            <div class="card-body">
-              <h5 class="card-title">What we Do</h5>
-              <p>Welcome to ICP Rwanda, a pioneering tech community based in Rwanda, dedicated to empowering individuals and businesses in the dynamic realm of web3 development.</p>
-
-              <!-- Basic Modal -->
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal">
-                Edit
-              </button>
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal">
-                Delete
-              </button>
-              
-
+              <!-- Default Table -->
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Full Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Biography</th>
+                    <th scope="col">Courses</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="student-tbody">
+                  <!-- Students will be populated here using JavaScript -->
+                </tbody>
+              </table>
+              <!-- End Default Table Example -->
             </div>
           </div>
-
-          <div class="card" style="width: 500px;">
-            <div class="card-body">
-              <h5 class="card-title">Our Mission</h5>
-              <p>Our mission is to democratize access to web3 technologies, empower individuals with the knowledge and skills needed to thrive in the digital economy, and drive sustainable growth and innovation in Rwanda and beyond. We are committed to providing a supportive and inclusive environment where aspiring and existing web3 developers can learn, collaborate, and succeed.</p>
-
-              <!-- Scrolling Modal -->
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#scrollingModal">
-                Edit
-              </button>
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#scrollingModal">
-                Delete              </button>
-              
-  
-
-            </div>
-          </div>
-
-        </div>
-
-        <div class="col-lg-6">
-
-          <div class="card" style="width: 500px;">
-            <div class="card-body">
-              <h5 class="card-title">Our Vision</h5>
-              <p>Our vision is to position Rwanda as a hub for web3 innovation and entrepreneurship, driving economic growth, social impact, and technological advancement. We envision a future where individuals and businesses harness the full potential of decentralized technologies to create positive change and build a more inclusive and equitable society.</p>
-
-              
-              <!-- Large Modal -->
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#largeModal">
-                Edit
-              </button>
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#largeModal">
-                Delete
-              </button>
-
-              
-
-            </div>
-          </div>
-
-          <div class="card" style="width: 500px;">
-            <div class="card-body">
-              <h5 class="card-title">What we Do</h5>
-              
-              <ul>
-                <li><i class="ri-check-double-line"></i> <b>Education:</b> We offer a range of educational programs, workshops, and resources designed to equip individuals</li>
-                <li><i class="ri-check-double-line"></i> <b>Community Building:</b> We foster a vibrant and inclusive community of web3 developers, enthusiasts, and experts through networking events, meetups, and online forums.</li>
-                <li><i class="ri-check-double-line"></i> <b>Advocacy and Awareness:</b> We actively promote awareness and adoption of web3 technologies through advocacy campaigns, outreach initiatives, and partnerships with industry stakeholders. </li>
-              </ul>
-
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#largeModal">
-                Edit
-              </button>
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#largeModal">
-                Delete
-              </button>
-            </div>
-          </div>
-
         </div>
       </div>
     </section>
 
-  </main> 
+
+  </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
@@ -348,18 +296,18 @@
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
-  <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/chart.js/chart.umd.js"></script>
-  <script src="assets/vendor/echarts/echarts.min.js"></script>
-  <script src="assets/vendor/quill/quill.js"></script>
-  <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
-  <script src="assets/vendor/tinymce/tinymce.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="{{ asset('assets/vendor/apexcharts/apexcharts.min.js') }}"></script>
+  <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ asset('assets/vendor/chart.js/chart.umd.js') }}"></script>
+  <script src="{{ asset('assets/vendor/echarts/echarts.min.js') }}"></script>
+  <script src="{{ asset('assets/vendor/quill/quill.js') }}"></script>
+  <script src="{{ asset('assets/vendor/simple-datatables/simple-datatables.js') }}"></script>
+  <script src="{{ asset('assets/vendor/tinymce/tinymce.min.js') }}"></script>
+  <script src="{{ asset('assets/vendor/php-email-form/validate.js') }}"></script>
 
   <!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>
-  <script src="assets/js/mains.js"></script>
+  <script src="{{ asset('assets/js/main.js') }}"></script>
+  <script src="{{ asset('assets/js/mains.js') }}"></script>
 
 </body>
 

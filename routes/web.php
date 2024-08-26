@@ -8,6 +8,8 @@ use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\CustomerSupportCustomer;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\CourseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,7 +70,7 @@ Route::delete('/gallery/{id}', [GalleryController::class, 'deletePicture'])->nam
 
 
 Route::get('/create-certificate', [CertificateController::class, 'showCreateForm'])->name('showCerticateCreateForm');
-Route::post('/certificates', [CertificateController::class, 'generate'])->name('certificates.generate');
+Route::post('/certificates/create', [CertificateController::class, 'generate'])->name('certificates.generate');
 Route::put('/certificates/{id}', [CertificateController::class, 'updateCertificate'])->name('certificates.update');
 Route::delete('/certificates/{id}', [CertificateController::class, 'deleteCertificate'])->name('certificates.delete');
 Route::get('/certificates', [CertificateController::class, 'getAllCertificates'])->name('certificates.getAll');
@@ -85,6 +87,22 @@ Route::delete('/customer-support/delete', [CustomerSupportCustomer::class, 'dele
 Route::get('/get-dashboard', [BlogController::class, 'showAllBlog'])->name('showAllBlog');
 Route::post('/store/blog', [BlogController::class, 'createBlog'])->name('storeBlog');
 Route::get('/blog-frontend/{id}', [BlogController::class, 'show'])->name('blogs.show');
+
+
+Route::get('/students/create', [StudentController::class, 'showCreateForm'])->name('showCreateStudentForm');
+Route::post('/create/student', [StudentController::class, 'createStudent'])->name('student.create');
+Route::get('/Students/all', [StudentController::class, 'showAllStudents'])->name('students.all');
+Route::get('/all/students', [StudentController::class, 'getAllStudents']);
+
+
+Route::get('/course/create', [CourseController::class, 'showCreateForm'])->name('showCreateCourseForm');
+Route::post('/create/course', [CourseController::class, 'createCourse'])->name('course.create');
+Route::get('/courses/all', [CourseController::class, 'getAllCourses'])->name('courses.all');
+
+
+Route::post('/import', [StudentController::class, 'importStudentWithExcel'])->name('import');
+
+
 
 
 

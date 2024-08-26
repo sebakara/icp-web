@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Dashboard - ICP RWANDA </title>
+  <title>Forms / Elements - ICP RWANDA</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -18,16 +18,20 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
-  <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
-  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+  <link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/vendor/quill/quill.snow.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/vendor/quill/quill.bubble.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/vendor/remixicon/remixicon.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/vendor/simple-datatables/style.css') }}" rel="stylesheet">
 
   <!-- Template Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+
+
+
+
 
   <!-- =======================================================
   * Template Name: NiceAdmin
@@ -67,7 +71,7 @@
           </a>
         </li><!-- End Search Icon-->
 
-        
+
 
         <li class="nav-item dropdown pe-3">
 
@@ -227,7 +231,7 @@
         </a>
       </li><!-- End Profile Page Nav -->
 
-      
+
     </ul>
 
   </aside><!-- End Sidebar-->
@@ -235,12 +239,12 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>ICP ADMIN DASHBOARD</h1>
+      <h1>Form Elements</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Components</li>
-          <li class="breadcrumb-item active">Modal</li>
+          <li class="breadcrumb-item">Forms</li>
+          <li class="breadcrumb-item active">Elements</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -249,79 +253,36 @@
       <div class="row">
         <div class="col-lg-6">
 
-          <div class="card" style="width: 500px;">
+          <div class="card">
             <div class="card-body">
-              <h5 class="card-title">What we Do</h5>
-              <p>Welcome to ICP Rwanda, a pioneering tech community based in Rwanda, dedicated to empowering individuals and businesses in the dynamic realm of web3 development.</p>
+              <h5 class="card-title">Add New Course</h5>
 
-              <!-- Basic Modal -->
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal">
-                Edit
-              </button>
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal">
-                Delete
-              </button>
-              
+              <!-- General Form Elements -->
+              <form id="create-course-form" action="{{ route('course.create') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="row mb-3">
+                  <label for="inputText" class="col-sm-2 col-form-label">Course Name</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="name" placeholder="Course Name" required>
+                  </div>
+                </div>
 
-            </div>
-          </div>
+                <div class="row mb-3">
+                  <label for="inputText" class="col-sm-2 col-form-label">Description</label>
+                  <div class="col-sm-10">
+                    <textarea name="description" placeholder="Biography" class="form-control" style="height: 100px"></textarea>
+                  </div>
+                </div>
 
-          <div class="card" style="width: 500px;">
-            <div class="card-body">
-              <h5 class="card-title">Our Mission</h5>
-              <p>Our mission is to democratize access to web3 technologies, empower individuals with the knowledge and skills needed to thrive in the digital economy, and drive sustainable growth and innovation in Rwanda and beyond. We are committed to providing a supportive and inclusive environment where aspiring and existing web3 developers can learn, collaborate, and succeed.</p>
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label">Add Course</label>
+                  <div class="col-sm-10" id="hahaha">
+                    <button type="submit" class="btn btn-primary">Add</button>
+                  </div>
+                </div>
 
-              <!-- Scrolling Modal -->
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#scrollingModal">
-                Edit
-              </button>
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#scrollingModal">
-                Delete              </button>
-              
-  
+              </form><!-- End General Form Elements -->
 
-            </div>
-          </div>
-
-        </div>
-
-        <div class="col-lg-6">
-
-          <div class="card" style="width: 500px;">
-            <div class="card-body">
-              <h5 class="card-title">Our Vision</h5>
-              <p>Our vision is to position Rwanda as a hub for web3 innovation and entrepreneurship, driving economic growth, social impact, and technological advancement. We envision a future where individuals and businesses harness the full potential of decentralized technologies to create positive change and build a more inclusive and equitable society.</p>
-
-              
-              <!-- Large Modal -->
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#largeModal">
-                Edit
-              </button>
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#largeModal">
-                Delete
-              </button>
-
-              
-
-            </div>
-          </div>
-
-          <div class="card" style="width: 500px;">
-            <div class="card-body">
-              <h5 class="card-title">What we Do</h5>
-              
-              <ul>
-                <li><i class="ri-check-double-line"></i> <b>Education:</b> We offer a range of educational programs, workshops, and resources designed to equip individuals</li>
-                <li><i class="ri-check-double-line"></i> <b>Community Building:</b> We foster a vibrant and inclusive community of web3 developers, enthusiasts, and experts through networking events, meetups, and online forums.</li>
-                <li><i class="ri-check-double-line"></i> <b>Advocacy and Awareness:</b> We actively promote awareness and adoption of web3 technologies through advocacy campaigns, outreach initiatives, and partnerships with industry stakeholders. </li>
-              </ul>
-
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#largeModal">
-                Edit
-              </button>
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#largeModal">
-                Delete
-              </button>
             </div>
           </div>
 
@@ -329,7 +290,8 @@
       </div>
     </section>
 
-  </main> 
+
+  </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
@@ -348,18 +310,18 @@
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
-  <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/chart.js/chart.umd.js"></script>
-  <script src="assets/vendor/echarts/echarts.min.js"></script>
-  <script src="assets/vendor/quill/quill.js"></script>
-  <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
-  <script src="assets/vendor/tinymce/tinymce.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="{{ asset('assets/vendor/apexcharts/apexcharts.min.js') }}"></script>
+  <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ asset('assets/vendor/chart.js/chart.umd.js') }}"></script>
+  <script src="{{ asset('assets/vendor/echarts/echarts.min.js') }}"></script>
+  <script src="{{ asset('assets/vendor/quill/quill.js') }}"></script>
+  <script src="{{ asset('assets/vendor/simple-datatables/simple-datatables.js') }}"></script>
+  <script src="{{ asset('assets/vendor/tinymce/tinymce.min.js') }}"></script>
+  <script src="{{ asset('assets/vendor/php-email-form/validate.js') }}"></script>
 
   <!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>
-  <script src="assets/js/mains.js"></script>
+  <script src="{{ asset('assets/js/main.js') }}"></script>
+  <script src="{{ asset('assets/js/mains.js') }}"></script>
 
 </body>
 
