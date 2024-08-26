@@ -166,11 +166,11 @@
               <i class="bi bi-circle"></i><span>Add Image to Gallery</span>
             </a>
           </li>
-          <li>
+          <!-- <li>
             <a href="{{ route('showCerticateCreateForm') }}">
               <i class="bi bi-circle"></i><span>Generate Certificate</span>
             </a>
-          </li>
+          </li> -->
 
           <li>
             <a href="{{ route('showCreateStudentForm') }}">
@@ -239,12 +239,11 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Form Elements</h1>
+      <h1>Courses Registration Form</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Forms</li>
-          <li class="breadcrumb-item active">Elements</li>
+          <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+          
         </ol>
       </nav>
     </div><!-- End Page Title -->

@@ -52,8 +52,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         <td>${staff.Position}</td>
                         <td>${staff.Biography_description}</td>
                         <td>
-                            <button onclick="editStaff(${staff.id})">Edit</button>
-                            <button onclick="deleteStaff(${staff.id})">Delete</button>
+                            <button style="margin: 5px;" onclick="editStaff(${staff.id})">Edit</button> <br>
+                            <button style="margin: 5px;" onclick="deleteStaff(${staff.id})">Delete</button>
                         </td>
                     `;
                     staffList.appendChild(row);
@@ -133,8 +133,8 @@ document.addEventListener('DOMContentLoaded', function () {
                             <td>${icp.Service_title}</td>
                             <td>${icp.Service_description}</td>
                             <td>
-                                <button onclick="editICP(${icp.id})">Edit</button>
-                                <button onclick="deleteICP(${icp.id})">Delete</button>
+                                <button style="margin: 5px;" onclick="editICP(${icp.id})">Edit</button> <br>
+                                <button style="margin: 5px;" onclick="deleteICP(${icp.id})">Delete</button>
                             </td>
                         `;
                     icpList.appendChild(row);
@@ -232,8 +232,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         <td><img src="${picture.url}" alt="${picture.description}" width="100"></td>
                         <td>${picture.description}</td>
                         <td>
-                            <button onclick="editPicture(${picture.id})">Edit</button>
-                            <button onclick="deletePicture(${picture.id})">Delete</button>
+                            <button style="margin: 5px;" onclick="editPicture(${picture.id})">Edit</button> <br>
+                            <button style="margin: 5px;" onclick="deletePicture(${picture.id})">Delete</button>
                         </td>
                     `;
                     pictureList.appendChild(row);
@@ -398,7 +398,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         <td>${message.Message}</td>
                         <td>
                             
-                            <button onclick="deleteMessage(${message.id})">Delete</button>
+                            <button style="margin: 5px;" onclick="deleteMessage(${message.id})">Delete</button>
                         </td>
                     `;
                     messageList.appendChild(row);
@@ -476,8 +476,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         <td>${course.name}</td>
                         <td>${course.description}</td>
                         <td>
-                            <button onclick="editCourse(${course.id}, '${course.name}', '${course.description}')">Edit</button>
-                            <button onclick="deleteCourse(${course.id})">Delete</button>
+                            <button style="margin: 5px;" onclick="editCourse(${course.id}, '${course.name}', '${course.description}')">Edit</button> <br>
+                            <button style="margin: 5px;" onclick="deleteCourse(${course.id})">Delete</button>
                         </td>
                     `;
                     courseList.appendChild(row);
@@ -592,9 +592,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     <td>${student.biography_description}</td>
                     <td>${courses}</td>
                     <td>
-                        <button onclick="editStudent(${student.id})">Edit</button>
-                        <button onclick="deleteStudent(${student.id})">Delete</button>
-                        <button onclick="generateCertificate(${student.id}, '${student.full_name}', '${courses}')">Generate Certificate</button>
+                        <button style="margin: 5px;" onclick="editStudent(${student.id})">Edit</button> <br>
+                        <button style="margin: 5px; onclick="deleteStudent(${student.id})">Delete</button> <br>
+                        <button style="margin: 5px; onclick="generateCertificate(${student.id}, '${student.full_name}', '${courses}')">Generate Certificate</button>
                     </td>
                 `;
                     studentList.appendChild(row);

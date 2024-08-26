@@ -163,11 +163,11 @@
               <i class="bi bi-circle"></i><span>Add Image to Gallery</span>
             </a>
           </li>
-          <li>
+          <!-- <li>
             <a href="{{ route('showCerticateCreateForm') }}">
               <i class="bi bi-circle"></i><span>Generate Certificate</span>
             </a>
-          </li>
+          </li> -->
 
           <li>
             <a href="{{ route('showCreateStudentForm') }}">
@@ -239,9 +239,8 @@
       <h1>Received Message and Contacts</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Tables</li>
-          <li class="breadcrumb-item active">General</li>
+          <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+          
         </ol>
       </nav>
     </div><!-- End Page Title -->

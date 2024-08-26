@@ -162,11 +162,11 @@
               <i class="bi bi-circle"></i><span>Add Image to Gallery</span>
             </a>
           </li>
-          <li>
+          <!-- <li>
             <a href="{{ route('showCerticateCreateForm') }}">
               <i class="bi bi-circle"></i><span>Generate Certificate</span>
             </a>
-          </li>
+          </li> -->
 
           <li>
             <a href="{{ route('showCreateStudentForm') }}">
