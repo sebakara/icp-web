@@ -78,14 +78,14 @@
         @foreach($blogs as $blog)
         <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
           <div class="blog-item">
-          <div class="blog-item">
-              <img src="{{ asset($blog->image) }}" class="img-fluid"  alt="{{ $blog->title }}"  style="width: 55%; height: 60%;">
+            <div class="blog-item">
+              <img src="{{ asset($blog->image) }}" class="img-fluid" alt="{{ $blog->title }}" style="width: 55%; height: 60%;">
             </div>
             <div class="card-body">
               <h4 class="card-title">{{ $blog->title }}</h4>
-              
+
               <p class="card-text">{{ Str::limit($blog->content, 100) }}</p>
-              <a href="#hero" class="btn btn-primary">Read More</a>
+              <a href="{{ route('blogs.show',  ['id' => $blog->id]) }}" class="btn btn-primary">Read More</a>
             </div>
           </div>
         </div>
@@ -108,7 +108,7 @@
       <div class="row">
         @foreach($services as $service)
         <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="200">
-          <div class="icon-box">
+          <div class="icon-box" style="margin-top: 10%;">
             <div class="icon"> <img src="{{ asset($service->Icon) }}" alt="Service Icon" style="width: 60px; height: 50px; border-radius: 20%; object-fit: cover;"></div>
             <h4><a href="">{{ $service->Service_title }}</a></h4>
             <p>{{ $service->Service_description }}</p>
@@ -123,7 +123,7 @@
   <!-- ======= Cta Section ======= -->
   <!-- End Cta Section -->
 
-  <!-- ======= Portfolio Section ======= -->
+  <!-- Gallery section -->
   <section id="portfolio" class="portfolio">
     <div class="container" data-aos="fade-up">
 
@@ -131,20 +131,17 @@
         <h2>Gallery</h2>
         <p>Step into the world of innovation and creativity at the ICP Rwanda Gallery</p>
       </div>
+
       <ul id="portfolio-flters" class="d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
         <li data-filter="*" class="filter-active">All</li>
-        <li data-filter=".filter-app">Evangelism</li>
-        <li data-filter=".filter-card">Our Hackathons</li>
-        <li data-filter=".filter-web">Our Events</li>
+        @foreach($categories as $category)
+        <li data-filter=".filter-{{ Str::slug($category->name) }}">{{ $category->name }}</li>
+        @endforeach
       </ul>
 
       <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
         @foreach($pictures as $item)
-        <div class="col-lg-4 col-md-6 portfolio-item 
-                    @if($item->Image_category == 'Evangelism') filter-app
-                    @elseif($item->Image_category == 'Our Hackathons') filter-card
-                    @elseif($item->Image_category == 'Our Events') filter-web 
-                    @endif">
+        <div class="col-lg-4 col-md-6 portfolio-item filter-{{ Str::slug($item->Image_category) }}">
           <div class="portfolio-wrap">
             <img src="{{ asset($item->Image) }}" class="img-fluid" alt="">
             <div class="portfolio-info">
@@ -156,13 +153,14 @@
           </div>
         </div>
         @endforeach
-
       </div>
+
+
+
 
     </div>
   </section>
 
-  <!-- End Portfolio Section -->
 
   <!-- ======= Team Section ======= -->
   <section id="team" class="team section-bg">
@@ -265,7 +263,7 @@
               @if(session('success'))
               <div class="sent-message">{{ session('success') }}</div>
               @endif
-              <div class="loading">Loading</div> 
+              <div class="loading">Loading</div>
               <div class="error-message"></div>
               <div class="sent-message">Your message has been sent. Thank you!</div>
             </div>

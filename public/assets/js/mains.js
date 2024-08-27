@@ -38,6 +38,30 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     };
 
+    // Handle edit staff (implementation can be added)
+    window.editStaff = function (id) {
+        // Fetch the staff data based on the id
+        fetch(`http://127.0.0.1:8000/staff/${id}/edit`)
+            .then(response => response.json())
+            .then(data => {
+                // Populate the form fields with the fetched staff data
+                document.querySelector('input[name="Full_name"]').value = data.Full_name;
+                document.querySelector('input[name="Position"]').value = data.Position;
+                document.querySelector('textarea[name="Biography_description"]').value = data.Biography_description;
+
+                // If there is an image, set it up in the form
+                if (data.Profile_image) {
+                    document.querySelector('#formFile').src = data.Profile_image;
+                }
+
+                // Set the form action to update the staff
+                document.querySelector('#edit-staff-form').action = `http://127.0.0.1:8000/staff/${id}/update`;
+
+                // Open the modal
+                $('#editStaffModal').modal('show');
+            });
+    };
+
     // Fetch all staff members and display them
     function fetchStaff() {
         fetch('http://127.0.0.1:8000/staff/all') // Adjust this URL based on your routes
@@ -52,8 +76,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         <td>${staff.Position}</td>
                         <td>${staff.Biography_description}</td>
                         <td>
-                            <button style="margin: 5px;" onclick="editStaff(${staff.id})">Edit</button> <br>
-                            <button style="margin: 5px;" onclick="deleteStaff(${staff.id})">Delete</button>
+                            <button style="margin: 5px;" class="btn btn-primary rounded-pill" onclick="editStaff(${staff.id})">Edit</button> <br>
+                            <button style="margin: 5px;" class="btn btn-danger rounded-pill" onclick="deleteStaff(${staff.id})">Delete</button>
                         </td>
                     `;
                     staffList.appendChild(row);
@@ -70,23 +94,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const formData = new FormData(createStaffForm);
 
-        fetch('http://127.0.0.1:8000/create/staff', { // Adjust this URL based on your routes
-            method: 'POST',
+        // Determine if the form is for creating or updating by checking the form's action
+        const isEdit = createStaffForm.action.includes('update');
+        const method = isEdit ? 'PUT' : 'POST'; // Use PUT for editing, POST for creating
+
+        fetch(createStaffForm.action, {
+            method: method,
             body: formData,
         })
             .then(response => response.json())
             .then(data => {
                 fetchStaff(); // Refresh the staff list
+                // Close the modal if it's an edit operation
+                if (isEdit) {
+                    $('#editStaffModal').modal('hide');
+                } else {
+                    // Optionally, clear the form after creating a new staff member
+                    createStaffForm.reset();
+                }
             });
     });
-
-    // Handle edit staff (implementation can be added)
-    window.editStaff = function (id) {
-        // Implement the edit logic
-    };
-
-
-
 
 });
 
@@ -133,8 +160,8 @@ document.addEventListener('DOMContentLoaded', function () {
                             <td>${icp.Service_title}</td>
                             <td>${icp.Service_description}</td>
                             <td>
-                                <button style="margin: 5px;" onclick="editICP(${icp.id})">Edit</button> <br>
-                                <button style="margin: 5px;" onclick="deleteICP(${icp.id})">Delete</button>
+                                <button style="margin: 5px;"  class="btn btn-primary rounded-pill" onclick="editICP(${icp.id})">Edit</button> <br>
+                                <button style="margin: 5px;" class="btn btn-danger rounded-pill" onclick="deleteICP(${icp.id})">Delete</button>
                             </td>
                         `;
                     icpList.appendChild(row);
@@ -278,6 +305,37 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
+// Gallery on Frontend
+
+document.addEventListener('DOMContentLoaded', function() {
+    let portfolioFilters = document.querySelectorAll('#portfolio-flters li');
+    let portfolioItems = document.querySelectorAll('.portfolio-item');
+
+    portfolioFilters.forEach(filter => {
+        filter.addEventListener('click', function() {
+            let selectedFilter = this.getAttribute('data-filter');
+
+            // Remove 'filter-active' class from all filters
+            portfolioFilters.forEach(filter => filter.classList.remove('filter-active'));
+
+            // Add 'filter-active' class to the clicked filter
+            this.classList.add('filter-active');
+
+            // Show or hide portfolio items based on the selected filter
+            portfolioItems.forEach(item => {
+                if (selectedFilter === '*' || item.classList.contains(selectedFilter.substring(1))) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    });
+});
+
+
+
+
 // This is for Gallery on Backend
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -349,7 +407,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     img.src = `/${picture.Image}`;
                     img.alt = picture.Image_category;
                     img.classList.add('img-fluid', 'm-2');
-                    allTabContent.appendChild(img);
+                    allContent.appendChild(img);
                 });
             })
             .catch(error => console.error('Error fetching pictures:', error));
@@ -397,8 +455,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         <td>${message.Subject}</td>
                         <td>${message.Message}</td>
                         <td>
-                            
-                            <button style="margin: 5px;" onclick="deleteMessage(${message.id})">Delete</button>
+                            <button class="btn btn-danger rounded-pill" onclick="deleteMessage(${message.id})">Delete</button>
                         </td>
                     `;
                     messageList.appendChild(row);
@@ -476,8 +533,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         <td>${course.name}</td>
                         <td>${course.description}</td>
                         <td>
-                            <button style="margin: 5px;" onclick="editCourse(${course.id}, '${course.name}', '${course.description}')">Edit</button> <br>
-                            <button style="margin: 5px;" onclick="deleteCourse(${course.id})">Delete</button>
+                            <button class="btn btn-primary rounded-pill" style="margin: 5px;" onclick="editCourse(${course.id}, '${course.name}', '${course.description}')">Edit</button> <br>
+                            <button class="btn btn-danger rounded-pill" style="margin: 5px;" onclick="deleteCourse(${course.id})">Delete</button>
                         </td>
                     `;
                     courseList.appendChild(row);
@@ -557,55 +614,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const courseSelect = document.getElementById('course-select');
     const createCourseFormButton = document.getElementById('hahaha');
 
-    // Fetch all courses and populate the dropdown
-    function fetchCourses() {
-        fetch('http://127.0.0.1:8000/courses/all') // Adjust this URL based on your routes
-            .then(response => response.json())
-            .then(data => {
-                courseSelect.innerHTML = ''; // Clear existing options
-                data.forEach(course => {
-                    const option = document.createElement('option');
-                    option.value = course.id;
-                    option.text = course.name;
-                    courseSelect.appendChild(option);
-                });
-            })
-            .catch(error => console.error('Error fetching courses:', error));
-    }
-
-    // Fetch all students and display them
-    function fetchStudents() {
-        fetch('http://127.0.0.1:8000/all/students') // Adjust this URL based on your routes
-            .then(response => response.json())
-            .then(data => {
-                const studentList = document.getElementById('student-tbody');
-                studentList.innerHTML = ''; // Clear existing content
-                data.forEach(student => {
-                    const row = document.createElement('tr');
-
-                    // Combine course names into a single string
-                    const courses = student.courses.map(course => course.name).join('. ');
-
-                    row.innerHTML = `
-                    <td>${student.full_name}</td>
-                    <td>${student.email}</td>
-                    <td>${student.biography_description}</td>
-                    <td>${courses}</td>
-                    <td>
-                        <button style="margin: 5px;" onclick="editStudent(${student.id})">Edit</button> <br>
-                        <button style="margin: 5px; onclick="deleteStudent(${student.id})">Delete</button> <br>
-                        <button style="margin: 5px; onclick="generateCertificate(${student.id}, '${student.full_name}', '${courses}')">Generate Certificate</button>
-                    </td>
-                `;
-                    studentList.appendChild(row);
-                });
-            })
-            .catch(error => console.error('Error fetching students:', error));
-    }
-
-    // Call fetchStudents to populate the table on page load
-    fetchStudents();
-
     window.generateCertificate = function (studentId, studentName, studentProgram) {
         // Prepare data for the certificate
         const data = {
@@ -626,11 +634,11 @@ document.addEventListener('DOMContentLoaded', function () {
         })
             .then(response => {
                 if (!response.ok) {
-                    return response.json().then( errData =>{
+                    return response.json().then(errData => {
                         console.error('Server error:', errData);
                         throw new Error('Failed to generate certificate');
                     }); // Return the certificate PDF as a blob
-                } 
+                }
                 return response.blob();
             })
             .then(blob => {
@@ -641,6 +649,63 @@ document.addEventListener('DOMContentLoaded', function () {
             .catch(error => console.error('Error generating certificate:', error));
     }
 
+    // Fetch all courses and populate the dropdown
+    function fetchCourses() {
+        fetch('http://127.0.0.1:8000/courses/all') // Adjust this URL based on your routes
+            .then(response => response.json())
+            .then(data => {
+                courseSelect.innerHTML = ''; // Clear existing options
+                data.forEach(course => {
+                    const option = document.createElement('option');
+                    option.value = course.id;
+                    option.text = course.name;
+                    courseSelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error fetching courses:', error));
+    }
+
+  
+
+    
+
+
+    // Fetch all students and display them
+    function fetchStudents() {
+        fetch('http://127.0.0.1:8000/all/students') // Adjust this URL based on your routes
+            .then(response => response.json())
+            .then(data => {
+                const studentList = document.getElementById('student-tbody');
+                studentList.innerHTML = ''; // Clear existing content
+                data.forEach(student => {
+                    const row = document.createElement('tr');
+
+                    // Combine course names into a single string
+                    const courses = student.courses.map(course => course.name).join('. ');
+
+                    row.innerHTML = `
+                    <td>${student.full_name}</td>
+                    <td>${student.email}</td>
+                    <td>${student.biography_description}</td>
+                    <td>${courses}</td>
+                    <td>
+                        
+                        <button style="margin: 5px; " class="btn btn-primary rounded-pill" onclick="editStudent(${student.id})">Edit</button> <br>
+                        <button style="margin: 5px;" class="btn btn-danger rounded-pill"  onclick="deleteStudent(${student.id})">Delete</button> <br>
+                        <button style="margin: 5px;"  class="btn btn-success rounded-pill" onclick="generateCertificate(${student.id}, '${student.full_name}', '${courses}')">Certificate</button>
+                        
+                    </td>
+                `;
+                    studentList.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Error fetching students:', error));
+    }
+
+    // Call fetchStudents to populate the table on page load
+    fetchStudents();
+
+   
 
 
     // Handle delete student
@@ -747,8 +812,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         <td>${certificate.program}</td>
                         <td>${certificate.date}</td>
                         <td>
-                            <button onclick="editCertificate(${certificate.id})">Edit</button>
-                            <button onclick="deleteCertificate(${certificate.id})">Delete</button>
+                            <button class="btn btn-primary rounded-pill" onclick="editCertificate(${certificate.id})">Edit</button>
+                            <button class="btn btn-danger rounded-pill" onclick="deleteCertificate(${certificate.id})">Delete</button>
                         </td>
                     `;
                     certificateList.appendChild(row);
@@ -787,6 +852,8 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .catch(error => console.error('Error generating certificate:', error));
 
+
+
         // Handle edit certificate (implementation can be added)
         window.editCertificate = function (id) {
             // Implement the edit logic
@@ -807,4 +874,35 @@ document.addEventListener('DOMContentLoaded', function () {
         fetchCertificates();
     }
 });
+
+
+// This is for closing modal form
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Add the submit event listener for the edit staff form
+    document.querySelector('#edit-staff-form').addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevent default form submission
+
+        const formData = new FormData(this);
+
+        fetch(this.action, {
+            method: 'POST', // Use POST method
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest', // Indicate that this is an AJAX request
+                'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value // CSRF token for security
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Handle successful response
+                if (data.success) {
+                    $('#editStaffModal').modal('hide'); // Hide the modal
+                    // Optionally, refresh the data or update the UI
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    });
+});
+
 

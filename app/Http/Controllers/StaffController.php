@@ -51,7 +51,8 @@ class StaffController extends Controller
         return response()->json($staffs);
     }
 
-    public function showAllStaff(){
+    public function showAllStaff()
+    {
         return view('admin.all-staff');
     }
 
@@ -63,10 +64,17 @@ class StaffController extends Controller
 
     public function dashboard()
     {
-        $team = Staff::all(); 
+        $team = Staff::all();
 
-        return view('client.dashboard', ['team'=>$team]);
+        return view('client.dashboard', ['team' => $team]);
     }
+
+    public function editStaff($id)
+    {
+        $staff = Staff::findOrFail($id);
+        return response()->json($staff);
+    }
+
 
     public function getOneStaff(Request $request, $id)
     {
@@ -74,7 +82,7 @@ class StaffController extends Controller
         return response()->json($staff);
     }
 
-    public function updateStaff(Request $request)
+    public function updateStaff(Request $request, $id)
     {
         // Validation
         $request->validate([
@@ -93,7 +101,7 @@ class StaffController extends Controller
         }
 
         // Update Staff
-        $staff = Staff::findOrFail($request->input('id'));
+        $staff = Staff::findOrFail($id);
         $staff->update([
             'Full_name' => $request->input('Full_name'),
             'Position' => $request->input('Position'),
@@ -101,7 +109,10 @@ class StaffController extends Controller
             'Biography_description' => $request->input('Biography_description'),
         ]);
 
-        return redirect()->back()->with('success', 'Staff Service updated successfully');
+        return response()->json([
+            'success' => true,
+            'message' => 'Staff updated successfully'
+        ]);
     }
 
     public function deleteStaff(Request $request)

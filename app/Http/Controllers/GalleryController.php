@@ -55,7 +55,9 @@ class GalleryController extends Controller
     public function getAllPictureFrontend()
     {
         $pictures = Gallery::all();
-        return view('client.index', compact('pictures'));
+        $categories = Gallery::select('Image_category as name')->distinct()->get();
+    
+        return view('client.index', compact('pictures', 'categories'));
     }
 
     public function getOnePicture($id)

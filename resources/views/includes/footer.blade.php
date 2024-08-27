@@ -90,6 +90,7 @@
 
 <!-- Template Main JS File -->
 <script src="assets/frontend/js/main.js"></script>
+<script src="assets/js/mains.js"></script>
 
 </body>
 

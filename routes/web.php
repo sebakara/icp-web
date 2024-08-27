@@ -33,6 +33,10 @@ Route::post('custom-login', [UserController::class, 'customLogin'])->name('login
 Route::get('registration', [UserController::class, 'showRegistrationForm'])->name('register');
 Route::post('custom-registration', [UserController::class, 'customRegistration'])->name('register.custom');
 
+Route::get('/profile', [UserController::class, 'showUserProfilePage'])->name('showUserProfilePage');
+Route::post('/change/password', [UserController::class, 'changePassword']);
+Route::post('/change/profile', [UserController::class, 'updateProfile']);
+
 // Route for the dashboard
 Route::get('dashboard', [UserController::class, 'dashboard'])->name('dashboard');
 
@@ -57,8 +61,11 @@ Route::get('/staff/all', [StaffController::class, 'getAllStaff'])->name('ShowAll
 Route::get('/all-staff', [StaffController::class, 'showAllStaff'])->name('showAllStaff');
 Route::get('/create-staff', [StaffController::class, 'showCreateForm'])->name('showStaffCreateForm');
 Route::post('/staff/create', [StaffController::class, 'createStaff'])->name('staff.create');
-Route::put('/staff/update', [StaffController::class, 'updateStaff'])->name('staff.update');
+// Route::put('/staff/update', [StaffController::class, 'updateStaff'])->name('staff.update');
 Route::delete('/staff/delete', [StaffController::class, 'deleteStaff'])->name('staff.delete');
+Route::get('/staff/{id}/edit', [StaffController::class, 'editStaff']);
+Route::put('/staff/{id}/update', [StaffController::class, 'updateStaff']);
+
 // Route::get('/dashboard', [StaffController::class, 'dashboard'])->name('staff.dashboard');
 
 Route::get('/gallery-all', [GalleryController::class, 'showAllGallery'])->name('ShowAllGallery');

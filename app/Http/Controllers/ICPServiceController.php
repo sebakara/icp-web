@@ -66,16 +66,18 @@ class ICPServiceController extends Controller
     public function getAllICP_frontend()
     {
         $services = Service::all();
-        $pictures = Gallery::all();
         $staffs = Staff::all();
         $blogs = Blog::all();
-
+        $pictures = Gallery::all();
+        $categories = Gallery::select('Image_category as name')->distinct()->get();
+    
 
         return view('client.index', [
             'services' => $services,
             'pictures' => $pictures,
             'staffs' => $staffs,
             'blogs'=>$blogs,
+            'categories'=>$categories
         ]);
     }
 

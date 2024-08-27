@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -76,7 +77,7 @@ class UserController extends Controller
     public function dashboard()
     {
         // if (Auth::check()) {
-            return view('admin.index');
+        return view('admin.index');
         // }
 
         return redirect("login")->withSuccess('You are not allowed to access');
@@ -93,5 +94,55 @@ class UserController extends Controller
     public function showRegistrationForm()
     {
         return view('admin.pages-register');
+    }
+
+    public function showUserProfilePage(){
+        return view('admin.users-profile');
+    }
+
+
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|min:6|confirmed',
+        ]);
+
+        $user = Auth::user(); // Get the authenticated user
+
+        // Check if the provided current password is correct
+        if (!Hash::check($request->input('current_password'), $user->password)) {
+            return redirect()->back()->withErrors(['current_password' => 'The current password is incorrect.']);
+        }
+
+        // Update the password
+        DB::table('users')
+            ->where('id', $user->id)
+            ->update(['password' => Hash::make($request->input('new_password'))]);
+
+        return redirect()->back()->with('success', 'Password updated successfully.');
+    }
+
+
+    public function updateProfile(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+
+        ]);
+
+        $userId = Auth::id(); // Get the authenticated user's ID
+
+        $updateData = [
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+        ];
+
+        DB::table('users')
+            ->where('id', $userId)
+            ->update($updateData);
+
+        return redirect()->back()->with('success', 'Profile updated successfully.');
     }
 }
