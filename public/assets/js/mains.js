@@ -75,9 +75,9 @@ document.addEventListener('DOMContentLoaded', function () {
                         <td>${staff.Full_name}</td>
                         <td>${staff.Position}</td>
                         <td>${staff.Biography_description}</td>
-                        <td>
-                            <button style="margin: 5px;" class="btn btn-primary rounded-pill" onclick="editStaff(${staff.id})">Edit</button> <br>
-                            <button style="margin: 5px;" class="btn btn-danger rounded-pill" onclick="deleteStaff(${staff.id})">Delete</button>
+                        <td style="width: 120px;">
+                            <button  class="bi bi-pen" onclick="editStaff(${staff.id})"></button> 
+                            <button  class="bi bi-trash" onclick="deleteStaff(${staff.id})"></button>
                         </td>
                     `;
                     staffList.appendChild(row);
@@ -159,9 +159,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     row.innerHTML = `
                             <td>${icp.Service_title}</td>
                             <td>${icp.Service_description}</td>
-                            <td>
-                                <button style="margin: 5px;"  class="btn btn-primary rounded-pill" onclick="editICP(${icp.id})">Edit</button> <br>
-                                <button style="margin: 5px;" class="btn btn-danger rounded-pill" onclick="deleteICP(${icp.id})">Delete</button>
+                            <td style="width: 120px;">
+                                <button class="bi bi-pen" onclick="editICP(${icp.id})"></button> 
+                                <button class="bi bi-trash" onclick="deleteICP(${icp.id})"></button>
                             </td>
                         `;
                     icpList.appendChild(row);
@@ -455,7 +455,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         <td>${message.Subject}</td>
                         <td>${message.Message}</td>
                         <td>
-                            <button class="btn btn-danger rounded-pill" onclick="deleteMessage(${message.id})">Delete</button>
+                            <button class="bi bi-trash" onclick="deleteMessage(${message.id})"></button>
                         </td>
                     `;
                     messageList.appendChild(row);
@@ -533,8 +533,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         <td>${course.name}</td>
                         <td>${course.description}</td>
                         <td>
-                            <button class="btn btn-primary rounded-pill" style="margin: 5px;" onclick="editCourse(${course.id}, '${course.name}', '${course.description}')">Edit</button> <br>
-                            <button class="btn btn-danger rounded-pill" style="margin: 5px;" onclick="deleteCourse(${course.id})">Delete</button>
+                            <button class="bi bi-pen" style="margin: 5px;" onclick="editCourse(${course.id}, '${course.name}', '${course.description}')">Edit</button> <br>
+                            <button class="bi bi-trash" style="margin: 5px;" onclick="deleteCourse(${course.id})">Delete</button>
                         </td>
                     `;
                     courseList.appendChild(row);
@@ -690,9 +690,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     <td>${courses}</td>
                     <td>
                         
-                        <button style="margin: 5px; " class="btn btn-primary rounded-pill" onclick="editStudent(${student.id})">Edit</button> <br>
-                        <button style="margin: 5px;" class="btn btn-danger rounded-pill"  onclick="deleteStudent(${student.id})">Delete</button> <br>
-                        <button style="margin: 5px;"  class="btn btn-success rounded-pill" onclick="generateCertificate(${student.id}, '${student.full_name}', '${courses}')">Certificate</button>
+                        <button style="margin: 5px; " class="bi bi-pen" onclick="editStudent(${student.id})"></button> 
+                        <button style="margin: 5px;" class="bi bi-trash"  onclick="deleteStudent(${student.id})"></button> 
+                        <button style="margin: 5px;"  class="bi bi-arrow-down-circle" onclick="generateCertificate(${student.id}, '${student.full_name}', '${courses}')"></button>
                         
                     </td>
                 `;
@@ -812,8 +812,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         <td>${certificate.program}</td>
                         <td>${certificate.date}</td>
                         <td>
-                            <button class="btn btn-primary rounded-pill" onclick="editCertificate(${certificate.id})">Edit</button>
-                            <button class="btn btn-danger rounded-pill" onclick="deleteCertificate(${certificate.id})">Delete</button>
+                            <button class="bi bi-pen" onclick="editCertificate(${certificate.id})">Edit</button>
+                            <button class="bi bi-trash" onclick="deleteCertificate(${certificate.id})">Delete</button>
                         </td>
                     `;
                     certificateList.appendChild(row);

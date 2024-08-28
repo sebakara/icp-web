@@ -1093,10 +1093,12 @@ body {
     overflow: hidden;
     width: 180px;
     border-radius: 50%;
+    
   }
   
   .team .member .pic img {
     transition: ease-in-out 0.3s;
+    
   }
   
   .team .member:hover {

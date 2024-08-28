@@ -76,7 +76,7 @@
 
       <div class="row">
         @foreach($blogs as $blog)
-        <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
+        <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" style="margin-top: 2%;">
           <div class="blog-item">
             <div class="blog-item">
               <img src="{{ asset($blog->image) }}" class="img-fluid" alt="{{ $blog->title }}" style="width: 55%; height: 60%;">
@@ -85,7 +85,7 @@
               <h4 class="card-title">{{ $blog->title }}</h4>
 
               <p class="card-text">{{ Str::limit($blog->content, 100) }}</p>
-              <a href="{{ route('blogs.show',  ['id' => $blog->id]) }}" class="btn btn-primary">Read More</a>
+              <a href="{{ route('blogs.show',  ['id' => $blog->id]) }}" class="btn btn-primary" style="margin-bottom:1%">Read More</a>
             </div>
           </div>
         </div>
@@ -173,9 +173,9 @@
 
       <div class="row">
         @foreach($staffs as $member)
-        <div class="col-lg-4">
+        <div class="col-lg-4" style="margin-top: 1%;">
           <div class="member d-flex align-items-start" data-aos="zoom-in" data-aos-delay="100">
-            <div class="pic"><img src="{{ asset($member->Profile_image) }}" class="img-fluid" alt=""></div>
+            <div class="pic"><img src="{{ asset($member->Profile_image) }}" class="img-fluid"  alt=""></div>
             <div class="member-info">
               <h4>{{ $member->Full_name }}</h4>
               <span>{{ $member->Position }}</span>

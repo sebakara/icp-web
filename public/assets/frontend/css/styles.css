@@ -1,82 +1,48 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #ffffff;
-}
-
-.header {
-    padding: 20px;
-    text-align: center;
-}
-
-.header-meta p {
-    font-size: 14px;
-    color: #888;
-    margin: 0;
-}
-
-.post-title {
-    font-size: 36px;
-    font-weight: bold;
-    margin: 10px 0;
-}
-
-.featured-image-section {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    background-color: #f7f7f7;
-    padding: 20px 0;
-}
-
-.featured-image {
-    width: 80%;
-    max-width: 800px;
-    height: auto;
-    border-radius: 10px;
-}
-
+/* Centering and styling the content section */
 .content {
-    padding: 20px;
     max-width: 800px;
     margin: 0 auto;
-    font-size: 18px;
+    padding: 20px;
+    background-color: #f8f9fa; /* Light grey background */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Open Sans', sans-serif;
+    color: #333; /* Dark grey text color */
     line-height: 1.6;
-    color: #333;
 }
 
-.content a {
-    color: #007bff;
-    text-decoration: none;
+/* Styling the post title */
+.post-title {
+    font-size: 2em;
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #007bff; /* Blue color for the title */
 }
 
-.content a:hover {
-    text-decoration: underline;
+/* Styling the publish date */
+.content p {
+    text-align: center;
+    font-size: 0.9em;
+    color: #888; /* Lighter grey color for the date */
+    margin-bottom: 30px;
 }
 
-.btn {
-    display: inline-block;
-    padding: 10px 20px;
-    margin-left: 10%;
-    text-decoration: none;
-    color: #ffffff;
-    background-color: #1473d9;
-    border-radius: 5px;
+/* Styling the featured image */
+.featured-image-section {
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-
-
-
-.btn:hover {
-    background-color: #0056b3;
+.featured-image-section img.featured-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.btn-secondary {
-    background-color: #6c757d;
+/* General content styling */
+.content p {
+    text-align: justify;
+    margin-bottom: 15px;
 }
-
-.btn-secondary:hover {
-    background-color: #5a6268;
-}
-
