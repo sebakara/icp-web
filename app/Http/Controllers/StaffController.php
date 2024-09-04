@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Staff;
 use Illuminate\Http\Request;
-use Illuminate\Foundation\Http\FormRequest;
+
 
 class StaffController extends Controller
 {
@@ -22,6 +22,9 @@ class StaffController extends Controller
             'Position' => 'nullable|string|max:255',
             'Profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'Biography_description' => 'nullable|string',
+            'facebook' => 'nullable|url',
+            'instagram' => 'nullable|url',
+            'twitter' => 'nullable|url',
         ]);
 
         // Handle file upload
@@ -39,10 +42,13 @@ class StaffController extends Controller
             'Position' => $request->input('Position'),
             'Profile_image' => $profile_image,
             'Biography_description' => $request->input('Biography_description'),
+            'facebook' => $request->input('facebook') ?? null,
+            'instagram' => $request->input('instagram') ?? null,
+            'twitter' => $request->input('twitter') ?? null,
         ]);
 
         // Return back to the dashboard view with a success message
-        return redirect()->back()->with('success', 'ICP Service created successfully');
+        return response()->json(['success' => 'Team Member Added successfully']);
     }
 
     public function getAllStaff()
@@ -89,6 +95,9 @@ class StaffController extends Controller
             'Full_name' => 'required|string|max:255',
             'Position' => 'nullable|string|max:255',
             'Biography_description' => 'nullable|string',
+            'facebook' => 'nullable|url',
+            'instagram' => 'nullable|url',
+            'twitter' => 'nullable|url',
         ]);
 
         // Handle file upload
@@ -107,6 +116,9 @@ class StaffController extends Controller
             'Position' => $request->input('Position'),
             'Profile_image' => $profile_image ?? $staff->Profile_image,
             'Biography_description' => $request->input('Biography_description'),
+            'facebook' => $request->input('facebook') ?? null,
+            'instagram' => $request->input('instagram') ?? null,
+            'twitter' => $request->input('twitter') ?? null,
         ]);
 
         return response()->json([
@@ -120,6 +132,6 @@ class StaffController extends Controller
         $staff = new Staff();
         $staff->destroy($request->input('id'));
 
-        return redirect()->back()->with('success', 'Staff Service deleted successfully');
+        return response()->json(['success' => 'Team member deleted successfully']);
     }
 }

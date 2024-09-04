@@ -13,6 +13,9 @@ class Staff extends Model
         'Full_name',
         'Position',
         'Profile_image',
-        'Biography_description'
+        'Biography_description',
+        'facebook',
+        'instagram',
+        'twitter',
     ];
 }

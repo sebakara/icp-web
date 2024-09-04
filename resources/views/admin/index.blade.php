@@ -173,6 +173,13 @@
               <i class="bi bi-circle"></i><span>Add New Student</span>
             </a>
           </li>
+
+          <li>
+            <a href="{{ route('showCerticateCreateForm') }}">
+              <i class="bi bi-circle"></i><span>Generate Special Certificate</span>
+            </a>
+          </li>
+
           <li>
             <a href="{{ route('showCreateCourseForm') }}">
               <i class="bi bi-circle"></i><span>Add New Course</span>
@@ -201,6 +208,12 @@
           <li>
             <a href="{{ route('students.all') }}">
               <i class="bi bi-circle"></i><span>View All Students</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="{{ route('showStudentAndCertificates') }}">
+              <i class="bi bi-circle"></i><span>Courses and Students</span>
             </a>
           </li>
 

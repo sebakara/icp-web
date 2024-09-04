@@ -65,7 +65,7 @@
     </div>
   </section><!-- End About Us Section -->
 
-  <!-- ======= Blog Section ======= -->
+  <!-- ======= Blog Section ======-->
   <section id="blog" class="blog">
     <div class="container" data-aos="fade-up">
 
@@ -78,9 +78,9 @@
         @foreach($blogs as $blog)
         <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" style="margin-top: 2%;">
           <div class="blog-item">
-            <div class="blog-item">
-              <img src="{{ asset($blog->image) }}" class="img-fluid" alt="{{ $blog->title }}" style="width: 55%; height: 60%;">
-            </div>
+            
+              <img src="{{ asset($blog->image) }}" class="img-fluid" alt="{{ $blog->title }}" style="width: 150px; height:auto;">
+            
             <div class="card-body">
               <h4 class="card-title">{{ $blog->title }}</h4>
 
@@ -120,13 +120,11 @@
     </div>
   </section><!-- End Services Section -->
 
-  <!-- ======= Cta Section ======= -->
-  <!-- End Cta Section -->
+
 
   <!-- Gallery section -->
   <section id="portfolio" class="portfolio">
     <div class="container" data-aos="fade-up">
-
       <div class="section-title">
         <h2>Gallery</h2>
         <p>Step into the world of innovation and creativity at the ICP Rwanda Gallery</p>
@@ -140,14 +138,14 @@
       </ul>
 
       <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
-        @foreach($pictures as $item)
+        @foreach($featuredImages as $item)
         <div class="col-lg-4 col-md-6 portfolio-item filter-{{ Str::slug($item->Image_category) }}">
           <div class="portfolio-wrap">
-            <img src="{{ asset($item->Image) }}" class="img-fluid" alt="">
+            <img src="{{ asset($item->Image) }}" class="img-fluid" alt="" data-toggle="modal" data-target="#modal-{{ Str::slug($item->Image_category) }}">
             <div class="portfolio-info">
               <h4>{{ $item->Image_category }}</h4>
               <div class="portfolio-links">
-                <a href="{{ asset($item->Image) }}" data-gallery="portfolioGallery" class="portfolio-lightbox" title="{{ $item->Image_category }}"><i class="bx bx-plus"></i></a>
+                <a href="#" data-toggle="modal" data-target="#modal-{{ Str::slug($item->Image_category) }}" title="View All Images"><i class="bx bx-plus"></i></a>
               </div>
             </div>
           </div>
@@ -155,11 +153,37 @@
         @endforeach
       </div>
 
-
-
+      <!-- Modal for each category -->
+      @foreach($categories as $category)
+      <div class="modal fade" id="modal-{{ Str::slug($category->name) }}" tabindex="-1" role="dialog" aria-labelledby="modalLabel-{{ Str::slug($category->name) }}" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalLabel-{{ Str::slug($category->name) }}">{{ $category->name }}</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <!-- Fetch and display all images for the selected category -->
+                @foreach($pictures->where('Image_category', $category->name) as $image)
+                <div class="col-md-4">
+                  <a href="{{ asset($image->Image) }}" data-gallery="portfolioGallery" class="portfolio-lightbox" title="{{ $image->Image_category }}">
+                    <img src="{{ asset($image->Image) }}" class="img-fluid" alt="">
+                  </a>
+                </div>
+                @endforeach
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      @endforeach
 
     </div>
   </section>
+
 
 
   <!-- ======= Team Section ======= -->
@@ -175,16 +199,29 @@
         @foreach($staffs as $member)
         <div class="col-lg-4" style="margin-top: 1%;">
           <div class="member d-flex align-items-start" data-aos="zoom-in" data-aos-delay="100">
-            <div class="pic"><img src="{{ asset($member->Profile_image) }}" class="img-fluid"  alt=""></div>
+            <div class="pic"><img src="{{ asset($member->Profile_image) }}" class="img-fluid" style="width: 50px; height: auto; " alt=""></div>
             <div class="member-info">
               <h4>{{ $member->Full_name }}</h4>
               <span>{{ $member->Position }}</span>
               <p>{{ $member->Biography_description }}</p>
               <div class="social">
-                <a href="https://twitter.com/MaicSebakara" target="_blank"><i class="ri-twitter-fill"></i></a>
-                <!-- <a href=""><i class="ri-facebook-fill"></i></a>
-                  <a href=""><i class="ri-instagram-fill"></i></a> -->
-                <a href="" target="_blank"> <i class="ri-linkedin-box-fill"></i> </a>
+                @if($member->twitter)
+                <a href="{{ $member->twitter }}" target="_blank" rel="noopener noreferrer">
+                  <i class="ri-twitter-fill"></i>
+                </a>
+                @endif
+
+                @if($member->facebook)
+                <a href="{{ $member->facebook }}" target="_blank" rel="noopener noreferrer">
+                  <i class="ri-facebook-fill"></i>
+                </a>
+                @endif
+
+                @if($member->instagram)
+                <a href="{{ $member->instagram }}" target="_blank" rel="noopener noreferrer">
+                  <i class="ri-instagram-fill"></i>
+                </a>
+                @endif
               </div>
             </div>
           </div>

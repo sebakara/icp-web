@@ -208,6 +208,12 @@
           </li>
 
           <li>
+            <a href="{{ route('showStudentAndCertificates') }}">
+              <i class="bi bi-circle"></i><span>Courses and Students</span>
+            </a>
+          </li>
+
+          <li>
             <a href="{{ route('showAllStaff') }}">
               <i class="bi bi-circle"></i><span>View All Team members</span>
             </a>
@@ -242,7 +248,7 @@
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
-          
+
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -273,6 +279,9 @@
               </table>
               <!-- End Default Table Example -->
             </div>
+            <div id="spinner2" class="spinner-border" style="width: 20px; height: 20px; display: none; margin-left:40%" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
           </div>
         </div>
 
@@ -280,8 +289,8 @@
       </div>
     </section>
 
-     <!-- Modal Structure -->
-     <div class="modal fade" id="editStaffModal" tabindex="-1" role="dialog" aria-labelledby="editStaffModalLabel" aria-hidden="true">
+    <!-- Modal Structure -->
+    <div class="modal fade" id="editStaffModal" tabindex="-1" role="dialog" aria-labelledby="editStaffModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -307,6 +316,25 @@
                 <label for="Biography_description">Biography Description</label>
                 <textarea name="Biography_description" class="form-control" placeholder="Biography description" style="height: 100px" required></textarea>
               </div>
+
+              <div class="form-group">
+                <label for="facebook" class="col-sm-2 col-form-label">Facebook</label>
+                <input type="url" name="facebook" id="facebook" class="col-sm-10" value="{{ old('facebook') }}">
+                <div class="invalid-feedback">Please enter a valid Url link!</div>
+              </div>
+
+              <div class="form-group">
+                <label for="instagram" class="col-sm-2 col-form-label">Instagram</label>
+                <input type="url" name="instagram" id="instagram" class="col-sm-10" value="{{ old('instagram') }}">
+                <div class="invalid-feedback">Please enter a valid Url link!</div>
+              </div>
+
+              <div class="form-group">
+                <label for="twitter" class="col-sm-2 col-form-label">Twitter</label>
+                <input type="url" name="twitter" id="twitter" class="col-sm-10" value="{{ old('twitter') }}">
+                <div class="invalid-feedback">Please enter a valid Url link!</div>
+              </div>
+
               <div class="form-group">
                 <label for="Profile_image">Profile Image</label>
                 <input class="form-control" type="file" id="formFile" name="Profile_image">

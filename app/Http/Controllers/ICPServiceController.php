@@ -43,17 +43,15 @@ class ICPServiceController extends Controller
             'Icon' => $Icon,
         ]);
 
-
-
-        // Return back to the dashboard view with a success message
-        return redirect()->back()->with('success', 'ICP Service created successfully');
+        // Return a JSON response with a success message
+        return response()->json(['success' => 'ICP Service created successfully']);
     }
 
     // Get all ICP services for the backend
 
-    public function showAllServices(){
+    public function showAllServices()
+    {
         return view('admin.all-services');
-        
     }
 
     public function getAllICP()
@@ -70,14 +68,20 @@ class ICPServiceController extends Controller
         $blogs = Blog::all();
         $pictures = Gallery::all();
         $categories = Gallery::select('Image_category as name')->distinct()->get();
-    
+
+        // $categories = Gallery::select('Image_category as name')->distinct()->get();
+        $featuredImages = $categories->map(function($category) {
+            return Gallery::where('Image_category', $category->name)->first();
+        });
+
 
         return view('client.index', [
             'services' => $services,
             'pictures' => $pictures,
             'staffs' => $staffs,
-            'blogs'=>$blogs,
-            'categories'=>$categories
+            'blogs' => $blogs,
+            'featuredImages' => $featuredImages,
+            'categories' => $categories
         ]);
     }
 
@@ -120,7 +124,7 @@ class ICPServiceController extends Controller
         $service = new Service();
         $service->destroy($request->input('id'));
 
-        return redirect()->back()->with('success', 'ICP Service deleted successfully');
+        return response()->json(['success' => 'ICP Service deleted successfully']);
     }
 
     // Get all services to display on the dashboard

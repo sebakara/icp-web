@@ -57,7 +57,7 @@
         </div>
     </header><!-- End Header -->
 
-    <section class="featured-image-section" style="margin-left:20%; margin-top:4%; width:700px; height:400px; border-radius: 10px;" >
+    <section class="featured-image-section" style="margin-left:20%; margin-top:4%; width:700px; height: auto; border-radius: 10px;" >
         <img src="{{ asset($blog->image) }}" alt="{{ $blog->title }}" class="featured-image">
     </section>
     <h1 style="text-align: justify; margin-left: 5%; margin-top: 5%; font-size: 2em; font-weight: 600; color: #007bff;">{{ $blog->title }}</h1>

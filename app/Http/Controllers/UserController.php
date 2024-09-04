@@ -57,6 +57,9 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
+            'facebook' => 'nullable|url',
+            'instagram' => 'nullable|url',
+            'twitter' => 'nullable|url',
         ]);
 
         $data = $request->all();
@@ -70,7 +73,10 @@ class UserController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => Hash::make($data['password'])
+            'password' => Hash::make($data['password']),
+            'facebook' => $data['facebook'] ?? null,
+            'instagram' => $data['instagram'] ?? null,
+            'twitter' => $data['twitter'] ?? null,
         ]);
     }
 
@@ -96,7 +102,8 @@ class UserController extends Controller
         return view('admin.pages-register');
     }
 
-    public function showUserProfilePage(){
+    public function showUserProfilePage()
+    {
         return view('admin.users-profile');
     }
 
@@ -120,7 +127,7 @@ class UserController extends Controller
             ->where('id', $user->id)
             ->update(['password' => Hash::make($request->input('new_password'))]);
 
-        return redirect()->back()->with('success', 'Password updated successfully.');
+        return Redirect('login');
     }
 
 
@@ -129,6 +136,9 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email',
+            'facebook' => 'nullable|url',
+            'instagram' => 'nullable|url',
+            'twitter' => 'nullable|url',
 
         ]);
 
@@ -137,6 +147,9 @@ class UserController extends Controller
         $updateData = [
             'name' => $request->input('name'),
             'email' => $request->input('email'),
+            'facebook' => $request->input('facebook'),
+            'instagram' => $request->input('instagram'),
+            'twitter' => $request->input('twitter'),
         ];
 
         DB::table('users')

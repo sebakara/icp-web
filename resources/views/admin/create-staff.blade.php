@@ -8,6 +8,7 @@
   <title>Forms / Layouts - ICP RWANDA</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
@@ -206,6 +207,12 @@
           </li>
 
           <li>
+            <a href="{{ route('showStudentAndCertificates') }}">
+              <i class="bi bi-circle"></i><span>Courses and Students</span>
+            </a>
+          </li>
+
+          <li>
             <a href="{{ route('showAllStaff') }}">
               <i class="bi bi-circle"></i><span>View All Team members</span>
             </a>
@@ -242,7 +249,7 @@
 
         </ol>
       </nav>
-    </div><!-- End Page Title -->
+    </div>
     <section class="section">
       <div class="row">
         <div class="col-lg-6">
@@ -275,6 +282,24 @@
                 </div>
 
                 <div class="row mb-3">
+                  <label for="facebook" class="col-sm-2 col-form-label">Facebook</label>
+                  <input type="url" name="facebook" id="facebook" class="col-sm-10" value="{{ old('facebook') }}">
+                  <div class="invalid-feedback">Please enter a valid Url link!</div>
+                </div>
+
+                <div class="row mb-3">
+                  <label for="instagram" class="col-sm-2 col-form-label">Instagram</label>
+                  <input type="url" name="instagram" id="instagram" class="col-sm-10" value="{{ old('instagram') }}">
+                  <div class="invalid-feedback">Please enter a valid Url link!</div>
+                </div>
+
+                <div class="row mb-3">
+                  <label for="twitter" class="col-sm-2 col-form-label">Twitter</label>
+                  <input type="url" name="twitter" id="twitter" class="col-sm-10" value="{{ old('twitter') }}">
+                  <div class="invalid-feedback">Please enter a valid Url link!</div>
+                </div>
+
+                <div class="row mb-3">
                   <label for="inputNumber" class="col-sm-2 col-form-label">Profile image</label>
                   <div class="col-sm-10">
                     <input class="form-control" type="file" id="formFile" name="Profile_image" required>
@@ -301,7 +326,7 @@
       </div>
     </section>
 
-   
+
 
 
   </main><!-- End #main -->
@@ -337,6 +362,59 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const createStaffForm = document.getElementById('create-staff-form');
+
+      // Ensure that createStaffForm is defined before adding event listeners
+      if (createStaffForm) {
+        createStaffForm.addEventListener('submit', function(event) {
+          event.preventDefault();
+
+          const formData = new FormData(createStaffForm);
+
+          const isEdit = createStaffForm.action.includes('update');
+          const method = isEdit ? 'PUT' : 'POST';
+
+          fetch(createStaffForm.action, {
+              method: method,
+              body: formData,
+            })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              }
+              return response.json();
+            })
+            .then(data => {
+
+
+              // Create and display the success alert
+              const alertContainer = document.createElement('div');
+              alertContainer.className = 'alert alert-success bg-success text-light border-0 alert-dismissible fade show';
+              alertContainer.role = 'alert';
+              alertContainer.innerHTML = `
+                            ${data.success}
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                        `;
+
+              document.querySelector('.section').prepend(alertContainer);
+
+              // Hide the modal if editing
+              if (isEdit) {
+                $('#editStaffModal').modal('hide');
+              } else {
+                createStaffForm.reset();
+              }
+            })
+            .catch(error => {
+              console.error('There was a problem with the fetch operation:', error);
+            });
+        });
+      }
+    });
+  </script>
 
 </body>
 

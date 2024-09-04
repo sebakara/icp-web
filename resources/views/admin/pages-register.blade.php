@@ -79,6 +79,24 @@
                     </div>
 
                     <div class="col-12">
+                      <label for="facebook" class="form-label">Facebook</label>
+                      <input type="url" name="facebook" id="facebook" class="form-control"  value="{{ old('facebook') }}">
+                      <div class="invalid-feedback">Please enter a valid Url link!</div>
+                    </div>
+
+                    <div class="col-12">
+                      <label for="instagram" class="form-label">Instagram</label>
+                      <input type="url" name="instagram" id="instagram" class="form-control"  value="{{ old('instagram') }}">
+                      <div class="invalid-feedback">Please enter a valid Url link!</div>
+                    </div>
+
+                    <div class="col-12">
+                      <label for="twitter" class="form-label">Twitter</label>
+                      <input type="url" name="twitter" id="twitter" class="form-control"  value="{{ old('twitter') }}">
+                      <div class="invalid-feedback">Please enter a valid Url link!</div>
+                    </div>
+
+                    <div class="col-12">
                       <label for="yourUsername" class="form-label">Username</label>
                       <div class="input-group has-validation">
                         <span class="input-group-text" id="inputGroupPrepend">@</span>

@@ -37,12 +37,32 @@ class GalleryController extends Controller
         ]);
 
         // Return back to the dashboard view with a success message
-        return redirect()->back()->with('success', 'ICP Service created successfully');
+        return response()->json(['success' => 'Image Added Seccessfully']);
     }
 
     public function showAllGallery()
     {
         return view('admin.gallery');
+    }
+
+    public function getOneImagePerCategory()
+    {
+        $pictures = Gallery::select('Image_category')
+            ->distinct()
+            ->with('images') // Define a relationship to get the images later
+            ->get()
+            ->map(function($category) {
+                $category->image = Gallery::where('Image_category', $category->Image_category)->first()->Image;
+                return $category;
+            });
+
+        return response()->json($pictures);
+    }
+
+    public function getAllPicturesForCategory($category)
+    {
+        $pictures = Gallery::where('Image_category', $category)->get();
+        return response()->json($pictures);
     }
 
     public function getAllPicture()
@@ -54,12 +74,14 @@ class GalleryController extends Controller
 
     public function getAllPictureFrontend()
     {
-        $pictures = Gallery::all();
+        // Get one image per category for initial display
         $categories = Gallery::select('Image_category as name')->distinct()->get();
-    
-        return view('client.index', compact('pictures', 'categories'));
-    }
+        $featuredImages = $categories->map(function($category) {
+            return Gallery::where('Image_category', $category->name)->first();
+        });
 
+        return view('client.index', compact('featuredImages', 'categories'));
+    }
     public function getOnePicture($id)
     {
         $picture = Gallery::findOrFail($id);
@@ -98,6 +120,6 @@ class GalleryController extends Controller
         $picture = Gallery::findOrFail($id);
         $picture->delete();
 
-        return redirect()->back()->with('success', 'Picture updated successfully');
+        return response()->json(['success' => 'Image deleted Successfully']);
     }
 }

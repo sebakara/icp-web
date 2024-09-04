@@ -25,12 +25,19 @@
   <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
+  <!-- Include CSS files -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Your custom CSS -->
+  <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
   <!-- Template Main CSS File -->
   <link href="assets/frontend/css/style.css" rel="stylesheet">
-  
+
 </head>
 
 <body>
+
+  @yield('content')
 
   <!-- ======= Header ======= -->
   <header id="header" class="fixed-top ">

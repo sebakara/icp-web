@@ -40,6 +40,10 @@
   ======================================================== -->
 </head>
 
+
+
+</style>
+
 <body>
 
   <!-- ======= Header ======= -->
@@ -207,6 +211,12 @@
           </li>
 
           <li>
+            <a href="{{ route('showStudentAndCertificates') }}">
+              <i class="bi bi-circle"></i><span>Courses and Students</span>
+            </a>
+          </li>
+
+          <li>
             <a href="{{ route('showAllStaff') }}">
               <i class="bi bi-circle"></i><span>View All Team members</span>
             </a>
@@ -236,12 +246,20 @@
 
   <main id="main" class="main">
 
+    <!-- Spinner Button (Hidden by Default) -->
+    <button id="spinner" style="display: none; margin-left: 40%; background-color: green" class="btn btn-secondary" disabled>
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      Generating Certificate....
+    </button>
+
+
+
     <div class="pagetitle">
       <h1>ICP Students</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
-          
+
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -266,9 +284,16 @@
                 </thead>
                 <tbody id="student-tbody">
                   <!-- Students will be populated here using JavaScript -->
+
                 </tbody>
+
               </table>
+
               <!-- End Default Table Example -->
+            </div>
+            <!-- Spinner (Hidden by Default) -->
+            <div id="spinner1" class="spinner-border" style="width: 20px; height: 20px; display: none; margin-left:40%" role="status">
+              <span class="visually-hidden">Loading...</span>
             </div>
           </div>
         </div>

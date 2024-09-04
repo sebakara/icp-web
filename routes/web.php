@@ -79,11 +79,16 @@ Route::middleware(['auth'])->group(function () {
 
     // Route for Certificate
     Route::get('/create-certificate', [CertificateController::class, 'showCreateForm'])->name('showCerticateCreateForm');
-    Route::post('/certificates/create', [CertificateController::class, 'generate'])->name('certificates.generate');
+    // Route::post('/certificates/create', [CertificateController::class, 'generate'])->name('certificates.generate');
+    Route::post('/certificates/participation/create', [CertificateController::class, 'generateParticipationCertificate'])->name('generateParticipationCertificate.generate');
+    Route::post('/certificates/special/create', [CertificateController::class, 'generateSpecialCertificate'])->name('generateSpecialCertificate.generate');
     Route::put('/certificates/{id}', [CertificateController::class, 'updateCertificate'])->name('certificates.update');
     Route::delete('/certificates/{id}', [CertificateController::class, 'deleteCertificate'])->name('certificates.delete');
     Route::get('/certificates', [CertificateController::class, 'getAllCertificates'])->name('certificates.getAll');
     Route::get('/certificates/{id}', [CertificateController::class, 'getOneCertificate'])->name('certificates.getOne');
+    // routes/web.php
+    Route::get('/courses/{course}/students', [CourseController::class, 'getStudentsForCourse']);
+    Route::get('/student/certificates', [CourseController::class, 'showCoursesWithStudents'])->name('showStudentAndCertificates');
 
 
     // Route for Contact form
@@ -97,7 +102,7 @@ Route::middleware(['auth'])->group(function () {
     // Route for Blog
     Route::get('/get-dashboard', [BlogController::class, 'showAllBlog'])->name('showAllBlog');
     Route::post('/store/blog', [BlogController::class, 'createBlog'])->name('storeBlog');
-    Route::get('/blog-frontend/{id}', [BlogController::class, 'show'])->name('blogs.show');
+
 
 
     // Route for Students
@@ -113,33 +118,4 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/courses/all', [CourseController::class, 'getAllCourses'])->name('courses.all');
     Route::post('/import', [StudentController::class, 'importStudentWithExcel'])->name('import');
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Route::get('/blog-frontend/{id}', [BlogController::class, 'show'])->name('blogs.show');

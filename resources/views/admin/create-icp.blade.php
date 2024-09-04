@@ -8,6 +8,7 @@
   <title>Forms / Elements - ICP RWANDA</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
@@ -105,15 +106,7 @@
               <hr class="dropdown-divider">
             </li>
 
-            <!-- <li>
-              <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
-                <i class="bi bi-question-circle"></i>
-                <span>Need Help?</span>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li> -->
+
 
             <li>
               <a class="dropdown-item d-flex align-items-center" href="/signout">
@@ -205,6 +198,12 @@
           </li>
 
           <li>
+            <a href="{{ route('showStudentAndCertificates') }}">
+              <i class="bi bi-circle"></i><span>Courses and Students</span>
+            </a>
+          </li>
+
+          <li>
             <a href="{{ route('showAllStaff') }}">
               <i class="bi bi-circle"></i><span>View All Team members</span>
             </a>
@@ -234,12 +233,20 @@
 
   <main id="main" class="main">
 
+    <div id="alert-container" style=" #alert-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1050; /* Higher than default z-index for alerts */
+        }"></div>
+
     <div class="pagetitle">
       <h1>ICP Service</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
-          
+
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -439,6 +446,8 @@
   <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
   <script src="assets/vendor/tinymce/tinymce.min.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
+
+
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>

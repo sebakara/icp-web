@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Course;
 use Illuminate\Http\Request;
 
@@ -22,7 +23,7 @@ class CourseController extends Controller
         // Create Course
         Course::create($request->all());
 
-        return redirect()->back()->with('success', 'Course created successfully');
+        return response()->json(['success' => 'Course Added Seccessfully']);
     }
 
     public function getAllCourses()
@@ -63,6 +64,24 @@ class CourseController extends Controller
         $course->students()->detach(); // Detach students before deleting
         $course->delete();
 
-        return redirect()->back()->with('success', 'Course deleted successfully');
+        return response()->json(['success' => 'Course deleted Successfully']);
+    }
+
+    // CourseController.php
+    public function getStudentsForCourse($courseId)
+    {
+        $course = Course::with('students')->findOrFail($courseId);
+        return response()->json(['students' => $course->students]);
+    }
+
+    public function showStudentAndCertificates(){
+        return view('admin.students-certificate');
+    }
+
+    public function showCoursesWithStudents()
+    {
+        $courses = Course::with('students')->get();
+
+        return view('admin.students-certificate', compact('courses'));
     }
 }

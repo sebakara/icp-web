@@ -8,6 +8,8 @@
   <title>Forms / Validation - ICP RWANDA</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
 
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
@@ -247,6 +249,12 @@
       </nav>
     </div><!-- End Page Title -->
 
+    <!-- Spinner Button (Hidden by Default) -->
+    <button id="spinner" style="display: none; margin-left: 40%; background-color: green" class="btn btn-secondary" disabled>
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      Generating Certificate....
+    </button>
+
     <section class="section">
       <div class="row">
         <div class="col-lg-6">
@@ -256,7 +264,7 @@
               <h5 class="card-title">Generate Certificate</h5>
 
               <!-- General Form Elements -->
-              <form id="create-certificate-form" action="{{ route('certificates.generate') }}" method="POST" enctype="multipart/form-data">
+              <form id="create-certificate-form" action="{{ route('generateSpecialCertificate.generate') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row mb-3">
                   <label for="inputText" class="col-sm-2 col-form-label">Recipient Full Names</label>
@@ -266,9 +274,16 @@
                 </div>
 
                 <div class="row mb-3">
-                  <label for="inputText" class="col-sm-2 col-form-label">Program taken</label>
+                  <label for="inputText" class="col-sm-2 col-form-label">Project name || Award Name</label>
                   <div class="col-sm-10">
-                    <input type="text" name="program" placeholder="Program" required>
+                    <input type="text" name="project_name_or_special_award" placeholder="Project name/ Award name" required>
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <label for="inputPassword" class="col-sm-2 col-form-label">Project/Award description</label>
+                  <div class="col-sm-10">
+                    <textarea name="description" placeholder="Projet/Award description" class="form-control" style="height: 100px" required></textarea>
                   </div>
                 </div>
 
@@ -530,6 +545,44 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.getElementById('create-certificate-form');
+      const spinnerButton = document.getElementById('spinner');
+
+      form.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        // Show the spinner
+        spinnerButton.style.display = 'inline-block';
+
+        // Create a FormData object to hold the form data
+        const formData = new FormData(form);
+
+        // Make the AJAX request
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+              'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            }
+          })
+          .then(response => response.blob())
+          .then(blob => {
+            // Create a URL for the PDF blob and open it in a new tab
+            const url = window.URL.createObjectURL(blob);
+            window.open(url);
+          })
+          .catch(error => console.error('Error generating certificate:', error))
+          .finally(() => {
+            // Hide the spinner
+            spinnerButton.style.display = 'none';
+          });
+      });
+    });
+  </script>
+
 
 </body>
 

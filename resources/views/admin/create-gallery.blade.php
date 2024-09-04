@@ -8,6 +8,7 @@
   <title>Forms / Editors - ICP RWANDA</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
@@ -169,7 +170,7 @@
           </li> -->
 
           <li>
-            <a href="{{ route('showCreateStudentForm') }}">
+            <a href="{{ route('showGalleryCreateForm') }}">
               <i class="bi bi-circle"></i><span>Add New Student</span>
             </a>
           </li>
@@ -201,6 +202,12 @@
           <li>
             <a href="{{ route('students.all') }}">
               <i class="bi bi-circle"></i><span>View All Students</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="{{ route('showStudentAndCertificates') }}">
+              <i class="bi bi-circle"></i><span>Courses and Students</span>
             </a>
           </li>
 
@@ -257,13 +264,13 @@
               <form id="create-picture-form" action="{{ route('gallery.create') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row mb-3">
-                  <label class="col-sm-2 col-form-label">Select Category</label>
+                  <label class="col-sm-2 col-form-label">Select Event</label>
                   <div class="col-sm-10">
                     <select name="Image_category" id="category" class="form-select" required>
-                      <option selected>Select image category</option>
+                      <option selected>Select Event</option>
                       <option value="Evangelism">Evangelism</option>
                       <option value="Our_Hackathons">Our Hackathons</option>
-                      <option value="Our Events">Our Events</option>
+                      <option value="Our_Events">Our Events</option>
                     </select>
                   </div>
                 </div>
@@ -392,6 +399,49 @@
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
   <script src="assets/js/mains.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const createPictureForm = document.getElementById('create-picture-form');
+
+      // Ensure that createStaffForm is defined before adding event listeners
+      if (createPictureForm) {
+        createPictureForm.addEventListener('submit', function(event) {
+          event.preventDefault();
+
+          const formData = new FormData(createPictureForm);
+
+          fetch('http://127.0.0.1:8000/gallery', {
+              method: 'POST',
+              body: formData,
+            })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              }
+              return response.json();
+            })
+            .then(data => {
+              const alertContainer = document.createElement('div');
+              alertContainer.className = 'alert alert-success bg-success text-light border-0 alert-dismissible fade show';
+              alertContainer.role = 'alert';
+              alertContainer.innerHTML = `
+                            ${data.success}
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                        `;
+
+              document.querySelector('.section').prepend(alertContainer);
+
+              // createPictureForm.reset();
+
+            })
+            .catch(error => {
+              console.error('There was a problem with the fetch operation:', error);
+            });
+        });
+      }
+    });
+  </script>
 
 </body>
 

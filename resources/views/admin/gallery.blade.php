@@ -188,6 +188,12 @@
           </li>
 
           <li>
+            <a href="{{ route('showStudentAndCertificates') }}">
+              <i class="bi bi-circle"></i><span>Courses and Students</span>
+            </a>
+          </li>
+
+          <li>
             <a href="{{ route('showAllStaff') }}">
               <i class="bi bi-circle"></i><span>View All Team members</span>
             </a>
@@ -246,6 +252,9 @@
                 </div>
                 <!-- Tab contents will be dynamically generated here -->
               </div>
+            </div>
+            <div id="spinner1" class="spinner-border" style="width: 20px; height: 20px; display: none; margin-left:40%" role="status">
+              <span class="visually-hidden">Loading...</span>
             </div>
           </div>
 

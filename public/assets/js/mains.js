@@ -21,6 +21,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const staffList = document.getElementById('staff-tbody');
     const createStaffForm = document.getElementById('create-staff-form');
 
+
+
     // Handle delete staff
     window.deleteStaff = function (id) {
         fetch(`http://127.0.0.1:8000/staff/delete`, { // Adjust this URL based on your routes
@@ -34,7 +36,22 @@ document.addEventListener('DOMContentLoaded', function () {
         })
             .then(response => response.json())
             .then(data => {
-                fetchStaff(); // Refresh the staff list
+                const alertContainer = document.createElement('div');
+                alertContainer.className = 'alert alert-danger bg-danger text-light border-0 alert-dismissible fade show';
+                alertContainer.role = 'alert';
+                alertContainer.innerHTML = `
+                              ${data.success}
+                              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                          `;
+
+                document.querySelector('.section').prepend(alertContainer);
+
+                fetchStaff()
+
+            })
+            .finally(() => {
+                // Hide the spinner
+                spinner.style.display = 'none';
             });
     };
 
@@ -64,6 +81,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Fetch all staff members and display them
     function fetchStaff() {
+
+        const spinner = document.getElementById('spinner2');
+
+        spinner.style.display = 'block';
+
         fetch('http://127.0.0.1:8000/staff/all') // Adjust this URL based on your routes
             .then(response => response.json())
             .then(data => {
@@ -76,44 +98,22 @@ document.addEventListener('DOMContentLoaded', function () {
                         <td>${staff.Position}</td>
                         <td>${staff.Biography_description}</td>
                         <td style="width: 120px;">
-                            <button  class="bi bi-pen" onclick="editStaff(${staff.id})"></button> 
-                            <button  class="bi bi-trash" onclick="deleteStaff(${staff.id})"></button>
+                            <button class="btn btn-info btn-sm"  onclick="editStaff(${staff.id})"><i class="bi bi-pen"></i> </button> 
+                            <button  class="btn btn-danger btn-sm" onclick="deleteStaff(${staff.id})"> <i class="bi bi-trash"></i> </button>
                         </td>
                     `;
                     staffList.appendChild(row);
                 });
+            })
+            .finally(() => {
+                // Hide the spinner
+                spinner.style.display = 'none';
             });
     }
 
     // Initial fetch of staff members
     fetchStaff();
 
-    // Handle create staff
-    createStaffForm.addEventListener('submit', function (event) {
-        event.preventDefault();
-
-        const formData = new FormData(createStaffForm);
-
-        // Determine if the form is for creating or updating by checking the form's action
-        const isEdit = createStaffForm.action.includes('update');
-        const method = isEdit ? 'PUT' : 'POST'; // Use PUT for editing, POST for creating
-
-        fetch(createStaffForm.action, {
-            method: method,
-            body: formData,
-        })
-            .then(response => response.json())
-            .then(data => {
-                fetchStaff(); // Refresh the staff list
-                // Close the modal if it's an edit operation
-                if (isEdit) {
-                    $('#editStaffModal').modal('hide');
-                } else {
-                    // Optionally, clear the form after creating a new staff member
-                    createStaffForm.reset();
-                }
-            });
-    });
 
 });
 
@@ -144,8 +144,19 @@ document.addEventListener('DOMContentLoaded', function () {
         })
             .then(response => response.json())
             .then(data => {
-                fetchICP(); // Refresh the ICP services list
-            });
+                const alertContainer = document.createElement('div');
+                alertContainer.className = 'alert alert-danger bg-danger text-light border-0 alert-dismissible fade show';
+                alertContainer.role = 'alert';
+                alertContainer.innerHTML = `
+                              ${data.success}
+                              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                          `;
+
+                document.querySelector('.section').prepend(alertContainer);
+
+                fetchICP()
+
+            })
     };
 
     // Fetch all ICP services and display them
@@ -160,14 +171,18 @@ document.addEventListener('DOMContentLoaded', function () {
                             <td>${icp.Service_title}</td>
                             <td>${icp.Service_description}</td>
                             <td style="width: 120px;">
-                                <button class="bi bi-pen" onclick="editICP(${icp.id})"></button> 
-                                <button class="bi bi-trash" onclick="deleteICP(${icp.id})"></button>
+                                <button class="btn btn-info btn-sm"  onclick="editICP(${icp.id})"><i class="bi bi-pen"></i></button> 
+                                <button class="btn btn-danger btn-sm"  onclick="deleteICP(${icp.id})"><i class="bi bi-trash"></i></button>
                             </td>
                         `;
                     icpList.appendChild(row);
                 });
             })
-            .catch(error => console.error('Error fetching ICP services:', error));
+            .catch(error => console.error('Error fetching ICP services:', error))
+            .finally(() => {
+                // Hide the spinner
+                spinner.style.display = 'none';
+            });
     }
 
     // Call fetchICP once to populate the table on page load
@@ -180,18 +195,38 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     // Handle create ICP service
-    createICPFormButton.addEventListener('submit', function (event) {
+    createICPForm.addEventListener('submit', function (event) {
         event.preventDefault();
 
-        const formData = new FormData(createICPFormButton);
+        const formData = new FormData(createICPForm);
 
         fetch('http://127.0.0.1:8000/icp-services/create', { // Adjust this URL based on your routes
             method: 'POST',
             body: formData,
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            }
         })
             .then(response => response.json())
             .then(data => {
-                fetchICP(); // Refresh the ICP services list
+                if (data.success) {
+                    // Create and display the success alert
+                    const alert = document.createElement('div');
+                    alert.className = 'alert alert-success bg-success text-light border-0 alert-dismissible fade show';
+                    alert.role = 'alert';
+                    alert.innerHTML = `
+                        ${data.success}
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                    `;
+
+                    // Append the alert to the alert container
+                    document.getElementById('alert-container').appendChild(alert);
+
+                    createICPForm.reset();
+
+                    // Optionally, refresh the ICP services list
+                    fetchICP();
+                }
             });
     });
 
@@ -268,21 +303,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     }
 
-    // Handle create picture
-    createGalleryFormButton.addEventListener('submit', function (event) {
-        event.preventDefault();
 
-        const formData = new FormData(createGalleryFormButton);
-
-        fetch('http://127.0.0.1:8000/gallery', {
-            method: 'POST',
-            body: formData,
-        })
-            .then(response => response.json())
-            .then(data => {
-                fetchPictures(); // Refresh the pictures list
-            });
-    });
 
     // Handle edit picture (implementation can be added)
     window.editPicture = function (id) {
@@ -296,8 +317,19 @@ document.addEventListener('DOMContentLoaded', function () {
         })
             .then(response => response.json())
             .then(data => {
-                fetchPictures(); // Refresh the pictures list
-            });
+                const alertContainer = document.createElement('div');
+                alertContainer.className = 'alert alert-danger bg-danger text-light border-0 alert-dismissible fade show';
+                alertContainer.role = 'alert';
+                alertContainer.innerHTML = `
+                              ${data.success}
+                              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                          `;
+
+                document.querySelector('.section').prepend(alertContainer);
+
+                fetchPictures()
+
+            })
     };
 
     // Initial fetch of pictures
@@ -307,12 +339,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Gallery on Frontend
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     let portfolioFilters = document.querySelectorAll('#portfolio-flters li');
     let portfolioItems = document.querySelectorAll('.portfolio-item');
 
     portfolioFilters.forEach(filter => {
-        filter.addEventListener('click', function() {
+        filter.addEventListener('click', function () {
             let selectedFilter = this.getAttribute('data-filter');
 
             // Remove 'filter-active' class from all filters
@@ -332,9 +364,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
-
-
-
 
 // This is for Gallery on Backend
 
@@ -410,7 +439,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     allContent.appendChild(img);
                 });
             })
-            .catch(error => console.error('Error fetching pictures:', error));
+            .catch(error => console.error('Error fetching pictures:', error))
+            .finally(() => {
+                // Hide the spinner
+                spinner.style.display = 'none';
+            });
     }
 
     // Fetch pictures on page load
@@ -437,8 +470,19 @@ document.addEventListener('DOMContentLoaded', function () {
         })
             .then(response => response.json())
             .then(data => {
-                fetchMessages(); // Refresh the messages list
-            });
+                const alertContainer = document.createElement('div');
+                alertContainer.className = 'alert alert-danger bg-danger text-light border-0 alert-dismissible fade show';
+                alertContainer.role = 'alert';
+                alertContainer.innerHTML = `
+                              ${data.success}
+                              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                          `;
+
+                document.querySelector('.section').prepend(alertContainer);
+
+                fetchMessages()
+
+            })
     };
 
     // Fetch all messages and display them
@@ -455,11 +499,15 @@ document.addEventListener('DOMContentLoaded', function () {
                         <td>${message.Subject}</td>
                         <td>${message.Message}</td>
                         <td>
-                            <button class="bi bi-trash" onclick="deleteMessage(${message.id})"></button>
+                            <button class="btn btn-danger btn-sm"  onclick="deleteMessage(${message.id})"><i class="bi bi-trash"></i></button>
                         </td>
                     `;
                     messageList.appendChild(row);
                 });
+            })
+            .finally(() => {
+                // Hide the spinner
+                spinner.style.display = 'none';
             });
     }
 
@@ -492,9 +540,6 @@ document.addEventListener('DOMContentLoaded', function () {
     fetchMessages();
 });
 
-
-
-
 // This for Courses
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -517,8 +562,19 @@ document.addEventListener('DOMContentLoaded', function () {
         })
             .then(response => response.json())
             .then(data => {
-                fetchCourses(); // Refresh the course list
-            });
+                const alertContainer = document.createElement('div');
+                alertContainer.className = 'alert alert-danger bg-danger text-light border-0 alert-dismissible fade show';
+                alertContainer.role = 'alert';
+                alertContainer.innerHTML = `
+                              ${data.success}
+                              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                          `;
+
+                document.querySelector('.section').prepend(alertContainer);
+
+                fetchCourses()
+
+            })
     };
 
     // Fetch all courses and display them
@@ -546,22 +602,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Call fetchCourses once to populate the table on page load
     fetchCourses();
 
-    // Handle create course
-    createCourseFormButton.addEventListener('submit', function (event) {
-        event.preventDefault();
-
-        const formData = new FormData(createCourseForm);
-
-        fetch('http://127.0.0.1:8000/create/course', { // Adjust this URL based on your routes
-            method: 'POST',
-            body: formData,
-        })
-            .then(response => response.json())
-            .then(data => {
-                fetchCourses(); // Refresh the course list
-                createCourseForm.reset(); // Clear the form after submission
-            });
-    });
 
     // Handle edit course
     window.editCourse = function (id, name, description) {
@@ -614,8 +654,15 @@ document.addEventListener('DOMContentLoaded', function () {
     const courseSelect = document.getElementById('course-select');
     const createCourseFormButton = document.getElementById('hahaha');
 
+
+
+
     window.generateCertificate = function (studentId, studentName, studentProgram) {
-        // Prepare data for the certificate
+
+        const spinnerButton = document.getElementById('spinner');
+
+        spinnerButton.style.display = 'inline-block';
+
         const data = {
             id: studentId,
             name: studentName,
@@ -624,7 +671,7 @@ document.addEventListener('DOMContentLoaded', function () {
         };
 
         // Send a POST request to generate the certificate
-        fetch(`/certificates/create`, {
+        fetch(`/certificates/participation/create`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -646,8 +693,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 const url = window.URL.createObjectURL(blob);
                 window.open(url);
             })
-            .catch(error => console.error('Error generating certificate:', error));
+            .catch(error => console.error('Error generating certificate:', error))
+            .finally(() => {
+                // Hide the spinner
+                spinner.style.display = 'none';
+            });
     }
+
+
 
     // Fetch all courses and populate the dropdown
     function fetchCourses() {
@@ -665,13 +718,14 @@ document.addEventListener('DOMContentLoaded', function () {
             .catch(error => console.error('Error fetching courses:', error));
     }
 
-  
-
-    
-
 
     // Fetch all students and display them
     function fetchStudents() {
+
+        const spinner = document.getElementById('spinner1');
+
+        spinner.style.display = 'block';
+
         fetch('http://127.0.0.1:8000/all/students') // Adjust this URL based on your routes
             .then(response => response.json())
             .then(data => {
@@ -688,25 +742,25 @@ document.addEventListener('DOMContentLoaded', function () {
                     <td>${student.email}</td>
                     <td>${student.biography_description}</td>
                     <td>${courses}</td>
-                    <td>
-                        
-                        <button style="margin: 5px; " class="bi bi-pen" onclick="editStudent(${student.id})"></button> 
-                        <button style="margin: 5px;" class="bi bi-trash"  onclick="deleteStudent(${student.id})"></button> 
-                        <button style="margin: 5px;"  class="bi bi-arrow-down-circle" onclick="generateCertificate(${student.id}, '${student.full_name}', '${courses}')"></button>
+                    <td style="width:150px;">
+                        <button class="btn btn-info btn-sm"  onclick="editStudent(${student.id})"><i class="bi bi-pen"></i></button> 
+                        <button class="btn btn-danger btn-sm"   onclick="deleteStudent(${student.id})"><i class="bi bi-trash"></i></button> 
+                        <button class="btn btn-success btn-sm"   onclick="generateCertificate(${student.id}, '${student.full_name}', '${courses}')"><i class="bi bi-arrow-down-circle"></i></button>
                         
                     </td>
                 `;
                     studentList.appendChild(row);
                 });
             })
-            .catch(error => console.error('Error fetching students:', error));
+            .catch(error => console.error('Error fetching students:', error))
+            .finally(() => {
+                // Hide the spinner
+                spinner.style.display = 'none';
+            });
     }
 
     // Call fetchStudents to populate the table on page load
     fetchStudents();
-
-   
-
 
     // Handle delete student
     window.deleteStudent = function (id) {
@@ -721,29 +775,22 @@ document.addEventListener('DOMContentLoaded', function () {
         })
             .then(response => response.json())
             .then(data => {
-                fetchStudents(); // Refresh the student list
-            });
+                const alertContainer = document.createElement('div');
+                alertContainer.className = 'alert alert-danger bg-danger text-light border-0 alert-dismissible fade show';
+                alertContainer.role = 'alert';
+                alertContainer.innerHTML = `
+                              ${data.success}
+                              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                          `;
+
+                document.querySelector('.section').prepend(alertContainer);
+
+                fetchStudents()
+
+            })
     };
 
-    // Handle create student
-    createCourseFormButton.addEventListener('submit', function (event) {
-        event.preventDefault();
 
-        const formData = new FormData(createCourseFormButton);
-
-        fetch('http://127.0.0.1:8000/create/student', { // Adjust this URL based on your routes
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-            body: formData,
-        })
-            .then(response => response.json())
-            .then(data => {
-                fetchStudents(); // Refresh the student list
-                createStudentForm.reset(); // Reset the form
-            });
-    });
 
     // Handle edit student
     window.editStudent = function (id, name, email, course_id) {
@@ -866,8 +913,19 @@ document.addEventListener('DOMContentLoaded', function () {
             })
                 .then(response => response.json())
                 .then(data => {
-                    fetchCertificates(); // Refresh the certificates list
-                });
+                    const alertContainer = document.createElement('div');
+                    alertContainer.className = 'alert alert-danger bg-danger text-light border-0 alert-dismissible fade show';
+                    alertContainer.role = 'alert';
+                    alertContainer.innerHTML = `
+                                  ${data.success}
+                                  <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                              `;
+
+                    document.querySelector('.section').prepend(alertContainer);
+
+                    fetchCertificates()
+
+                })
         };
 
         // Initial fetch of certificates

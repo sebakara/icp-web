@@ -38,7 +38,7 @@ class StudentController extends Controller
 
         // return response()->json($student);
 
-        return redirect()->back()->with('success', 'Student created successfully');
+        return response()->json(['success' => 'Student created successfully']);
     }
 
     public function getAllStudents()
@@ -90,7 +90,7 @@ class StudentController extends Controller
         $student->courses()->detach();
         $student->delete();
 
-        return redirect()->back()->with('success', 'Student deleted successfully');
+        return response()->json(['success' => 'Student deleted successfully']);
     }
 
 

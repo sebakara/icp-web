@@ -17,7 +17,6 @@ class CreateGalleriesTable extends Migration
             $table->id();
             $table->string('Image_category')->nullable();
             $table->string('Image');
-            
             $table->timestamps();
         });
     }

@@ -8,6 +8,7 @@
   <title>Forms / Elements - ICP RWANDA</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
@@ -209,6 +210,12 @@
           </li>
 
           <li>
+            <a href="{{ route('showStudentAndCertificates') }}">
+              <i class="bi bi-circle"></i><span>Courses and Students</span>
+            </a>
+          </li>
+
+          <li>
             <a href="{{ route('showAllStaff') }}">
               <i class="bi bi-circle"></i><span>View All Team members</span>
             </a>
@@ -321,6 +328,49 @@
   <!-- Template Main JS File -->
   <script src="{{ asset('assets/js/main.js') }}"></script>
   <script src="{{ asset('assets/js/mains.js') }}"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const createCourseForm = document.getElementById('create-course-form');
+
+      // Ensure that createStaffForm is defined before adding event listeners
+      if (createCourseForm) {
+        createCourseForm.addEventListener('submit', function(event) {
+          event.preventDefault();
+
+          const formData = new FormData(createCourseForm);
+
+          fetch('http://127.0.0.1:8000/create/course', {
+              method: 'POST',
+              body: formData,
+            })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              }
+              return response.json();
+            })
+            .then(data => {
+              const alertContainer = document.createElement('div');
+              alertContainer.className = 'alert alert-success bg-success text-light border-0 alert-dismissible fade show';
+              alertContainer.role = 'alert';
+              alertContainer.innerHTML = `
+                            ${data.success}
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                        `;
+
+              document.querySelector('.section').prepend(alertContainer);
+
+              // createStudentForm.reset();
+
+            })
+            .catch(error => {
+              console.error('There was a problem with the fetch operation:', error);
+            });
+        });
+      }
+    });
+  </script>
 
 </body>
 

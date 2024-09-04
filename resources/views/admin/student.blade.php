@@ -8,6 +8,7 @@
   <title>Forms / Elements - ICP RWANDA</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
@@ -209,6 +210,12 @@
           </li>
 
           <li>
+            <a href="{{ route('showStudentAndCertificates') }}">
+              <i class="bi bi-circle"></i><span>Courses and Students</span>
+            </a>
+          </li>
+
+          <li>
             <a href="{{ route('showAllStaff') }}">
               <i class="bi bi-circle"></i><span>View All Team members</span>
             </a>
@@ -243,7 +250,7 @@
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
-          
+
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -315,7 +322,7 @@
               </form><!-- End General Form Elements -->
 
 
-              <h5 class="card-title">Import from Excell  File.</h5>
+              <h5 class="card-title">Import from Excell File.</h5>
 
               <form action="{{ route('import') }}" method="POST" enctype="multipart/form-data">
                 @csrf
@@ -363,6 +370,49 @@
   <!-- Template Main JS File -->
   <script src="{{ asset('assets/js/main.js') }}"></script>
   <script src="{{ asset('assets/js/mains.js') }}"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const createStudentForm = document.getElementById('create-student-form');
+
+      // Ensure that createStaffForm is defined before adding event listeners
+      if (createStudentForm) {
+        createStudentForm.addEventListener('submit', function(event) {
+          event.preventDefault();
+
+          const formData = new FormData(createStudentForm);
+
+          fetch(createStudentForm.action, {
+              method: 'POST',
+              body: formData,
+            })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              }
+              return response.json();
+            })
+            .then(data => {
+              const alertContainer = document.createElement('div');
+              alertContainer.className = 'alert alert-success bg-success text-light border-0 alert-dismissible fade show';
+              alertContainer.role = 'alert';
+              alertContainer.innerHTML = `
+                            ${data.success}
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                        `;
+
+              document.querySelector('.section').prepend(alertContainer);
+
+              // createStudentForm.reset();
+
+            })
+            .catch(error => {
+              console.error('There was a problem with the fetch operation:', error);
+            });
+        });
+      }
+    });
+  </script>
 
 </body>
 

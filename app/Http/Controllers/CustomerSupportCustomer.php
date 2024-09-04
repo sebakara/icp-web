@@ -53,6 +53,6 @@ class CustomerSupportCustomer extends Controller
         $message = new Customer_Support();
         $message->destroy($request->input('id'));
 
-        return redirect()->back()->with('success', 'Message Deleted successfully');
+        return response()->json(['success' => 'Message deleted successfully']);
     }
 }
