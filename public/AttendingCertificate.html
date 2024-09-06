@@ -14,7 +14,7 @@
         }
 
         body {
-           
+            
             font-family: Arial, sans-serif;
         }
 
@@ -22,12 +22,13 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+           
         }
 
         .outer-container {
-            border: 40px solid #38B6FF;
+            border: 48px solid #38B6FF;
             margin-top: 0px;
+            
         }
 
         .inner-container {
@@ -92,33 +93,35 @@
         }
 
         .signature {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .signature p {
-            font-size: 14px;
-            margin-top: 40px;
-        }
-
-        .signature-image {
-            width: 100px;
-            margin-right: 20px;
-        }
-
-        .signature::before {
-            content: '';
-            display: block;
-            width: 50px;
-            height: 50px;
-            background-image: url('seal-image-url');
-            background-size: contain;
-            background-repeat: no-repeat;
             position: absolute;
-            bottom: 60px;
-            right: 30px;
+            left: 40px;
+            bottom: 90px;
+            text-align: center;
+            color: #000000;
+            font-size: 15px;
         }
+
+        .signature img {
+            width: 200px;
+            display: block;
+            margin: 10px auto;
+        }
+
+        .qr_code {
+            margin-left: 90%;
+        }
+
+        /* .badge {
+            margin-left: 90%;
+            margin-top: 6%;
+            right: 10px;
+            bottom: 10px;
+
+        }
+
+        .badge img {
+            width: 100px;
+        } */
     </style>
 </head>
 
@@ -129,16 +132,30 @@
                 <div class="certificate">
                     <div class="header">
                         <img src="assets/img/RW blck letter.png" alt="ICP Rwanda Logo" class="logo">
-                    </div>
-                    <h2 class="title">CERTIFICATE</h2>
-                    <h3 class="subtitle">OF PARTICIPATION</h3>
+                    </div> <br>
+                    <h2 class="title">CERTIFICATE OF PARTICIPATION</h2> <br> <br>
+                    <!-- <h3 class="subtitle"></h3> -->
                     <p class="awarded-to">THIS CERTIFICATE IS AWARDED TO</p>
                     <p class="name">{{ $name }}</p>
                     <p class="description">FOR PARTICIPATING IN A HACKATHON ON INTERNET COMPUTER</p>
                     <div class="signature">
+                        <img src="assets/img/signature.png" alt="Authorized Signature"> <br>
+                        ---------------------------------------------<br>
+                        AUTHORISED SIGNATURE
+                       
+                    </div>
+                    <img class="qr_code" src="{{ $qr_code }}" alt="QR Code">
+                    
+                    <!-- <div class="badge">
+                        
+                    </div> -->
+
+
+
+                    <!-- <div class="signature">
                         <p>Authorised Signature</p>
                         <img src="assets/img/signature.png" alt="Signature" class="signature-image">
-                    </div>
+                    </div> -->
 
                 </div>
             </div>
