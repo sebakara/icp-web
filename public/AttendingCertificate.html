@@ -5,147 +5,147 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Certificate of Participation</title>
+    <link rel="stylesheet" href="style.css">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
+           
             font-family: Arial, sans-serif;
-            
-            width: 1200px;
-            height: 1200px;
-            padding: 1rem;
+        }
+
+        .certificate-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            
-            height: 550px;
-
+            height: 100vh;
         }
 
-        /* .backContainer{
-            border: 30px solid rgb(13, 68, 220);
-        } */
+        .outer-container {
+            border: 40px solid #38B6FF;
+            margin-top: 0px;
+        }
 
-        .certificate-container {
+        .inner-container {
+            border: 40px solid #FFFFFF;
+            margin-left: 26px;
+        }
+
+        .certificate {
             background-color: white;
-            width: 950px;
-            height: 600px;
-            padding: 25px;
-            border: 5px solid rgb(0, 0, 0);
-            border-radius: 2%;
+            border: 10px solid #3F124E;
+            width: 800px;
+            padding: 40px;
+            text-align: center;
             position: relative;
-
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
         }
 
-        .header-logo {
-            text-align: center;
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
         }
 
-        .header-logo img {
-            width: 430px;
-            height:auto;
+        .logo {
+            width: 460px;
+            height: 70px;
+            top: 100px;
+            left: 670px;
         }
 
-        .certificate-title {
-            text-align: center;
-            font-size: 36px;
-            font-weight: bold;
-            color: #000000;
-            margin-top: 20px;
+        h1 {
+            font-size: 40px;
+            color: #000;
         }
 
-        .sub-title {
-            text-align: center;
-            font-size: 30px;
-            font-weight: bold;
-            margin-top: -10px;
-            color: #000000;
+        h2.title {
+            font-size: 40px;
+            margin-top: 30px;
+            color: #000;
+        }
+
+        h3.subtitle {
+            font-size: 25px;
+            color: #000;
         }
 
         .awarded-to {
-            text-align: center;
-            font-size: 20px;
-            margin-top: 20px;
-            color: #000000;
+            font-size: 16px;
+            margin: 40px 0 10px;
         }
 
         .name {
-            text-align: center;
-            font-size: 32px;
+            font-size: 22px;
             font-weight: bold;
-            margin-top: 10px;
-            color: #000000;
+            margin-bottom: 30px;
         }
 
         .description {
-            text-align: center;
             font-size: 18px;
-            margin-top: 10px;
-            color: #000000;
-        }
-
-        .skill {
-            text-align: center;
-            font-size: 18px;
-            margin-top: 20px;
-            color: #000000;
-        }
-
-        .skill span {
-            color: #000000;
+            margin-bottom: 60px;
         }
 
         .signature {
-            position: absolute;
-            left: 40px;
-            bottom: 40px;
-            text-align: center;
-            color: #000000;
-            font-size: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .signature img {
-            width: 200px;
-            display: block;
-            margin: 10px auto;
+        .signature p {
+            font-size: 14px;
+            margin-top: 40px;
         }
 
-        .badge {
-            margin-left: 90%;
-            margin-top: 6%;
-            right: 10px;
-            bottom: 10px;
-        }
-
-        .badge img {
+        .signature-image {
             width: 100px;
+            margin-right: 20px;
+        }
+
+        .signature::before {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 50px;
+            background-image: url('seal-image-url');
+            background-size: contain;
+            background-repeat: no-repeat;
+            position: absolute;
+            bottom: 60px;
+            right: 30px;
         }
     </style>
 </head>
 
 <body>
-    <div class="backContainer">
-        <div class="certificate-container" style="margin-right: 30%;">
-            <div class="header-logo">
-                <img src="assets/img/RW blck letter.png" alt="Kenya ICP Hubs Network">
-            </div>
-            <div class="certificate-title">CERTIFICATE</div> <br>
-            <div class="sub-title">OF PARTICIPATION</div>
-            <div class="awarded-to">THIS CERTIFICATE IS AWARDED TO</div>
-            <div class="name"><u>{{ $name }}</u></div>
-            <div class="description">FOR PARTICIPATION AT THE MEGA HACKATHON BY INTERNET COMPUTER.</div>
-            <div class="signature">
-                <h4>DATE: {{ $date }}</h4>
-                <img src="assets/img/icp-signature.png" alt="Authorized Signature"> <br>
-                ---------------------------------------------<br>
-                AUTHORISED SIGNATURE
-            </div>
-            <br>
-            <div class="badge">
-                <img class="qr_code" src="{{ $qr_code }}" alt="QR Code">
-            </div>
-        </div>
-    </div>
+    <div class="certificate-container">
+        <div class="outer-container">
+            <div class="inner-container">
+                <div class="certificate">
+                    <div class="header">
+                        <img src="assets/img/RW blck letter.png" alt="ICP Rwanda Logo" class="logo">
+                    </div>
+                    <h2 class="title">CERTIFICATE</h2>
+                    <h3 class="subtitle">OF PARTICIPATION</h3>
+                    <p class="awarded-to">THIS CERTIFICATE IS AWARDED TO</p>
+                    <p class="name">{{ $name }}</p>
+                    <p class="description">FOR PARTICIPATING IN A HACKATHON ON INTERNET COMPUTER</p>
+                    <div class="signature">
+                        <p>Authorised Signature</p>
+                        <img src="assets/img/icp-signature.png" alt="Signature" class="signature-image">
+                    </div>
 
+                </div>
+            </div>
+
+        </div>
+
+    </div>
 </body>
 
 </html>

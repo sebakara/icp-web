@@ -260,7 +260,7 @@
             <div class="card-body">
               <h5 class="card-title">Add Image to Gallery</h5>
 
-              <!-- General Form Elements -->
+              <!-- General Form Element -->
               <form id="create-picture-form" action="{{ route('gallery.create') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row mb-3">

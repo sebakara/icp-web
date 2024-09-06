@@ -8,17 +8,29 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            
+
             width: 1200px;
             height: 1200px;
             padding: 1rem;
             display: flex;
             justify-content: center;
             align-items: center;
-            
+
             height: 550px;
 
         }
+
+        /* .outer-container {
+            border: 40px solid #38B6FF;
+            margin-top: 0px;
+            width: 950px;
+            height: 600px;
+        }
+
+        .inner-container {
+            border: 40px solid #FFFFFF;
+            margin-left: 26px;
+        } */
 
         /* .backContainer{
             border: 30px solid rgb(13, 68, 220);
@@ -28,7 +40,7 @@
             background-color: white;
             width: 950px;
             height: 600px;
-            padding: 25px;
+            padding: 25px; 
             border: 5px solid rgb(0, 0, 0);
             border-radius: 2%;
             position: relative;
@@ -42,7 +54,7 @@
 
         .header-logo img {
             width: 430px;
-            height:auto;
+            height: auto;
         }
 
         .certificate-title {
@@ -93,7 +105,7 @@
         .description span {
             font-weight: bolder;
             font-size: large;
-            
+
         }
 
         .signature {
@@ -126,27 +138,34 @@
 
 <body>
     <div class="backContainer">
-        <div class="certificate-container" style="margin-right: 30%;">
-            <div class="header-logo">
-                <img src="assets/img/RW blck letter.png" alt="Kenya ICP Hubs Network">
-            </div>
-            <div class="certificate-title">CERTIFICATE</div> <br>
-            <div class="sub-title">OF COMPLETION</div>
-            <div class="awarded-to">THIS CERTIFICATE IS AWARDED TO</div>
-            <div class="name"><u>{{ $name }}</u></div>
-            <div class="description">FOR COMPLETING <span>{{ $program }}</span> TRAINING COURSE AT THE MEGA HACKATHON BY INTERNET COMPUTER.</div>
-            <div class="skill">TOP SKILL COVERED: <span>{{ $program }}</span></div>
-            <div class="signature">
-                <h4>DATE: {{ $date }}</h4>
-                <img src="assets/img/icp-signature.png" alt="Authorized Signature"> <br>
-                ---------------------------------------------<br>
-                AUTHORISED SIGNATURE
-            </div>
-            <br>
-            <div class="badge">
-                <img class="qr_code" src="{{ $qr_code }}" alt="QR Code">
+        <div class="outer-container">
+            <div class="inner-container">
+                <div class="certificate-container" style="margin-right: 30%;">
+                    <div class="header-logo">
+                        <img src="assets/img/RW blck letter.png" alt="Kenya ICP Hubs Network">
+                    </div>
+                    <div class="certificate-title">CERTIFICATE</div> <br>
+                    <div class="sub-title">OF COMPLETION</div>
+                    <div class="awarded-to">THIS CERTIFICATE IS AWARDED TO</div>
+                    <div class="name"><u>{{ $name }}</u></div>
+                    <div class="description">FOR COMPLETING <span>{{ $program }}</span> TRAINING COURSE AT THE MEGA
+                        HACKATHON BY INTERNET COMPUTER.</div>
+                    <div class="skill">TOP SKILL COVERED: <span>{{ $program }}</span></div>
+                    <div class="signature">
+                        <h4>DATE: {{ $date }}</h4>
+                        <img src="assets/img/icp-signature.png" alt="Authorized Signature"> <br>
+                        ---------------------------------------------<br>
+                        AUTHORISED SIGNATURE
+                    </div>
+                    <br>
+                    <div class="badge">
+                        <img class="qr_code" src="{{ $qr_code }}" alt="QR Code">
+                    </div>
+                </div>
             </div>
         </div>
+
+
     </div>
 
 </body>

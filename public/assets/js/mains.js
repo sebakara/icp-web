@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const formData = new FormData(createICPForm);
 
-        fetch('http://127.0.0.1:8000/icp-services/create', { // Adjust this URL based on your routes
+        fetch('/icp-services/create', { // Adjust this URL based on your routes
             method: 'POST',
             body: formData,
             headers: {

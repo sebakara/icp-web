@@ -79,7 +79,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Route for Certificate
     Route::get('/create-certificate', [CertificateController::class, 'showCreateForm'])->name('showCerticateCreateForm');
-    // Route::post('/certificates/create', [CertificateController::class, 'generate'])->name('certificates.generate');
+    Route::post('/certificates/create', [CertificateController::class, 'generate'])->name('certificates.generate');
     Route::post('/certificates/participation/create', [CertificateController::class, 'generateParticipationCertificate'])->name('generateParticipationCertificate.generate');
     Route::post('/certificates/special/create', [CertificateController::class, 'generateSpecialCertificate'])->name('generateSpecialCertificate.generate');
     Route::put('/certificates/{id}', [CertificateController::class, 'updateCertificate'])->name('certificates.update');

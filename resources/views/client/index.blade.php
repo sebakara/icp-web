@@ -121,7 +121,6 @@
   </section><!-- End Services Section -->
 
 
-
   <!-- Gallery section -->
   <section id="portfolio" class="portfolio">
     <div class="container" data-aos="fade-up">
@@ -138,7 +137,9 @@
       </ul>
 
       <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
+     
         @foreach($featuredImages as $item)
+        
         <div class="col-lg-4 col-md-6 portfolio-item filter-{{ Str::slug($item->Image_category) }}">
           <div class="portfolio-wrap">
             <img src="{{ asset($item->Image) }}" class="img-fluid" alt="" data-toggle="modal" data-target="#modal-{{ Str::slug($item->Image_category) }}">

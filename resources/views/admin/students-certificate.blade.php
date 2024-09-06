@@ -358,7 +358,7 @@
                 date: new Date().toISOString().split('T')[0], // Today's date in YYYY-MM-DD format
             };
 
-            // Send a POST request to generate the certificate
+            // Send  POST request to generate the certificate
             fetch(`/certificates/create`, {
                     method: 'POST',
                     headers: {
