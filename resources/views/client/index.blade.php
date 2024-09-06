@@ -75,21 +75,21 @@
       </div>
 
       <div class="row">
-        @foreach($blogs as $blog)
-        <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" style="margin-top: 2%;">
+        <div class="blog-container">
+          @foreach($blogs as $blog)
+
           <div class="blog-item">
-            
-              <img src="{{ asset($blog->image) }}" class="img-fluid" alt="{{ $blog->title }}" style="width: 150px; height:auto;">
-            
+            <img src="{{ asset($blog->image) }}" class="img-fluid" alt="{{ $blog->title }}">
             <div class="card-body">
               <h4 class="card-title">{{ $blog->title }}</h4>
-
               <p class="card-text">{{ Str::limit($blog->content, 100) }}</p>
-              <a href="{{ route('blogs.show',  ['id' => $blog->id]) }}" class="btn btn-primary" style="margin-bottom:1%">Read More</a>
+              <a href="{{ route('blogs.show', ['id' => $blog->id]) }}" class="btn btn-primary" style="margin-bottom:1%">Read More</a>
+                
             </div>
           </div>
+
+          @endforeach
         </div>
-        @endforeach
       </div>
 
     </div>
@@ -137,9 +137,9 @@
       </ul>
 
       <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
-     
+
         @foreach($featuredImages as $item)
-        
+
         <div class="col-lg-4 col-md-6 portfolio-item filter-{{ Str::slug($item->Image_category) }}">
           <div class="portfolio-wrap">
             <img src="{{ asset($item->Image) }}" class="img-fluid" alt="" data-toggle="modal" data-target="#modal-{{ Str::slug($item->Image_category) }}">

@@ -283,7 +283,7 @@
                     <div class="card" style="width: 1200px;">
                         <div class="card-body" id="student-list">
 
-                            <h5 class="card-title" style="font-size: 1.5em; font-weight: bold;">All Students Attended <span id="courseName" style="font-size: 1em; font-weight: bold;"></span></h5>
+                            <h5 class="card-title" style="font-size: 1.5em; font-weight: bold;">All Students Attended <span id="courseName" style="font-size: 1em; font-weight: bold;">[Select Course to View List]</span></h5>
                             <!-- Default Table -->
                             <table class="table">
                                 <thead>
@@ -297,9 +297,9 @@
                                 <tbody id="studentTable">
                                     <!-- Students will be populated here using JavaScript -->
 
-                                </tbody>
+                                 </tbody> 
 
-                            </table>
+                            </table> 
 
                             <!-- End Default Table Example -->
                         </div>
