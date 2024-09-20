@@ -184,6 +184,13 @@
                             <i class="bi bi-circle"></i><span>Add New Course</span>
                         </a>
                     </li>
+
+                    <li>
+                        <a href="{{ route('showCreateBlogForm') }}">
+                            <i class="bi bi-circle"></i><span>Create a Blog</span>
+                        </a>
+                    </li>
+
                 </ul>
             </li><!-- End Forms Nav -->
 
@@ -297,9 +304,9 @@
                                 <tbody id="studentTable">
                                     <!-- Students will be populated here using JavaScript -->
 
-                                 </tbody> 
+                                </tbody>
 
-                            </table> 
+                            </table>
 
                             <!-- End Default Table Example -->
                         </div>
@@ -345,20 +352,23 @@
     <script src="{{ asset('assets/js/mains.js') }}"></script>
 
     <script>
-        window.generateCompletionCertificate = function(studentId, studentName, studentProgram) {
-
+        window.generateCompletionCertificate = function(studentId, studentName, studentProgram, studentEmail) {
             const spinnerButton = document.getElementById('spinner');
 
+            // Display the spinner while the request is being processed
             spinnerButton.style.display = 'inline-block';
 
+            // Prepare the data for certificate generation and email
             const data = {
                 id: studentId,
                 name: studentName,
                 program: studentProgram,
+                email: studentEmail, // Add email field
                 date: new Date().toISOString().split('T')[0], // Today's date in YYYY-MM-DD format
+                
             };
 
-            // Send  POST request to generate the certificate
+            // Send a POST request to generate the certificate and send an email
             fetch(`/certificates/create`, {
                     method: 'POST',
                     headers: {
@@ -372,21 +382,25 @@
                         return response.json().then(errData => {
                             console.error('Server error:', errData);
                             throw new Error('Failed to generate certificate');
-                        }); // Return the certificate PDF as a blob
+                        });
                     }
-                    return response.blob();
+                    return response.blob(); // Get the certificate PDF as a blob
                 })
                 .then(blob => {
                     // Create a URL for the PDF blob and open it in a new tab
                     const url = window.URL.createObjectURL(blob);
                     window.open(url);
+
+                    // Optionally, show a success message for the email sending
+                    alert(`The certificate has been generated and sent to ${studentEmail}`);
                 })
                 .catch(error => console.error('Error generating certificate:', error))
                 .finally(() => {
-                    // Hide the spinner
-                    spinner.style.display = 'none';
+                    // Hide the spinner after the request is complete
+                    spinnerButton.style.display = 'none';
                 });
         }
+
 
         function loadStudents() {
             var courseId = document.getElementById('courseDropdown').value;
@@ -426,7 +440,7 @@
                 <td>${student.email}</td>
                 <td>${student.biography_description}</td>
                 <td>
-                    <button class="btn btn-success btn-sm" onclick="generateCompletionCertificate(${student.id}, '${student.full_name}', '${courseName}')"><i class="bi bi-arrow-down-circle"></i></button> 
+                   <button class="btn btn-success btn-sm" onclick="generateCompletionCertificate(${student.id}, '${student.full_name}', '${courseName}', '${student.email}')"><i class="bi bi-arrow-down-circle"></i></button>
                 </td>
             </tr>
         `;

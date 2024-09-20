@@ -96,7 +96,7 @@
   </section><!-- End Blog Section -->
 
 
-  <!-- ======= Services Section ======= -->
+  <!-- ======= Services Section ====== -->
   <section id="services" class="services section-bg">
     <div class="container" data-aos="fade-up">
 
@@ -119,73 +119,6 @@
 
     </div>
   </section><!-- End Services Section -->
-
-
-  <!-- Gallery section -->
-  <section id="portfolio" class="portfolio">
-    <div class="container" data-aos="fade-up">
-      <div class="section-title">
-        <h2>Gallery</h2>
-        <p>Step into the world of innovation and creativity at the ICP Rwanda Gallery</p>
-      </div>
-
-      <ul id="portfolio-flters" class="d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
-        <li data-filter="*" class="filter-active">All</li>
-        @foreach($categories as $category)
-        <li data-filter=".filter-{{ Str::slug($category->name) }}">{{ $category->name }}</li>
-        @endforeach
-      </ul>
-
-      <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
-
-        @foreach($featuredImages as $item)
-
-        <div class="col-lg-4 col-md-6 portfolio-item filter-{{ Str::slug($item->Image_category) }}">
-          <div class="portfolio-wrap">
-            <img src="{{ asset($item->Image) }}" class="img-fluid" alt="" data-toggle="modal" data-target="#modal-{{ Str::slug($item->Image_category) }}">
-            <div class="portfolio-info">
-              <h4>{{ $item->Image_category }}</h4>
-              <div class="portfolio-links">
-                <a href="#" data-toggle="modal" data-target="#modal-{{ Str::slug($item->Image_category) }}" title="View All Images"><i class="bx bx-plus"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-        @endforeach
-      </div>
-
-      <!-- Modal for each category -->
-      @foreach($categories as $category)
-      <div class="modal fade" id="modal-{{ Str::slug($category->name) }}" tabindex="-1" role="dialog" aria-labelledby="modalLabel-{{ Str::slug($category->name) }}" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="modalLabel-{{ Str::slug($category->name) }}">{{ $category->name }}</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <div class="row">
-                <!-- Fetch and display all images for the selected category -->
-                @foreach($pictures->where('Image_category', $category->name) as $image)
-                <div class="col-md-4">
-                  <a href="{{ asset($image->Image) }}" data-gallery="portfolioGallery" class="portfolio-lightbox" title="{{ $image->Image_category }}">
-                    <img src="{{ asset($image->Image) }}" class="img-fluid" alt="">
-                  </a>
-                </div>
-                @endforeach
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      @endforeach
-
-    </div>
-  </section>
-
-
 
   <!-- ======= Team Section ======= -->
   <section id="team" class="team section-bg">

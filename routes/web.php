@@ -10,6 +10,8 @@ use App\Http\Controllers\CustomerSupportCustomer;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\CourseController;
+use App\Models\Certificate;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,6 +59,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/all-icp', [ICPServiceController::class, 'showAllServices'])->name('showAllServices');
 
 
+
     // Route for Team/Staff
     Route::get('/staff/all', [StaffController::class, 'getAllStaff'])->name('ShowAllTeam');
     Route::get('/all-staff', [StaffController::class, 'showAllStaff'])->name('showAllStaff');
@@ -75,7 +78,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/gallery', [GalleryController::class, 'createPicture'])->name('gallery.create');
     Route::put('/gallery/{id}', [GalleryController::class, 'updatePicture'])->name('gallery.update');
     Route::delete('/gallery/{id}', [GalleryController::class, 'deletePicture'])->name('gallery.delete');
-
+    Route::get('/gallery-page', [GalleryController::class, 'displayGallery']);
 
     // Route for Certificate
     Route::get('/create-certificate', [CertificateController::class, 'showCreateForm'])->name('showCerticateCreateForm');
@@ -101,7 +104,10 @@ Route::middleware(['auth'])->group(function () {
 
     // Route for Blog
     Route::get('/get-dashboard', [BlogController::class, 'showAllBlog'])->name('showAllBlog');
+    Route::get('/create-blog', [BlogController::class, 'create'])->name('showCreateBlogForm');
     Route::post('/store/blog', [BlogController::class, 'createBlog'])->name('storeBlog');
+    Route::post('/upload-image', [BlogController::class, 'uploadImage'])->name('upload.image');
+
 
 
 
@@ -119,3 +125,14 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/import', [StudentController::class, 'importStudentWithExcel'])->name('import');
 });
 Route::get('/blog-frontend/{id}', [BlogController::class, 'show'])->name('blogs.show');
+
+Route::get('/certificates/download/{id}', function ($id) {
+    $certificate = Certificate::findOrFail($id);
+    $filePath = public_path('assets/' . $certificate->file_path);
+
+    if (file_exists($filePath)) {
+        return response()->download($filePath);
+    } else {
+        abort(404, 'Certificate not found.');
+    }
+})->name('certificates.download');

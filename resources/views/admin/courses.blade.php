@@ -178,6 +178,13 @@
               <i class="bi bi-circle"></i><span>Add New Student</span>
             </a>
           </li>
+
+          <li>
+            <a href="{{ route('showCreateBlogForm') }}">
+              <i class="bi bi-circle"></i><span>Create a Blog</span>
+            </a>
+          </li>
+
           <li>
             <a href="{{ route('showCreateCourseForm') }}">
               <i class="bi bi-circle"></i><span>Add New Course</span>
@@ -266,10 +273,12 @@
               <!-- General Form Elements -->
               <form id="create-course-form" action="{{ route('course.create') }}" method="POST" enctype="multipart/form-data">
                 @csrf
+
+
                 <div class="row mb-3">
                   <label for="inputText" class="col-sm-2 col-form-label">Course Name</label>
                   <div class="col-sm-10">
-                    <input type="text" name="name" placeholder="Course Name" required>
+                    <input type="text" class="form-control" id="title" name="name" placeholder="Course Name" required>
                   </div>
                 </div>
 

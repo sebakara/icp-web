@@ -7,6 +7,7 @@ use App\Models\Gallery;
 use App\Models\Staff;
 use App\Models\Blog;
 
+
 use Illuminate\Http\Request;
 
 class ICPServiceController extends Controller
@@ -66,24 +67,17 @@ class ICPServiceController extends Controller
         $services = Service::all();
         $staffs = Staff::all();
         $blogs = Blog::all();
-        $pictures = Gallery::all();
-        $categories = Gallery::select('Image_category as name')->distinct()->get();
-
-        // $categories = Gallery::select('Image_category as name')->distinct()->get();
-        $featuredImages = $categories->map(function($category) {
-            return Gallery::where('Image_category', $category->name)->first();
-        });
-
+       
 
         return view('client.index', [
             'services' => $services,
-            'pictures' => $pictures,
+            
             'staffs' => $staffs,
             'blogs' => $blogs,
-            'featuredImages' => $featuredImages,
-            'categories' => $categories
+            
         ]);
     }
+
 
     // Get a specific ICP service
     public function getOneICP(Request $request)

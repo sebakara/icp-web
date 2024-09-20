@@ -4,9 +4,44 @@ namespace App\Http\Controllers;
 
 use App\Models\Gallery;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class GalleryController extends Controller
 {
+
+
+    public function displayGallery()
+    {
+
+        $pictures = Gallery::all();
+
+        // Fetch main categories (main events)
+        $categories = Gallery::whereNull('parent_event_id')->select('Image_category as name')->distinct()->get();
+
+        // Fetch featured images for main categories for "All" tab
+        $featuredImages = $categories->map(function ($category) {
+            return Gallery::where('Image_category', $category->name)->first();
+        });
+
+        // Fetch images grouped by event titles for the filtered tabs
+        $subEvents = [];
+        foreach ($categories as $category) {
+            $subEvents[$category->name] = Gallery::where('Image_category', $category->name)
+                ->groupBy('event_title')
+                ->select('event_title', DB::raw('min(id) as id'))
+                ->get()
+                ->mapWithKeys(function ($event) {
+                    return [$event->event_title => Gallery::where('event_title', $event->event_title)->get()];
+                });
+        }
+
+        return view('client.gallery', [
+            'pictures' => $pictures,
+            'featuredImages' => $featuredImages,
+            'categories' => $categories,
+            'subEvents' => $subEvents,
+        ]);
+    }
 
     public function showCreateForm()
     {
@@ -18,6 +53,9 @@ class GalleryController extends Controller
         // Validation
         $request->validate([
             'Image_category' => 'required|string|max:255',
+            'event_title' => 'required|string|max:255',
+            'event_description' => 'nullable|string',
+            'event_year' => 'required|integer|digits:4',
             'Image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -33,8 +71,14 @@ class GalleryController extends Controller
         // Create Picture
         $picture = Gallery::create([
             'Image_category' => $request->input('Image_category'),
+            'event_title' => $request->input('event_title'),
+            'event_description' => $request->input('event_description'),
+            'event_year' => $request->input('event_year'),
             'Image' => $image,
         ]);
+
+        // Update the parent_event_id field to the same id as the newly created picture
+        // $picture->update(['parent_event_id' => $picture->id]);
 
         // Return back to the dashboard view with a success message
         return response()->json(['success' => 'Image Added Seccessfully']);
@@ -51,7 +95,7 @@ class GalleryController extends Controller
             ->distinct()
             ->with('images') // Define a relationship to get the images later
             ->get()
-            ->map(function($category) {
+            ->map(function ($category) {
                 $category->image = Gallery::where('Image_category', $category->Image_category)->first()->Image;
                 return $category;
             });
@@ -76,7 +120,7 @@ class GalleryController extends Controller
     {
         // Get one image per category for initial display
         $categories = Gallery::select('Image_category as name')->distinct()->get();
-        $featuredImages = $categories->map(function($category) {
+        $featuredImages = $categories->map(function ($category) {
             return Gallery::where('Image_category', $category->name)->first();
         });
 

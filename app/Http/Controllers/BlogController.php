@@ -17,7 +17,7 @@ class BlogController extends Controller
     // Show the form for creating a new blog
     public function create()
     {
-        return view('blogs.create');
+        return view('admin.create-blog');
     }
 
     // Store a newly created blog in the database
@@ -45,9 +45,26 @@ class BlogController extends Controller
             'image' => $image,
         ]);
 
-        // return redirect()->route('blogs.index')->with('success', 'Blog created successfully.');
-        return response()->json($newBlog);
+
+        return response()->json(['success' => 'Blog has been created successfully']);
     }
+
+
+    // Handle image upload from quill
+    public function uploadImage(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        // Store the uploaded image
+        $path = $request->file('image')->store('blogs', 'public');
+
+        // Return the URL of the uploaded image
+        return response()->json(['success' => true, 'url' => asset('storage/' . $path)]);
+    }
+
+
 
     // Display the specified blog
     public function show($id)
@@ -55,7 +72,6 @@ class BlogController extends Controller
         $blog = Blog::findOrFail($id);
         // $otherBlogs = Blog::where('id', '!=', $id)->limit(5)->get(); 
         return view('admin.singleBlog', compact('blog'));
-        
     }
 
 

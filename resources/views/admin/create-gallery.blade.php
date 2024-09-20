@@ -174,6 +174,13 @@
               <i class="bi bi-circle"></i><span>Add New Student</span>
             </a>
           </li>
+
+          <li>
+            <a href="{{ route('showCreateBlogForm') }}">
+              <i class="bi bi-circle"></i><span>Create a Blog</span>
+            </a>
+          </li>
+
           <li>
             <a href="{{ route('showCreateCourseForm') }}">
               <i class="bi bi-circle"></i><span>Add New Course</span>
@@ -275,7 +282,26 @@
                   </div>
                 </div>
 
-               
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label">Event Title</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="event_title" placeholder="e.g. Hackathon 2018: First Edition" required>
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label">Event Description</label>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" name="event_description" rows="3" placeholder="Enter event details (optional)"></textarea>
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label">Event Year</label>
+                  <div class="col-sm-10">
+                    <input type="number" class="form-control" name="event_year" placeholder="e.g. 2018" required>
+                  </div>
+                </div>
 
                 <div class="row mb-3">
                   <label for="inputNumber" class="col-sm-2 col-form-label">Upload Image</label>
@@ -297,7 +323,7 @@
 
         </div>
 
-        
+
       </div>
 
       <!-- <div class="row">

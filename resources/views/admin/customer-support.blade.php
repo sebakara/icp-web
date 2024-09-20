@@ -174,6 +174,13 @@
               <i class="bi bi-circle"></i><span>Add New Student</span>
             </a>
           </li>
+
+          <li>
+            <a href="{{ route('showCreateBlogForm') }}">
+              <i class="bi bi-circle"></i><span>Create a Blog</span>
+            </a>
+          </li>
+
           <li>
             <a href="{{ route('showCreateCourseForm') }}">
               <i class="bi bi-circle"></i><span>Add New Course</span>

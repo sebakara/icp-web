@@ -57,14 +57,11 @@
         </div>
     </header><!-- End Header -->
 
-    <section class="featured-image-section" style="margin-left:20%; margin-top:4%; width:700px; height: auto; border-radius: 10px;" >
-        <img src="{{ asset($blog->image) }}" alt="{{ $blog->title }}" class="featured-image">
+    <!-- Displaying only the blog content -->
+    <section style="padding: 10%;">
+        {!! $blog->content !!} <!-- Render the full blog content with all formatting -->
     </section>
-    <h1 style="text-align: justify; margin-left: 5%; margin-top: 5%; font-size: 2em; font-weight: 600; color: #007bff;">{{ $blog->title }}</h1>
-    <p style="margin-left: 5%;"><i><b>Published on {{ $blog->created_at }}</b></i></p>
-    <section style="max-width: 1100px; max-height: 1300px; padding: 20px; background-color: #f8f9fa; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); color: #333; line-height: 1.6; text-align:center; margin:2%">
-        <p style="text-align: justify; margin-bottom: 20px;">{{ $blog->content }}</p>
-    </section>
+
 
     <!-- ======= Footer ======= -->
     <footer id="footer">

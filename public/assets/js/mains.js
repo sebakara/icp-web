@@ -365,6 +365,36 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+
+// Add filtering logic for sub-events
+document.addEventListener('DOMContentLoaded', function () {
+    let portfolioFilters = document.querySelectorAll('#portfolio-flters li');
+    let portfolioItems = document.querySelectorAll('.portfolio-item');
+
+    portfolioFilters.forEach(filter => {
+        filter.addEventListener('click', function () {
+            let selectedFilter = this.getAttribute('data-filter');
+
+            // Remove 'filter-active' class from all filters
+            portfolioFilters.forEach(filter => filter.classList.remove('filter-active'));
+
+            // Add 'filter-active' class to the clicked filter
+            this.classList.add('filter-active');
+
+            // Show or hide portfolio items based on the selected filter
+            portfolioItems.forEach(item => {
+                if (selectedFilter === '*' || item.classList.contains(selectedFilter.substring(1))) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    });
+});
+
+
+
 // This is for Gallery on Backend
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -745,8 +775,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <td style="width:150px;">
                         <button class="btn btn-info btn-sm"  onclick="editStudent(${student.id})"><i class="bi bi-pen"></i></button> 
                         <button class="btn btn-danger btn-sm"   onclick="deleteStudent(${student.id})"><i class="bi bi-trash"></i></button> 
-                        <button class="btn btn-success btn-sm"   onclick="generateCertificate(${student.id}, '${student.full_name}', '${courses}')"><i class="bi bi-arrow-down-circle"></i></button>
-                        
+                        <button class="btn btn-success btn-sm" onclick="generateCertificate(${student.id}, '${student.full_name}', '${courses}', '${student.email}')"><i class="bi bi-arrow-down-circle"></i></button>
                     </td>
                 `;
                     studentList.appendChild(row);
@@ -869,16 +898,17 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Handle create certificate
-    function generateCertificate(studentId, studentName, studentProgram) {
-
+    function generateCertificate(studentId, studentName, studentProgram, studentEmail) {
         // Prepare data for the certificate
         const data = {
             name: studentName,
             program: studentProgram,
             date: new Date().toISOString().split('T')[0], // Today's date in YYYY-MM-DD format
+            email: studentEmail // Add email
         };
 
         fetch('/certificates/generate', { // Adjust this URL based on your routes
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
@@ -898,39 +928,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 window.open(url);
             })
             .catch(error => console.error('Error generating certificate:', error));
-
-
-
-        // Handle edit certificate (implementation can be added)
-        window.editCertificate = function (id) {
-            // Implement the edit logic
-        };
-
-        // Handle delete certificate
-        window.deleteCertificate = function (id) {
-            fetch(`/certificates/delete/${id}`, { // Adjust this URL based on your routes
-                method: 'DELETE',
-            })
-                .then(response => response.json())
-                .then(data => {
-                    const alertContainer = document.createElement('div');
-                    alertContainer.className = 'alert alert-danger bg-danger text-light border-0 alert-dismissible fade show';
-                    alertContainer.role = 'alert';
-                    alertContainer.innerHTML = `
-                                  ${data.success}
-                                  <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
-                              `;
-
-                    document.querySelector('.section').prepend(alertContainer);
-
-                    fetchCertificates()
-
-                })
-        };
-
-        // Initial fetch of certificates
-        fetchCertificates();
     }
+
 });
 
 

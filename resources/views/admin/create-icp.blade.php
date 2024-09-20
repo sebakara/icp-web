@@ -166,6 +166,13 @@
               <i class="bi bi-circle"></i><span>Add New Student</span>
             </a>
           </li>
+
+          <li>
+            <a href="{{ route('showCreateBlogForm') }}">
+              <i class="bi bi-circle"></i><span>Create a Blog</span>
+            </a>
+          </li>
+
           <li>
             <a href="{{ route('showCreateCourseForm') }}">
               <i class="bi bi-circle"></i><span>Add New Course</span>
@@ -265,7 +272,7 @@
                 <div class="row mb-3">
                   <label for="inputText" class="col-sm-2 col-form-label">Service title</label>
                   <div class="col-sm-10">
-                    <input type="text" name="Service_title" placeholder="Service Name" required>
+                    <input type="text" class="form-control" id="title" placeholder="Service Name" name="Service_title" required>
                   </div>
                 </div>
 

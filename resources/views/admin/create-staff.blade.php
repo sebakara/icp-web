@@ -175,6 +175,13 @@
               <i class="bi bi-circle"></i><span>Add New Student</span>
             </a>
           </li>
+
+          <li>
+            <a href="{{ route('showCreateBlogForm') }}">
+              <i class="bi bi-circle"></i><span>Create a Blog</span>
+            </a>
+          </li>
+
           <li>
             <a href="{{ route('showCreateCourseForm') }}">
               <i class="bi bi-circle"></i><span>Add New Course</span>
@@ -260,17 +267,18 @@
 
               <form id="create-staff-form" action="{{ route('staff.create') }}" method="POST" enctype="multipart/form-data">
                 @csrf
+
                 <div class="row mb-3">
                   <label for="inputText" class="col-sm-2 col-form-label">Full Names</label>
                   <div class="col-sm-10">
-                    <input type="text" name="Full_name" placeholder="Full name" required>
+                    <input type="text" class="form-control" id="title" placeholder="Full name" name="Full_name" required>
                   </div>
                 </div>
 
                 <div class="row mb-3">
                   <label for="inputText" class="col-sm-2 col-form-label">Position</label>
                   <div class="col-sm-10">
-                    <input type="text" name="Position" placeholder="Position" required>
+                    <input type="text" class="form-control" id="title" placeholder="Position" name="Position" required>
                   </div>
                 </div>
 

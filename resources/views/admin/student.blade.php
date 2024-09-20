@@ -178,6 +178,13 @@
               <i class="bi bi-circle"></i><span>Add New Student</span>
             </a>
           </li>
+
+          <li>
+            <a href="{{ route('showCreateBlogForm') }}">
+              <i class="bi bi-circle"></i><span>Create a Blog</span>
+            </a>
+          </li>
+
           <li>
             <a href="{{ route('showCreateCourseForm') }}">
               <i class="bi bi-circle"></i><span>Add New Course</span>
@@ -266,26 +273,20 @@
               <!-- General Form Elements -->
               <form id="create-student-form" action="{{ route('student.create') }}" method="POST" enctype="multipart/form-data">
                 @csrf
+
                 <div class="row mb-3">
                   <label for="inputText" class="col-sm-2 col-form-label">Full Name</label>
                   <div class="col-sm-10">
-                    <input type="text" name="Full_name" placeholder="Full Name" required>
+                    <input type="text" class="form-control" id="title" name="Full_name" placeholder="Full Name" required>
                   </div>
                 </div>
 
                 <div class="row mb-3">
-                  <label for="inputText" class="col-sm-2 col-form-label">Email</label>
+                  <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
                   <div class="col-sm-10">
-                    <input type="email" name="Email" placeholder="Email" required>
+                    <input type="email" class="form-control" name="Email" placeholder="Email" required>
                   </div>
                 </div>
-
-                <!-- <div class="row mb-3">
-                  <label for="inputText" class="col-sm-2 col-form-label">Phone Number</label>
-                  <div class="col-sm-10">
-                    <input type="text" name="Phone_number" placeholder="Phone Number">
-                  </div>
-                </div> -->
 
                 <div class="row mb-3">
                   <label for="inputText" class="col-sm-2 col-form-label">Biography</label>
