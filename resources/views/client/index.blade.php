@@ -82,9 +82,9 @@
             <img src="{{ asset($blog->image) }}" class="img-fluid" alt="{{ $blog->title }}">
             <div class="card-body">
               <h4 class="card-title">{{ $blog->title }}</h4>
-              <p class="card-text">{{ Str::limit($blog->content, 100) }}</p>
-              <a href="{{ route('blogs.show', ['id' => $blog->id]) }}" class="btn btn-primary" style="margin-bottom:1%">Read More</a>
-                
+              
+              <!-- <p class="card-text" style="font-size: smaller;">{!! Str::limit($blog->content, 100) !!}</p> -->
+              <a href="{{ route('blogs.show', ['slug' => $blog->slug]) }}" class="btn btn-primary" style="margin-bottom:1%">Read More</a>
             </div>
           </div>
 
@@ -93,7 +93,9 @@
       </div>
 
     </div>
-  </section><!-- End Blog Section -->
+  </section>
+
+  <!-- End Blog Section -->
 
 
   <!-- ======= Services Section ====== -->

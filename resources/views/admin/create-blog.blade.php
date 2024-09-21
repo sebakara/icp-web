@@ -54,12 +54,12 @@
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
-    <div class="search-bar">
+   <!-- <div class="search-bar">
       <form class="search-form d-flex align-items-center" method="POST" action="#">
         <input type="text" name="query" placeholder="Search" title="Enter search keyword">
         <button type="submit" title="Search"><i class="bi bi-search"></i></button>
       </form>
-    </div><!-- End Search Bar -->
+    </div> --><!-- End Search Bar -->
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
@@ -272,7 +272,7 @@
               <form id="create-blog-form" action="{{ route('storeBlog') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row mb-3">
-                  <label for="inputText" class="col-sm-2 col-form-label">Text</label>
+                  <label for="inputText" class="col-sm-2 col-form-label">Title</label>
                   <div class="col-sm-10">
                     <input type="text" class="form-control" id="title" name="title">
                   </div>
@@ -454,16 +454,24 @@
           },
           body: formData
         })
-        .then(response => response.json())
+        .then(response => {
+          if (!response.ok) {
+            return response.json().then(err => {
+              // Throw an error containing the error details
+              throw new Error(err.error || 'Something went wrong');
+            });
+          }
+          return response.json();
+        })
         .then(data => {
           // Create and display the success alert
           const alertContainer = document.createElement('div');
           alertContainer.className = 'alert alert-success bg-success text-light border-0 alert-dismissible fade show';
           alertContainer.role = 'alert';
           alertContainer.innerHTML = `
-            ${data.success}
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
-        `;
+          ${data.success}
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+      `;
 
           // Append the alert to a specific element (e.g., a div with id 'alert-area')
           document.getElementById('alert-area').appendChild(alertContainer);
@@ -480,9 +488,8 @@
           }, 5000); // Adjust time as needed
         })
         .catch(error => {
-          // Handle errors
-          console.error('Error creating blog post:', error);
-          alert('Error creating blog post. Please try again.');
+          console.error('Error:', error.message);
+          alert('Error creating blog post: ' + error.message);
         });
     });
   </script>

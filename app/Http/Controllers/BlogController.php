@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Log;
+
 
 use App\Models\Blog;
 use Illuminate\Http\Request;
@@ -23,54 +25,51 @@ class BlogController extends Controller
     // Store a newly created blog in the database
     public function createBlog(Request $request)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
-
-        // Handle file upload
-        $image = null;
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $imageName = time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('assets/img/blogs'), $imageName);
-            $image = 'assets/img/blogs/' . $imageName;
+        try {
+            $validated = $request->validate([
+                'title' => 'required|string|max:255',
+                'content' => 'required|string',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg,webp,gif|max:2048',
+            ]);
+    
+            // Handle file upload
+            $image = null;
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+                $imageName = time() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('assets/img/blogs'), $imageName);
+                $image = 'assets/img/blogs/' . $imageName;
+            }
+    
+            // Create the blog post
+            $newBlog = Blog::create([
+                'title' => $request->input('title'),
+                'content' => $request->input('content'),
+                'image' => $image,
+            ]);
+    
+            return response()->json(['success' => 'Blog has been created successfully']);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Log validation errors
+            Log::error('Validation failed:', ['errors' => $e->errors()]);
+    
+            return response()->json(['error' => 'Validation failed', 'details' => $e->errors()], 422);
+        } catch (\Exception $e) {
+            // Log other errors
+            Log::error('Error creating blog post:', ['error' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
+    
+            return response()->json(['error' => 'Error creating blog post: ' . $e->getMessage()], 500);
         }
-
-        // Create the blog post
-        $newBlog = Blog::create([
-            'title' => $request->input('title'),
-            'content' => $request->input('content'),
-            'image' => $image,
-        ]);
-
-
-        return response()->json(['success' => 'Blog has been created successfully']);
     }
-
-
-    // Handle image upload from quill
-    public function uploadImage(Request $request)
-    {
-        $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
-
-        // Store the uploaded image
-        $path = $request->file('image')->store('blogs', 'public');
-
-        // Return the URL of the uploaded image
-        return response()->json(['success' => true, 'url' => asset('storage/' . $path)]);
-    }
-
+    
+    
 
 
     // Display the specified blog
-    public function show($id)
+    public function show($slug)
     {
-        $blog = Blog::findOrFail($id);
-        // $otherBlogs = Blog::where('id', '!=', $id)->limit(5)->get(); 
+        $blog =  Blog::where('slug', $slug)->firstOrFail();
+
         return view('admin.singleBlog', compact('blog'));
     }
 

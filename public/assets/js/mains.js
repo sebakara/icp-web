@@ -687,7 +687,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-    window.generateCertificate = function (studentId, studentName, studentProgram) {
+    window.generateCertificate = function (studentId, studentName, studentProgram, studentEmail) {
 
         const spinnerButton = document.getElementById('spinner');
 
@@ -697,6 +697,7 @@ document.addEventListener('DOMContentLoaded', function () {
             id: studentId,
             name: studentName,
             program: studentProgram,
+            email: studentEmail, // Add email field
             date: new Date().toISOString().split('T')[0], // Today's date in YYYY-MM-DD format
         };
 
@@ -714,19 +715,22 @@ document.addEventListener('DOMContentLoaded', function () {
                     return response.json().then(errData => {
                         console.error('Server error:', errData);
                         throw new Error('Failed to generate certificate');
-                    }); // Return the certificate PDF as a blob
+                    });
                 }
-                return response.blob();
+                return response.blob(); // Get the certificate PDF as a blob
             })
             .then(blob => {
                 // Create a URL for the PDF blob and open it in a new tab
                 const url = window.URL.createObjectURL(blob);
                 window.open(url);
+
+                // Optionally, show a success message for the email sending
+                alert(`The certificate has been generated and sent to ${studentEmail}`);
             })
             .catch(error => console.error('Error generating certificate:', error))
             .finally(() => {
-                // Hide the spinner
-                spinner.style.display = 'none';
+                // Hide the spinner after the request is complete
+                spinnerButton.style.display = 'none';
             });
     }
 
@@ -903,8 +907,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const data = {
             name: studentName,
             program: studentProgram,
+            email: studentEmail, // Add email
             date: new Date().toISOString().split('T')[0], // Today's date in YYYY-MM-DD format
-            email: studentEmail // Add email
+
         };
 
         fetch('/certificates/generate', { // Adjust this URL based on your routes

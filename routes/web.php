@@ -124,7 +124,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/courses/all', [CourseController::class, 'getAllCourses'])->name('courses.all');
     Route::post('/import', [StudentController::class, 'importStudentWithExcel'])->name('import');
 });
-Route::get('/blog-frontend/{id}', [BlogController::class, 'show'])->name('blogs.show');
+Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blogs.show');
 
 Route::get('/certificates/download/{id}', function ($id) {
     $certificate = Certificate::findOrFail($id);

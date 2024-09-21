@@ -58,8 +58,11 @@
     </header><!-- End Header -->
 
     <!-- Displaying only the blog content -->
-    <section style="padding: 10%;">
-        {!! $blog->content !!} <!-- Render the full blog content with all formatting -->
+    <section >
+        <div style="padding: 10%; margin-left: 10%; background-color: white; text-align: justify">
+            {!! $blog->content !!} <!-- Render the full blog content with all formatting -->
+        </div>
+        
     </section>
 
 

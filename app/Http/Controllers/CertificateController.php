@@ -11,7 +11,9 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
-use App\Mail\CertificateMail;
+use App\Mail\CourseCompletionCertificateMail;
+use App\Mail\ParticipationCertificateMail;
+use App\Mail\SpecialCertificateMail;
 use Illuminate\Support\Facades\Mail;
 
 
@@ -81,7 +83,7 @@ class CertificateController extends Controller
         // Send the email to the student with the certificate link
         $certificateUrl = url('storage/' . $filePath); // Public URL to the certificate
         // Make sure to set the 'from' address here
-        Mail::to($data['email'])->send(new CertificateMail($certificateUrl));
+        Mail::to($data['email'])->send(new CourseCompletionCertificateMail($certificateUrl));
 
         // Optionally, you can return the file or redirect
         return $pdf->stream('certificate.pdf');
@@ -96,6 +98,7 @@ class CertificateController extends Controller
             'name' => 'required|string',
             'program' => 'required|string',
             'date' => 'required|date',
+            'email' => 'required',
         ]);
 
         // Generate a unique file name for the certificate
@@ -139,6 +142,12 @@ class CertificateController extends Controller
             'qr_code_path' => 'certificates/participation/' . $qrCodeFilePath,
         ]);
 
+        // Send the email to the student with the certificate link
+        $certificateUrl = url('storage/' . $filePath); // Public URL to the certificate
+        // Make sure to set the 'from' address here
+        Mail::to($data['email'])->send(new ParticipationCertificateMail($certificateUrl));
+
+
         // Optionally, you can return the file or redirect
         return $pdf->stream('certificate.pdf');
     }
@@ -153,6 +162,7 @@ class CertificateController extends Controller
             'project_name_or_special_award' => 'required|string',
             'description' => 'string',
             'date' => 'required|date',
+            'email' => 'required',
         ]);
 
         // Generate a unique file name for the certificate
@@ -196,6 +206,11 @@ class CertificateController extends Controller
             'file_path' => 'certificates/special/' . $fileName,
             'qr_code_path' => 'certificates/special/' . $qrCodeFilePath,
         ]);
+
+        // Send the email to the student with the certificate link
+        $certificateUrl = url('storage/' . $filePath); // Public URL to the certificate
+        // Make sure to set the 'from' address here
+        Mail::to($data['email'])->send(new SpecialCertificateMail($certificateUrl));
 
         // Optionally, you can return the file or redirect
         return $pdf->stream('certificate.pdf');

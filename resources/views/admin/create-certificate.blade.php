@@ -55,12 +55,12 @@
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
-    <div class="search-bar">
+   <!-- <div class="search-bar">
       <form class="search-form d-flex align-items-center" method="POST" action="#">
         <input type="text" name="query" placeholder="Search" title="Enter search keyword">
         <button type="submit" title="Search"><i class="bi bi-search"></i></button>
       </form>
-    </div><!-- End Search Bar -->
+    </div> --><!-- End Search Bar -->
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
@@ -274,16 +274,23 @@
               <form id="create-certificate-form" action="{{ route('generateSpecialCertificate.generate') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row mb-3">
-                  <label for="inputText" class="col-sm-2 col-form-label">Recipient Full Names</label>
+                  <label for="inputText" class="col-sm-2 col-form-label">Full Names</label>
                   <div class="col-sm-10">
-                    <input type="text" name="name" placeholder="Recipient Name" required>
+                    <input type="text" class="form-control" id="title" placeholder="Full name" name="name" required>
                   </div>
                 </div>
 
                 <div class="row mb-3">
-                  <label for="inputText" class="col-sm-2 col-form-label">Project name || Award Name</label>
+                  <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
                   <div class="col-sm-10">
-                    <input type="text" name="project_name_or_special_award" placeholder="Project name/ Award name" required>
+                    <input type="email" class="form-control" name="email" placeholder="Email" required>
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <label for="inputText" class="col-sm-2 col-form-label">Project/Award name</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="title" placeholder="Project/award name" name="project_name_or_special_award" required>
                   </div>
                 </div>
 
@@ -575,15 +582,26 @@
               'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
             }
           })
-          .then(response => response.blob())
+          .then(response => {
+            if (!response.ok) {
+              return response.json().then(errData => {
+                console.error('Server error:', errData);
+                throw new Error('Failed to generate certificate');
+              });
+            }
+            return response.blob(); // Get the certificate PDF as a blob
+          })
           .then(blob => {
             // Create a URL for the PDF blob and open it in a new tab
             const url = window.URL.createObjectURL(blob);
             window.open(url);
+
+            // Optionally, show a success message for the email sending
+            alert(`The certificate has been generated and sent to ${email}`);
           })
           .catch(error => console.error('Error generating certificate:', error))
           .finally(() => {
-            // Hide the spinner
+            // Hide the spinner after the request is complete
             spinnerButton.style.display = 'none';
           });
       });
