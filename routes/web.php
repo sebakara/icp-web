@@ -47,6 +47,9 @@ Route::middleware(['auth'])->group(function () {
     // Route for the dashboard
     Route::get('dashboard', [UserController::class, 'dashboard'])->name('dashboard');
 
+    Route::get('api/get-report-data', [UserController::class, 'getReportData'])->name('getReportData');
+
+
     // Route for sign out
     Route::get('signout', [UserController::class, 'signOut'])->name('signout');
 

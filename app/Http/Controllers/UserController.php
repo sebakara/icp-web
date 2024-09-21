@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Certificate;
+use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
+use App\Models\Student;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -80,14 +84,61 @@ class UserController extends Controller
         ]);
     }
 
+    public function getReportData()
+    {
+        // Fetch enrollment data for the last 7 days
+        $enrollments = Student::select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as total'))
+            ->where('created_at', '>=', Carbon::now()->subDays(7))
+            ->groupBy(DB::raw('DATE(created_at)'))  // Grouping by date only
+            ->orderBy('date', 'asc')
+            ->get()
+            ->pluck('total')
+            ->toArray();
+
+        // Fetch certificate data for the last 7 days
+        $certificates = Certificate::select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as total'))
+            ->where('created_at', '>=', Carbon::now()->subDays(7))
+            ->groupBy(DB::raw('DATE(created_at)'))  // Grouping by date only
+            ->orderBy('date', 'asc')
+            ->get()
+            ->pluck('total')
+            ->toArray();
+
+        // Fetch dates for the last 7 days
+        $dates = Certificate::select(DB::raw('DATE(created_at) as date'))
+            ->where('created_at', '>=', Carbon::now()->subDays(7))
+            ->groupBy(DB::raw('DATE(created_at)'))  // Grouping by date only
+            ->orderBy('created_at', 'asc')
+            ->pluck('date')
+            ->toArray();
+
+        // Return the data as JSON response for the chart
+        return response()->json([
+            'enrollments' => $enrollments,
+            'certificates' => $certificates,
+            'dates' => $dates
+        ]);
+    }
+
+
     public function dashboard()
     {
-        // if (Auth::check()) {
-        return view('admin.index');
-        // }
 
-        return redirect("login")->withSuccess('You are not allowed to access');
+        $totalStudents = Student::count();
+        $totalCourses = Course::count();
+        $totalCertificate = Certificate::count();
+        $courses = Course::withCount('students')
+        ->orderBy('students_count', 'desc')
+        ->get();
+
+        return view('admin.index',  [
+            'totalStudents' => $totalStudents,
+            'totalCourses' => $totalCourses,
+            'totalCertificate' => $totalCertificate,
+            'courses' => $courses,
+        ]);
     }
+
 
     public function signOut()
     {

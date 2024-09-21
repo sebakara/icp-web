@@ -51,7 +51,7 @@
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
-   <!-- <div class="search-bar">
+    <!-- <div class="search-bar">
       <form class="search-form d-flex align-items-center" method="POST" action="#">
         <input type="text" name="query" placeholder="Search" title="Enter search keyword">
         <button type="submit" title="Search"><i class="bi bi-search"></i></button>
@@ -67,7 +67,7 @@
           </a>
         </li><!-- End Search Icon-->
 
-        
+
 
         <li class="nav-item dropdown pe-3">
 
@@ -240,7 +240,7 @@
         </a>
       </li><!-- End Profile Page Nav -->
 
-      
+
     </ul>
 
   </aside><!-- End Sidebar-->
@@ -258,91 +258,186 @@
       </nav>
     </div><!-- End Page Title -->
 
-    <section class="section">
+    <section class="section dashboard">
       <div class="row">
-        <div class="col-lg-6">
 
-          <div class="card" style="width: 500px;">
-            <div class="card-body">
-              <h5 class="card-title">What we Do</h5>
-              <p>Welcome to ICP Rwanda, a pioneering tech community based in Rwanda, dedicated to empowering individuals and businesses in the dynamic realm of web3 development.</p>
+        <!-- Left side columns -->
+        <div class="col-lg-8">
+          <div class="row">
 
-              <!-- Basic Modal -->
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal">
-                Edit
-              </button>
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal">
-                Delete
-              </button>
-              
+            <!-- Sales Card -->
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card sales-card">
 
+                <div class="card-body">
+                  <h5 class="card-title">Total Students <span>|</span></h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-people"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6>{{ $totalStudents }}</h6>
+                      <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div><!-- End Sales Card -->
+
+            <!-- Revenue Card -->
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card revenue-card">
+                <div class="card-body">
+                  <h5 class="card-title">Total Courses <span>|</span></h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-book"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6>{{$totalCourses}}</h6>
+                      <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div><!-- End Revenue Card -->
+
+            <!-- Customers Card -->
+            <div class="col-xxl-4 col-xl-12">
+
+              <div class="card info-card customers-card">
+                <div class="card-body">
+                  <h5 class="card-title">Total Certificate Issued <span>|</span></h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-award"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6>{{$totalCertificate}}</h6>
+                      <span class="text-danger small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">decrease</span>
+
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div><!-- End Customers Card -->
+
+            <!-- Reports -->
+            <div class="col-12">
+              <div class="card">
+           
+
+                <div class="card-body">
+                  <h5 class="card-title">Reports on Students Enrollments/Joined and Certificate Issued during past 7 days<span>|</span></h5>
+
+                  <!-- Line Chart -->
+                  <div id="reportsChart"></div>
+
+                  <script>
+                    document.addEventListener("DOMContentLoaded", () => {
+                      fetch('/api/get-report-data') // Fetching data from your backend (explained below)
+                        .then(response => response.json())
+                        .then(data => {
+                          new ApexCharts(document.querySelector("#reportsChart"), {
+                            series: [{
+                              name: 'Enrollments|Joined Students',
+                              data: data.enrollments, // Data for enrollments
+                            }, {
+                              name: 'Certificates Awarded|Issued',
+                              data: data.certificates // Data for certificates awarded
+                            }],
+                            chart: {
+                              height: 350,
+                              type: 'area',
+                              toolbar: {
+                                show: false
+                              }
+                            },
+                            markers: {
+                              size: 4
+                            },
+                            colors: ['#4154f1', '#2eca6a'],
+                            fill: {
+                              type: "gradient",
+                              gradient: {
+                                shadeIntensity: 1,
+                                opacityFrom: 0.3,
+                                opacityTo: 0.4,
+                                stops: [0, 90, 100]
+                              }
+                            },
+                            dataLabels: {
+                              enabled: false
+                            },
+                            stroke: {
+                              curve: 'smooth',
+                              width: 2
+                            },
+                            xaxis: {
+                              type: 'datetime',
+                              categories: data.dates // Dynamic dates from the backend
+                            },
+                            tooltip: {
+                              x: {
+                                format: 'dd/MM/yy'
+                              }
+                            }
+                          }).render();
+                        });
+                    });
+                  </script>
+                </div>
+              </div>
             </div>
+
+            <!-- Top Courses -->
+            <div class="col-12">
+              <div class="card top-selling overflow-auto">
+
+                <div class="card-body pb-0">
+                  <h5 class="card-title">Top Enrolled Courses <span>|</span></h5>
+
+                  <table class="table table-borderless">
+                    <thead>
+                      <tr>
+                        <th scope="col">Course</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Enrolled Students</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @foreach($courses as $course)
+                      <tr>
+                        <td><a href="#" class="text-primary fw-bold">{{ $course->name }}</a></td>
+                        <td>{{ $course->description }}</td>
+                        <td class="fw-bold">{{ $course->students_count }}</td>
+                      </tr>
+                      @endforeach
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div><!-- End Top Selling Courses -->
+
+
           </div>
+        </div><!-- End Left side columns -->
 
-          <div class="card" style="width: 500px;">
-            <div class="card-body">
-              <h5 class="card-title">Our Mission</h5>
-              <p>Our mission is to democratize access to web3 technologies, empower individuals with the knowledge and skills needed to thrive in the digital economy, and drive sustainable growth and innovation in Rwanda and beyond. We are committed to providing a supportive and inclusive environment where aspiring and existing web3 developers can learn, collaborate, and succeed.</p>
 
-              <!-- Scrolling Modal -->
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#scrollingModal">
-                Edit
-              </button>
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#scrollingModal">
-                Delete              </button>
-              
-  
 
-            </div>
-          </div>
-
-        </div>
-
-        <div class="col-lg-6">
-
-          <div class="card" style="width: 500px;">
-            <div class="card-body">
-              <h5 class="card-title">Our Vision</h5>
-              <p>Our vision is to position Rwanda as a hub for web3 innovation and entrepreneurship, driving economic growth, social impact, and technological advancement. We envision a future where individuals and businesses harness the full potential of decentralized technologies to create positive change and build a more inclusive and equitable society.</p>
-
-              
-              <!-- Large Modal -->
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#largeModal">
-                Edit
-              </button>
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#largeModal">
-                Delete
-              </button>
-
-              
-
-            </div>
-          </div>
-
-          <div class="card" style="width: 500px;">
-            <div class="card-body">
-              <h5 class="card-title">What we Do</h5>
-              
-              <ul>
-                <li><i class="ri-check-double-line"></i> <b>Education:</b> We offer a range of educational programs, workshops, and resources designed to equip individuals</li>
-                <li><i class="ri-check-double-line"></i> <b>Community Building:</b> We foster a vibrant and inclusive community of web3 developers, enthusiasts, and experts through networking events, meetups, and online forums.</li>
-                <li><i class="ri-check-double-line"></i> <b>Advocacy and Awareness:</b> We actively promote awareness and adoption of web3 technologies through advocacy campaigns, outreach initiatives, and partnerships with industry stakeholders. </li>
-              </ul>
-
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#largeModal">
-                Edit
-              </button>
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#largeModal">
-                Delete
-              </button>
-            </div>
-          </div>
-
-        </div>
       </div>
     </section>
 
-  </main> 
+  </main>
 
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
