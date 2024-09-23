@@ -56,7 +56,7 @@
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
-   <!-- <div class="search-bar">
+    <!-- <div class="search-bar">
       <form class="search-form d-flex align-items-center" method="POST" action="#">
         <input type="text" name="query" placeholder="Search" title="Enter search keyword">
         <button type="submit" title="Search"><i class="bi bi-search"></i></button>
@@ -268,69 +268,85 @@
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Create New Student</h5>
+              <h5 class="card-title">Create New Student</h5> <br>
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md-3">
+                    <!-- Navigation for tabs -->
+                    <div class="d-flex flex-column" id="studentTab">
+                      <div class="nav flex-column nav-pills me-3 mb-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                        <button class="nav-link active mb-2" id="create-student-tab" data-bs-toggle="pill" data-bs-target="#create-student" type="button" role="tab" aria-controls="create-student" aria-selected="true">Add student</button>
+                        <button class="nav-link" id="import-tab" data-bs-toggle="pill" data-bs-target="#import" type="button" role="tab" aria-controls="import" aria-selected="false">Import File</button>
+                      </div>
+                    </div>
+                  </div>
 
-              <!-- General Form Elements -->
-              <form id="create-student-form" action="{{ route('student.create') }}" method="POST" enctype="multipart/form-data">
-                @csrf
+                  <div class="col-md-9">
+                    <div class="tab-content" id="studentTabContent">
+                      <div class="tab-pane fade show active" id="create-student" role="tabpanel" aria-labelledby="create-student-tab">
+                        <!-- Create Student Form -->
+                        <form id="create-student-form" action="{{ route('student.create') }}" method="POST" enctype="multipart/form-data">
+                          @csrf
+                          <div class="row mb-3">
+                            <label for="inputText" class="col-sm-2 col-form-label">Full Name</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" id="title" name="Full_name" placeholder="Full Name" required>
+                            </div>
+                          </div>
 
-                <div class="row mb-3">
-                  <label for="inputText" class="col-sm-2 col-form-label">Full Name</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="title" name="Full_name" placeholder="Full Name" required>
+                          <div class="row mb-3">
+                            <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+                            <div class="col-sm-10">
+                              <input type="email" class="form-control" name="Email" placeholder="Email" required>
+                            </div>
+                          </div>
+
+                          <div class="row mb-3">
+                            <label for="inputText" class="col-sm-2 col-form-label">Biography</label>
+                            <div class="col-sm-10">
+                              <textarea name="Biography_description" placeholder="Biography" class="form-control" style="height: 100px"></textarea>
+                            </div>
+                          </div>
+
+                          <div class="row mb-3">
+                            <label for="inputNumber" class="col-sm-2 col-form-label">Courses</label>
+                            <div class="col-sm-10">
+                              <select class="form-select" name="courses[]" single>
+                                @foreach($courses as $course)
+                                <option value="{{ $course->id }}">{{ $course->name }}</option>
+                                @endforeach
+                              </select>
+                            </div>
+                          </div>
+
+                          <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">Create Student</label>
+                            <div class="col-sm-10">
+                              <button type="submit" class="btn btn-primary">Create</button>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+
+                      <div class="tab-pane fade" id="import" role="tabpanel" aria-labelledby="import-tab">
+                        <!-- Import Student Form -->
+                        <form action="{{ route('import') }}" method="POST" enctype="multipart/form-data">
+                          @csrf
+                          <div class="row mb-3">
+                            <label for="inputFile" class="col-sm-2 col-form-label">File Upload</label>
+                            <div class="col-sm-8">
+                              <input type="file" name="file" accept=".xlsx,.csv" class="form-control" id="formFile" required>
+                            </div>
+                            <div class="col-sm-2">
+                              <button type="submit" class="btn btn-primary">Send</button>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
                   </div>
                 </div>
-
-                <div class="row mb-3">
-                  <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
-                  <div class="col-sm-10">
-                    <input type="email" class="form-control" name="Email" placeholder="Email" required>
-                  </div>
-                </div>
-
-                <div class="row mb-3">
-                  <label for="inputText" class="col-sm-2 col-form-label">Biography</label>
-                  <div class="col-sm-10">
-                    <textarea name="Biography_description" placeholder="Biography" class="form-control" style="height: 100px"></textarea>
-                  </div>
-                </div>
-
-                <!-- <div class="row mb-3">
-                  <label for="inputNumber" class="col-sm-2 col-form-label">Profile Image</label>
-                  <div class="col-sm-10">
-                    <input class="form-control" type="file" id="formFile" name="Profile_image">
-                  </div>
-                </div> -->
-
-                <div class="row mb-3">
-                  <label for="inputNumber" class="col-sm-2 col-form-label">Courses</label>
-                  <div class="col-sm-10">
-                    <select class="form-select" name="courses[]" multiple>
-                      @foreach($courses as $course)
-                      <option value="{{ $course->id }}">{{ $course->name }}</option>
-                      @endforeach
-                    </select>
-                  </div>
-                </div>
-
-                <div class="row mb-3">
-                  <label class="col-sm-2 col-form-label">Create Student</label>
-                  <div class="col-sm-10" id="hahaha">
-                    <button type="submit" class="btn btn-primary">Create</button>
-                  </div>
-                </div>
-
-              </form><!-- End General Form Elements -->
-
-
-              <h5 class="card-title">Import from Excell File.</h5>
-
-              <form action="{{ route('import') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <input type="file" name="file" accept=".xlsx,.csv" required>
-                <button type="submit" class="btn btn-primary">Import Students</button>
-              </form>
-
+              </div>
 
             </div>
           </div>

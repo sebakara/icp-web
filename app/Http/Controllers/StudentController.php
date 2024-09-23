@@ -43,7 +43,7 @@ class StudentController extends Controller
 
     public function getAllStudents()
     {
-        $students = Student::with('courses')->get();
+        $students = Student::with('courses')->paginate(10);
         return response()->json($students);
     }
 
@@ -83,6 +83,20 @@ class StudentController extends Controller
 
         return redirect()->back()->with('success', 'Student updated successfully');
     }
+
+    public function edit($id)
+    {
+        $student = Student::with('courses')->findOrFail($id);
+
+        // Return the student data along with the course IDs for the JS to populate the form
+        return response()->json([
+            'full_name' => $student->full_name,
+            'email' => $student->email,
+            'biography_description' => $student->biography_description,
+            'courses' => $student->courses->pluck('id'), // Return the array of course IDs
+        ]);
+    }
+
 
     public function deleteStudent($id)
     {
@@ -177,6 +191,4 @@ class StudentController extends Controller
 
         return back()->with('success', 'Students imported successfully');
     }
-
-    
 }

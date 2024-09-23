@@ -277,7 +277,6 @@
           <div class="card" style="width: 1200px;">
             <div class="card-body" id="student-list">
               <h5 class="card-title">All Students</h5>
-
               <!-- Default Table -->
               <table class="table">
                 <thead>
@@ -296,7 +295,7 @@
 
               </table>
 
-              <!-- End Default Table Example -->
+              <div id="pagination"></div>
             </div>
             <!-- Spinner (Hidden by Default) -->
             <div id="spinner1" class="spinner-border" style="width: 20px; height: 20px; display: none; margin-left:40%" role="status">
@@ -306,6 +305,48 @@
         </div>
       </div>
     </section>
+
+    <!-- Modal Structure -->
+    <div class="modal fade" id="editStudentModal" tabindex="-1" role="dialog" aria-labelledby="editStudentModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editStudentModalLabel">Edit Student</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <!-- Form for editing student -->
+            <form id="edit-student-form" action="" method="POST">
+              @csrf
+              <input type="hidden" name="_method" value="PUT">
+              <div class="form-group">
+                <label for="full_name">Full Name</label>
+                <input type="text" class="form-control" name="full_name" placeholder="Full Name" required>
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" name="email" placeholder="Email" required>
+              </div>
+              <div class="form-group">
+                <label for="biography_description">Biography Description</label>
+                <textarea name="biography_description" class="form-control" placeholder="Biography Description" style="height: 100px"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="courses">Courses</label>
+                <select name="courses[]" id="courses" class="form-control" multiple>
+                  <!-- Courses will be dynamically populated here -->
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
 
 
   </main><!-- End #main -->
@@ -335,6 +376,9 @@
   <script src="{{ asset('assets/vendor/simple-datatables/simple-datatables.js') }}"></script>
   <script src="{{ asset('assets/vendor/tinymce/tinymce.min.js') }}"></script>
   <script src="{{ asset('assets/vendor/php-email-form/validate.js') }}"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
   <!-- Template Main JS File -->
   <script src="{{ asset('assets/js/main.js') }}"></script>

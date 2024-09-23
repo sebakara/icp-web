@@ -58,7 +58,7 @@
         </div><!-- End Logo -->
 
         <div class="search-bar">
-             <!-- <div class="search-bar">
+            <!-- <div class="search-bar">
       <form class="search-form d-flex align-items-center" method="POST" action="#">
         <input type="text" name="query" placeholder="Search" title="Enter search keyword">
         <button type="submit" title="Search"><i class="bi bi-search"></i></button>
@@ -310,7 +310,7 @@
 
                             </table>
 
-                            <!-- End Default Table Example -->
+                            <div id="pagination"></div>
                         </div>
                         <!-- Spinner (Hidden by Default) -->
                         <div id="spinner1" class="spinner-border" style="width: 20px; height: 20px; display: none; margin-left:40%" role="status">
@@ -367,7 +367,7 @@
                 program: studentProgram,
                 email: studentEmail, // Add email field
                 date: new Date().toISOString().split('T')[0], // Today's date in YYYY-MM-DD format
-                
+
             };
 
             // Send a POST request to generate the certificate and send an email
@@ -404,12 +404,11 @@
         }
 
 
-        function loadStudents() {
+        function loadStudents(page = 1) {
             var courseId = document.getElementById('courseDropdown').value;
-            var courseId = courseDropdown.value;
             var courseName = courseDropdown.options[courseDropdown.selectedIndex].text;
-            if (courseId) {
 
+            if (courseId) {
                 // Set the course name in the title
                 document.getElementById('courseName').textContent = courseName;
 
@@ -417,10 +416,11 @@
                 document.getElementById('spinner1').style.display = 'block';
 
                 // Make an AJAX request to fetch students for the selected course
-                fetch(`/courses/${courseId}/students`)
+                fetch(`/courses/${courseId}/students?page=${page}`)
                     .then(response => response.json())
                     .then(data => {
                         displayStudents(data.students, courseName);
+                        createPagination(data.pagination);
                     })
                     .catch(error => console.error('Error fetching students:', error))
                     .finally(() => {
@@ -449,6 +449,30 @@
             });
 
             document.getElementById('studentTable').innerHTML = tableBody;
+        }
+
+        function createPagination(pagination) {
+            const paginationDiv = document.getElementById('pagination');
+            paginationDiv.innerHTML = ''; // Clear the pagination
+
+            let paginationHTML = '';
+
+            // Previous Page Link
+            if (pagination.current_page > 1) {
+                paginationHTML += `<button class="btn btn-light" onclick="loadStudents(${pagination.current_page - 1})">Previous</button>`;
+            }
+
+            // Page Numbers
+            for (let page = 1; page <= pagination.last_page; page++) {
+                paginationHTML += `<button class="btn btn-success" onclick="loadStudents(${page})" ${page === pagination.current_page ? 'disabled' : ''}>${page}</button>`;
+            }
+
+            // Next Page Link
+            if (pagination.current_page < pagination.last_page) {
+                paginationHTML += `<button class="btn btn-light" onclick="loadStudents(${pagination.current_page + 1})">Next</button>`;
+            }
+
+            paginationDiv.innerHTML = paginationHTML;
         }
     </script>
 

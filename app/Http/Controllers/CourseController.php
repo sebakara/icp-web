@@ -70,11 +70,24 @@ class CourseController extends Controller
     // CourseController.php
     public function getStudentsForCourse($courseId)
     {
-        $course = Course::with('students')->findOrFail($courseId);
-        return response()->json(['students' => $course->students]);
+        // Find the course and paginate the students
+        $course = Course::findOrFail($courseId);
+        $students = $course->students()->paginate(10); // Paginate students, 10 per page
+
+        return response()->json([
+            'students' => $students->items(), // Get the student records
+            'pagination' => [
+                'total' => $students->total(),
+                'current_page' => $students->currentPage(),
+                'per_page' => $students->perPage(),
+                'last_page' => $students->lastPage(),
+            ]
+        ]);
     }
 
-    public function showStudentAndCertificates(){
+
+    public function showStudentAndCertificates()
+    {
         return view('admin.students-certificate');
     }
 

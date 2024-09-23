@@ -77,24 +77,24 @@
       <div class="row">
         <div class="blog-container">
           @foreach($blogs as $blog)
-
           <div class="blog-item">
             <img src="{{ asset($blog->image) }}" class="img-fluid" alt="{{ $blog->title }}">
             <div class="card-body">
               <h4 class="card-title">{{ $blog->title }}</h4>
-              
-              <!-- <p class="card-text" style="font-size: smaller;">{!! Str::limit($blog->content, 100) !!}</p> -->
               <a href="{{ route('blogs.show', ['slug' => $blog->slug]) }}" class="btn btn-primary" style="margin-bottom:1%">Read More</a>
             </div>
           </div>
-
           @endforeach
         </div>
+      </div> <br>
+
+      <!-- Pagination Links -->
+      <div class="pagination">
+        {{ $blogs->links() }} <!-- This will create pagination links -->
       </div>
 
     </div>
   </section>
-
   <!-- End Blog Section -->
 
 

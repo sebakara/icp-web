@@ -53,7 +53,7 @@
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
-   <!-- <div class="search-bar">
+    <!-- <div class="search-bar">
       <form class="search-form d-flex align-items-center" method="POST" action="#">
         <input type="text" name="query" placeholder="Search" title="Enter search keyword">
         <button type="submit" title="Search"><i class="bi bi-search"></i></button>
@@ -255,7 +255,7 @@
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
-         
+
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -273,6 +273,7 @@
                 <thead>
                   <tr>
                     <!-- <th scope="col">#</th> -->
+                    <th scope="col">Service Icon</th>
                     <th scope="col">Service Name</th>
                     <th scope="col">Description</th>
                     <th scope="col">Actions</th>
@@ -293,6 +294,40 @@
 
       </div>
     </section>
+
+    <!-- Modal Structure -->
+    <div class="modal fade" id="editServiceModal" tabindex="-1" role="dialog" aria-labelledby="editServiceModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editStaffModalLabel">Edit Service</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <!-- The form for editing services -->
+            <form id="edit-serive-form" action="" method="POST" enctype="multipart/form-data">
+              @csrf
+              <input type="hidden" name="_method" value="PUT">
+              <div class="form-group">
+                <label for="Full_name">Service title</label>
+                <input type="text" class="form-control" name="Service_title" placeholder="Service title" required>
+              </div>
+              <div class="form-group">
+                <label for="Biography_description">Description</label>
+                <textarea name="Service_description" class="form-control" placeholder="Service Description" style="height: 100px" required></textarea>
+              </div>
+              <div class="form-group">
+                <label for="Profile_image">Icon</label>
+                <input class="form-control" type="file" id="formFile" name="Icon">
+              </div>
+              <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
 
   </main><!-- End #main -->
 
@@ -321,6 +356,10 @@
   <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
   <script src="assets/vendor/tinymce/tinymce.min.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>

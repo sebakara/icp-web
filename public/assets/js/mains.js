@@ -128,9 +128,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Fetch all ICP services and display them
     const icpList = document.getElementById('icp-tbody');
 
-    // for edit form
-    const editICPForm = document.getElementById('edit-icp-form');
-
     // Handle delete ICP service
     window.deleteICP = function (id) {
         fetch(`http://127.0.0.1:8000/icp-services/delete`, { // Adjust this URL based on your routes
@@ -159,6 +156,29 @@ document.addEventListener('DOMContentLoaded', function () {
             })
     };
 
+    // Handle edit Service 
+    window.editService = function (id) {
+        // Fetch the staff data based on the id
+        fetch(`http://127.0.0.1:8000/service/${id}/edit`)
+            .then(response => response.json())
+            .then(data => {
+                // Populate the form fields with the fetched service data
+                document.querySelector('input[name="Service_title"]').value = data.Service_title;
+                document.querySelector('textarea[name="Service_description"]').value = data.Service_description;
+
+                // If there is an image, set it up in the form
+                if (data.Icon) {
+                    document.querySelector('#formFile').src = data.Icon;
+                }
+
+                // Set the form action to update the staff
+                document.querySelector('#edit-serive-form').action = `http://127.0.0.1:8000/icp-services/${id}/update`;
+
+                // Open the modal
+                $('#editServiceModal').modal('show');
+            });
+    };
+
     // Fetch all ICP services and display them
     function fetchICP() {
         fetch('http://127.0.0.1:8000/icp-services/all') // Adjust this URL based on your API routes
@@ -168,10 +188,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 data.forEach(icp => {
                     const row = document.createElement('tr');
                     row.innerHTML = `
+                            <td><img src="${icp.Icon}" alt="${icp.Service_title}'s Profile" class="small-image"></td>
                             <td>${icp.Service_title}</td>
                             <td>${icp.Service_description}</td>
                             <td style="width: 120px;">
-                                <button class="btn btn-info btn-sm"  onclick="editICP(${icp.id})"><i class="bi bi-pen"></i></button> 
+                                <button class="btn btn-info btn-sm"  onclick="editService(${icp.id})"><i class="bi bi-pen"></i></button> 
                                 <button class="btn btn-danger btn-sm"  onclick="deleteICP(${icp.id})"><i class="bi bi-trash"></i></button>
                             </td>
                         `;
@@ -752,52 +773,83 @@ document.addEventListener('DOMContentLoaded', function () {
             .catch(error => console.error('Error fetching courses:', error));
     }
 
-
     // Fetch all students and display them
-    function fetchStudents() {
-
+    window.fetchStudents = function (page = 1) { // Attach fetchStudents to the window object
         const spinner = document.getElementById('spinner1');
-
         spinner.style.display = 'block';
 
-        fetch('http://127.0.0.1:8000/all/students') // Adjust this URL based on your routes
+        // Fetch students with pagination
+        fetch(`http://127.0.0.1:8000/all/students?page=${page}`) // Adjust this URL based on your routes
             .then(response => response.json())
             .then(data => {
                 const studentList = document.getElementById('student-tbody');
                 studentList.innerHTML = ''; // Clear existing content
-                data.forEach(student => {
+
+                data.data.forEach(student => {
                     const row = document.createElement('tr');
 
                     // Combine course names into a single string
                     const courses = student.courses.map(course => course.name).join('. ');
 
                     row.innerHTML = `
-                    <td>${student.full_name}</td>
-                    <td>${student.email}</td>
-                    <td>${student.biography_description}</td>
-                    <td>${courses}</td>
-                    <td style="width:150px;">
-                        <button class="btn btn-info btn-sm"  onclick="editStudent(${student.id})"><i class="bi bi-pen"></i></button> 
-                        <button class="btn btn-danger btn-sm"   onclick="deleteStudent(${student.id})"><i class="bi bi-trash"></i></button> 
-                        <button class="btn btn-success btn-sm" onclick="generateCertificate(${student.id}, '${student.full_name}', '${courses}', '${student.email}')"><i class="bi bi-arrow-down-circle"></i></button>
-                    </td>
+                <td>${student.full_name}</td>
+                <td>${student.email}</td>
+                <td>${student.biography_description}</td>
+                <td>${courses}</td>
+                <td style="width:150px;">
+                    <button class="btn btn-info btn-sm"  onclick="editStudent(${student.id})"><i class="bi bi-pen"></i></button> 
+                    <button class="btn btn-danger btn-sm"   onclick="deleteStudent(${student.id})"><i class="bi bi-trash"></i></button> 
+                    <button class="btn btn-success btn-sm" onclick="generateCertificate(${student.id}, '${student.full_name}', '${courses}', '${student.email}')"><i class="bi bi-arrow-down-circle"></i></button>
+                </td>
                 `;
                     studentList.appendChild(row);
                 });
+
+                // Create pagination links
+                createPagination(data);
             })
             .catch(error => console.error('Error fetching students:', error))
             .finally(() => {
-                // Hide the spinner
                 spinner.style.display = 'none';
             });
-    }
+    };
 
     // Call fetchStudents to populate the table on page load
     fetchStudents();
 
+    // Create pagination for next and previous pages
+    function createPagination(data) {
+        const pagination = document.getElementById('pagination');
+        pagination.innerHTML = ''; // Clear existing pagination
+
+        // Previous Page Button
+        if (data.prev_page_url) {
+            pagination.innerHTML += `<button class="btn btn-light" onclick="fetchStudents(${data.current_page - 1})">Previous</button>`;
+        }
+
+        // Page Numbers (Display only a few around the current page, e.g., 5 pages max)
+        let startPage = Math.max(data.current_page - 2, 1);
+        let endPage = Math.min(data.current_page + 2, data.last_page);
+
+        for (let i = startPage; i <= endPage; i++) {
+            if (i === data.current_page) {
+                // Highlight current page
+                pagination.innerHTML += `<button class="btn btn-success">${i}</button>`;
+            } else {
+                pagination.innerHTML += `<button class="btn btn-light" onclick="fetchStudents(${i})">${i}</button>`;
+            }
+        }
+
+        // Next Page Button
+        if (data.next_page_url) {
+            pagination.innerHTML += `<button class="btn btn-light" onclick="fetchStudents(${data.current_page + 1})">Next</button>`;
+        }
+    }
+
+
     // Handle delete student
     window.deleteStudent = function (id) {
-        fetch(`http://127.0.0.1:8000/students/delete`, {
+        fetch(`http://127.0.0.1:8000/student/delete/${id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -824,43 +876,46 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
 
-
-    // Handle edit student
-    window.editStudent = function (id, name, email, course_id) {
-        document.getElementById('edit-student-id').value = id;
-        document.getElementById('edit-student-name').value = name;
-        document.getElementById('edit-student-email').value = email;
-        document.getElementById('edit-course-select').value = course_id;
-        editStudentForm.style.display = 'block';
-    };
-
-    // Handle update student
-    editStudentForm.addEventListener('submit', function (event) {
-        event.preventDefault();
-        const id = document.getElementById('edit-student-id').value;
-        const name = document.getElementById('edit-student-name').value;
-        const email = document.getElementById('edit-student-email').value;
-        const course_id = document.getElementById('edit-course-select').value;
-
-        fetch('http://127.0.0.1:8000/students/update', {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            },
-            body: JSON.stringify({
-                id: id,
-                name: name,
-                email: email,
-                course_id: course_id,
-            }),
-        })
+    // Function to open modal and populate the form with student data
+    window.editStudent = function (id) {
+        // Fetch the student data based on the id
+        fetch(`/students/${id}/edit`)
             .then(response => response.json())
             .then(data => {
-                editStudentForm.style.display = 'none';
-                fetchStudents(); // Refresh the student list
+                // Populate the form fields with the fetched student data
+                document.querySelector('input[name="full_name"]').value = data.full_name;
+                document.querySelector('input[name="email"]').value = data.email;
+                document.querySelector('textarea[name="biography_description"]').value = data.biography_description;
+
+                // Populate the courses select field
+                fetch('/courses/all')
+                    .then(response => response.json())
+                    .then(courses => {
+                        let coursesSelect = document.querySelector('#courses');
+                        coursesSelect.innerHTML = ''; // Clear existing options
+                        courses.forEach(course => {
+                            let option = document.createElement('option');
+                            option.value = course.id;
+                            option.text = course.name;
+
+                            // Check if the student is already enrolled in the course
+                            if (data.courses.includes(course.id)) {
+                                option.selected = true;
+                            }
+
+                            coursesSelect.appendChild(option);
+                        });
+                    });
+
+                // Set the form action to update the student
+                document.querySelector('#edit-student-form').action = `/students/${id}/update`;
+
+                // Open the modal
+                $('#editStudentModal').modal('show');
             });
-    });
+    };
+
+
 
     // Cancel editing
     document.getElementById('cancel-edit').addEventListener('click', function () {

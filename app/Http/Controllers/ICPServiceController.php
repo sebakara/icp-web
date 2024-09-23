@@ -66,7 +66,7 @@ class ICPServiceController extends Controller
     {
         $services = Service::all();
         $staffs = Staff::all();
-        $blogs = Blog::all();
+        $blogs = Blog::paginate(2);;
        
 
         return view('client.index', [
@@ -86,8 +86,14 @@ class ICPServiceController extends Controller
         return response()->json($service);
     }
 
-    // Update an ICP service
-    public function updateICP(Request $request)
+    public function editService($id)
+    {
+        $service = Service::findOrFail($id);
+        return response()->json($service);
+    }
+
+    // Update an ICP servie
+    public function updateICP(Request $request, $id)
     {
         $request->validate([
             'Service_title' => 'required|string|max:255',
@@ -95,8 +101,9 @@ class ICPServiceController extends Controller
             'Icon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $service = Service::findOrFail($request->input('id'));
+        $service = Service::findOrFail($id);
 
+        $service->Icon = $request->input('Icon');
         $service->Service_title = $request->input('Service_title');
         $service->Service_description = $request->input('Service_description');
 

@@ -53,7 +53,7 @@
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
-   <!-- <div class="search-bar">
+    <!-- <div class="search-bar">
       <form class="search-form d-flex align-items-center" method="POST" action="#">
         <input type="text" name="query" placeholder="Search" title="Enter search keyword">
         <button type="submit" title="Search"><i class="bi bi-search"></i></button>
@@ -291,19 +291,25 @@
 
                 <div class="row mb-3">
                   <label for="facebook" class="col-sm-2 col-form-label">Facebook</label>
-                  <input type="url" name="facebook" id="facebook" class="col-sm-10" value="{{ old('facebook') }}">
+                  <div class="col-sm-10">
+                    <input type="url" name="facebook" id="facebook" class="form-control" value="{{ old('facebook') }}">
+                  </div>
                   <div class="invalid-feedback">Please enter a valid Url link!</div>
                 </div>
 
                 <div class="row mb-3">
                   <label for="instagram" class="col-sm-2 col-form-label">Instagram</label>
-                  <input type="url" name="instagram" id="instagram" class="col-sm-10" value="{{ old('instagram') }}">
+                  <div class="col-sm-10">
+                    <input type="url" name="instagram" id="instagram" class="form-control" value="{{ old('instagram') }}">
+                  </div>
                   <div class="invalid-feedback">Please enter a valid Url link!</div>
                 </div>
 
                 <div class="row mb-3">
                   <label for="twitter" class="col-sm-2 col-form-label">Twitter</label>
-                  <input type="url" name="twitter" id="twitter" class="col-sm-10" value="{{ old('twitter') }}">
+                  <div class="col-sm-10">
+                    <input type="url" name="twitter" id="twitter" class="form-control" value="{{ old('twitter') }}">
+                  </div>
                   <div class="invalid-feedback">Please enter a valid Url link!</div>
                 </div>
 

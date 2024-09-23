@@ -55,7 +55,8 @@ Route::middleware(['auth'])->group(function () {
 
     // Route for ICP services
     Route::post('/icp-services/create', [ICPServiceController::class, 'createICP'])->name('icp.create');
-    Route::put('/icp-services/update', [ICPServiceController::class, 'updateICP'])->name('icp.update');
+    Route::get('/service/{id}/edit', [ICPServiceController::class, 'editService']);
+    Route::put('/icp-services/{id}/update', [ICPServiceController::class, 'updateICP'])->name('icp.update');
     Route::delete('/icp-services/delete', [ICPServiceController::class, 'deleteICP'])->name('icp.delete');
     Route::get('/icp-services/all', [ICPServiceController::class, 'getAllICP'])->name('icp.services');
     Route::get('/create-icp', [ICPServiceController::class, 'showCreateForm'])->name('showCreateForm');
@@ -81,7 +82,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/gallery', [GalleryController::class, 'createPicture'])->name('gallery.create');
     Route::put('/gallery/{id}', [GalleryController::class, 'updatePicture'])->name('gallery.update');
     Route::delete('/gallery/{id}', [GalleryController::class, 'deletePicture'])->name('gallery.delete');
-    Route::get('/gallery-page', [GalleryController::class, 'displayGallery']);
+
 
     // Route for Certificate
     Route::get('/create-certificate', [CertificateController::class, 'showCreateForm'])->name('showCerticateCreateForm');
@@ -93,7 +94,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/certificates', [CertificateController::class, 'getAllCertificates'])->name('certificates.getAll');
     Route::get('/certificates/{id}', [CertificateController::class, 'getOneCertificate'])->name('certificates.getOne');
     // routes/web.php
-    Route::get('/courses/{course}/students', [CourseController::class, 'getStudentsForCourse']);
+
     Route::get('/student/certificates', [CourseController::class, 'showCoursesWithStudents'])->name('showStudentAndCertificates');
 
 
@@ -119,15 +120,21 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/create/student', [StudentController::class, 'createStudent'])->name('student.create');
     Route::get('/Students/all', [StudentController::class, 'showAllStudents'])->name('students.all');
     Route::get('/all/students', [StudentController::class, 'getAllStudents']);
+    Route::delete('/student/delete/{id}', [StudentController::class, 'deleteStudent']);
+    Route::get('/students/{id}/edit', [StudentController::class, 'edit']);
+    Route::put('/students/{id}/update', [StudentController::class, 'updateStudent']);
+
 
 
     // Route for course
+    Route::get('/courses/{course}/students', [CourseController::class, 'getStudentsForCourse']);
     Route::get('/course/create', [CourseController::class, 'showCreateForm'])->name('showCreateCourseForm');
     Route::post('/create/course', [CourseController::class, 'createCourse'])->name('course.create');
     Route::get('/courses/all', [CourseController::class, 'getAllCourses'])->name('courses.all');
     Route::post('/import', [StudentController::class, 'importStudentWithExcel'])->name('import');
 });
 Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blogs.show');
+Route::get('/gallery-page', [GalleryController::class, 'displayGallery']);
 
 Route::get('/certificates/download/{id}', function ($id) {
     $certificate = Certificate::findOrFail($id);
