@@ -89,10 +89,7 @@
       </div> <br>
 
       <!-- Pagination Links -->
-      <div class="pagination">
-        {{ $blogs->links() }} <!-- This will create pagination links -->
-      </div>
-
+      {{ $blogs->onEachSide(1)->links('vendor.pagination.bootstrap-4') }}
     </div>
   </section>
   <!-- End Blog Section -->
