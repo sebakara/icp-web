@@ -66,7 +66,7 @@ class ICPServiceController extends Controller
     {
         $services = Service::all();
         $staffs = Staff::all();
-        $blogs = Blog::paginate(2);
+        $blogs = Blog::paginate(3);
        
 
         return view('client.index', [
