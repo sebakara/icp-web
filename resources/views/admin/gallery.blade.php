@@ -169,6 +169,12 @@
             </a>
           </li>
 
+          <li>
+            <a href="{{ route('showCreateBlogForm') }}">
+              <i class="bi bi-circle"></i><span>Create a Blog</span>
+            </a>
+          </li>
+
           <!-- <li>
             <a href="{{ route('showCerticateCreateForm') }}">
               <i class="bi bi-circle"></i><span>Generate Certificate</span>
@@ -203,6 +209,18 @@
           <li>
             <a href="{{ route('showAllStaff') }}">
               <i class="bi bi-circle"></i><span>View All Team members</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="{{ route('showAllBlog') }}">
+              <i class="bi bi-circle"></i><span>View All Blogs</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="{{ route('courses.ShowAll') }}">
+              <i class="bi bi-circle"></i><span>View All Courses</span>
             </a>
           </li>
 

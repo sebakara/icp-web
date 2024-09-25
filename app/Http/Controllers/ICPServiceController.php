@@ -62,21 +62,26 @@ class ICPServiceController extends Controller
     }
 
     // Get all ICP services for the frontend
-    public function getAllICP_frontend()
+    public function getAllICP_frontend(Request $request)
     {
         $services = Service::all();
         $staffs = Staff::all();
-        $blogs = Blog::paginate(3);
-       
+        $blogs = Blog::paginate(2);
+
+        if ($request->ajax()) {
+            return response()->json([
+                'blogs' => view('partials.blogs', compact('blogs'))->render(),
+                'pagination' => (string) $blogs->onEachSide(1)->links('vendor.pagination.bootstrap-4')
+            ]);
+        }
 
         return view('client.index', [
             'services' => $services,
-            
             'staffs' => $staffs,
             'blogs' => $blogs,
-            
         ]);
     }
+
 
 
     // Get a specific ICP service

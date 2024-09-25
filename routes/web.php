@@ -107,10 +107,16 @@ Route::middleware(['auth'])->group(function () {
 
 
     // Route for Blog
+
+    // Blog routes
+    Route::get('/blogs/{id}/edit', [BlogController::class, 'edit'])->name('blogs.edit');
+    Route::put('/blogs/{id}', [BlogController::class, 'update'])->name('blogs.update');
+    Route::delete('/blogs/{id}', [BlogController::class, 'destroy'])->name('blogs.destroy');
     Route::get('/get-dashboard', [BlogController::class, 'showAllBlog'])->name('showAllBlog');
     Route::get('/create-blog', [BlogController::class, 'create'])->name('showCreateBlogForm');
     Route::post('/store/blog', [BlogController::class, 'createBlog'])->name('storeBlog');
     Route::post('/upload-image', [BlogController::class, 'uploadImage'])->name('upload.image');
+    Route::get('/admin-blog/{slug}', [BlogController::class, 'showAdmin'])->name('blogs.showAdmin');
 
 
 
@@ -126,12 +132,15 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-    // Route for course
+    // Route fo course
     Route::get('/courses/{course}/students', [CourseController::class, 'getStudentsForCourse']);
     Route::get('/course/create', [CourseController::class, 'showCreateForm'])->name('showCreateCourseForm');
     Route::post('/create/course', [CourseController::class, 'createCourse'])->name('course.create');
     Route::get('/courses/all', [CourseController::class, 'getAllCourses'])->name('courses.all');
+    Route::get('/courses-all', [CourseController::class, 'showAllCourses'])->name('courses.ShowAll');
     Route::post('/import', [StudentController::class, 'importStudentWithExcel'])->name('import');
+    Route::get('/courses/{id}/edit', [CourseController::class, 'editCourse']);
+    Route::put('/courses/{id}/update', [CourseController::class, 'updateCourse']);
 });
 Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blogs.show');
 Route::get('/gallery-page', [GalleryController::class, 'displayGallery']);

@@ -602,7 +602,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Handle delete course
     window.deleteCourse = function (id) {
-        fetch(`http://127.0.0.1:8000/courses/delete`, { // Adjust this URL based on your routes
+        fetch(`http://127.0.0.1:8000/courses/delete/${id}`, { // Adjust this URL based on your routes
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -640,8 +640,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         <td>${course.name}</td>
                         <td>${course.description}</td>
                         <td>
-                            <button class="bi bi-pen" style="margin: 5px;" onclick="editCourse(${course.id}, '${course.name}', '${course.description}')">Edit</button> <br>
-                            <button class="bi bi-trash" style="margin: 5px;" onclick="deleteCourse(${course.id})">Delete</button>
+                            <button class="btn btn-info btn-sm"  onclick="editCourse(${course.id}, '${course.name}', '${course.description}')"><i class="bi bi-pen"></i></button> 
+                            <button class="btn btn-danger btn-sm"  onclick="deleteCourse(${course.id})"><i class="bi bi-trash"></i></button>
                         </td>
                     `;
                     courseList.appendChild(row);
@@ -654,44 +654,66 @@ document.addEventListener('DOMContentLoaded', function () {
     fetchCourses();
 
 
-    // Handle edit course
-    window.editCourse = function (id, name, description) {
-        document.getElementById('edit-course-id').value = id;
-        document.getElementById('edit-course-name').value = name;
-        document.getElementById('edit-course-description').value = description;
-        editCourseForm.style.display = 'block';
-    };
-
-    // Handle update course
-    editCourseForm.addEventListener('submit', function (event) {
-        event.preventDefault();
-        const id = document.getElementById('edit-course-id').value;
-        const name = document.getElementById('edit-course-name').value;
-        const description = document.getElementById('edit-course-description').value;
-
-        fetch('http://127.0.0.1:8000/courses/update', {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            },
-            body: JSON.stringify({
-                id: id,
-                name: name,
-                description: description,
-            }),
-        })
+    // Handle edit Course
+    window.editCourse = function (id) {
+        // Fetch the course data based on the id
+        fetch(`http://127.0.0.1:8000/courses/${id}/edit`)
             .then(response => response.json())
             .then(data => {
-                editCourseForm.style.display = 'none';
-                fetchCourses(); // Refresh the course list
+                // Populate the form fields with the fetched course data
+                document.querySelector('input[name="name"]').value = data.name;
+                document.querySelector('textarea[name="description"]').value = data.description;
+
+                // Set the form action to update the course
+                document.querySelector('#edit-course-form').action = `http://127.0.0.1:8000/courses/${id}/update`;
+
+                // Open the modal
+                $('#editCourseModal').modal('show');
+            })
+            .catch(error => {
+                console.error('Error fetching course data:', error);
+                alert('There was an error fetching course data. Please try again later.');
+            });
+    };
+
+    // Handle course form submission
+    document.querySelector('#edit-course-form').addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        const formData = new FormData(this); // Gather the form data
+
+        fetch(this.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json(); // Return the JSON response
+                }
+                throw new Error('Network response was not ok.'); // Handle network errors
+            })
+            .then(data => {
+                // Close the modal
+                $('#editCourseModal').modal('hide');
+
+                // Optionally, you can display a success message or notification here
+                alert('Course updated successfully!');
+
+                // Refresh the page or redirect
+                window.location.reload(); // This will refresh the current page
+                // Alternatively, you could redirect to a specific page like:
+                // window.location.href = '/courses'; // Redirect to courses page
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+                alert('There was an error updating the course. Please try again later.');
             });
     });
 
-    // Cancel editing
-    document.getElementById('cancel-edit').addEventListener('click', function () {
-        editCourseForm.style.display = 'none';
-    });
+
 });
 
 

@@ -43,6 +43,13 @@ class CourseController extends Controller
         return response()->json($course);
     }
 
+    public function editCourse($id)
+    {
+        $course = Course::findOrFail($id);
+        return response()->json($course);
+    }
+
+
     public function updateCourse(Request $request, $id)
     {
         // Validation
@@ -55,7 +62,7 @@ class CourseController extends Controller
         $course = Course::findOrFail($id);
         $course->update($request->all());
 
-        return redirect()->back()->with('success', 'Course updated successfully');
+        return response()->json(['success' => 'Course updated successfully']);
     }
 
     public function deleteCourse($id)
@@ -67,7 +74,7 @@ class CourseController extends Controller
         return response()->json(['success' => 'Course deleted Successfully']);
     }
 
-    // CourseController.php
+    // CourseContrller.php
     public function getStudentsForCourse($courseId)
     {
         // Find the course and paginate the students

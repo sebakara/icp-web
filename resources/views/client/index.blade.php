@@ -68,14 +68,13 @@
   <!-- ======= Blog Section ======-->
   <section id="blog" class="blog">
     <div class="container" data-aos="fade-up">
-
       <div class="section-title">
         <h2>Latest Blogs</h2>
         <p>Stay updated with the latest news, insights, and updates from our team.</p>
       </div>
 
       <div class="row">
-        <div class="blog-container">
+        <div class="blog-container" id="blog-container">
           @foreach($blogs as $blog)
           <div class="blog-item">
             <img src="{{ asset($blog->image) }}" class="img-fluid" alt="{{ $blog->title }}">
@@ -89,10 +88,13 @@
       </div> <br>
 
       <!-- Pagination Links -->
-      {{ $blogs->onEachSide(1)->links('vendor.pagination.bootstrap-4') }}
+      <div id="pagination-links">
+        {{ $blogs->onEachSide(1)->links('vendor.pagination.bootstrap-4') }}
+      </div>
     </div>
   </section>
   <!-- End Blog Section -->
+
 
 
   <!-- ======= Services Section ====== -->

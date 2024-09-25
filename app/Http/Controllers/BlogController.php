@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Log;
 
 
@@ -31,7 +32,7 @@ class BlogController extends Controller
                 'content' => 'required|string',
                 'image' => 'nullable|image|mimes:jpeg,png,jpg,webp,gif|max:2048',
             ]);
-    
+
             // Handle file upload
             $image = null;
             if ($request->hasFile('image')) {
@@ -40,29 +41,29 @@ class BlogController extends Controller
                 $file->move(public_path('assets/img/blogs'), $imageName);
                 $image = 'assets/img/blogs/' . $imageName;
             }
-    
+
             // Create the blog post
             $newBlog = Blog::create([
                 'title' => $request->input('title'),
                 'content' => $request->input('content'),
                 'image' => $image,
             ]);
-    
+
             return response()->json(['success' => 'Blog has been created successfully']);
         } catch (\Illuminate\Validation\ValidationException $e) {
             // Log validation errors
             Log::error('Validation failed:', ['errors' => $e->errors()]);
-    
+
             return response()->json(['error' => 'Validation failed', 'details' => $e->errors()], 422);
         } catch (\Exception $e) {
             // Log other errors
             Log::error('Error creating blog post:', ['error' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
-    
+
             return response()->json(['error' => 'Error creating blog post: ' . $e->getMessage()], 500);
         }
     }
-    
-    
+
+
 
 
     // Display the specified blog
@@ -73,18 +74,30 @@ class BlogController extends Controller
         return view('admin.singleBlog', compact('blog'));
     }
 
+    public function showAdmin($slug)
+    {
+        $blog =  Blog::where('slug', $slug)->firstOrFail();
+
+        return view('admin.singleBlogAdminView', compact('blog'));
+    }
+
 
     public function showAllBlog()
     {
-        return view('admin.front-page');
+        $blogs = Blog::paginate(2);
+
+        return view('admin.all-blogs', [
+            'blogs' => $blogs,
+        ]);
     }
 
     // Show the form for editing the specified blog
     public function edit($id)
     {
-        $blog = Blog::findOrFail($id);
-        return view('blogs.edit', compact('blog'));
+        $blog = Blog::find($id);
+        return response()->json($blog);
     }
+
 
     // Update the specified blog in the database
     public function update(Request $request, $id)
@@ -112,20 +125,23 @@ class BlogController extends Controller
             'image' => $blog->image,
         ]);
 
-        return redirect()->route('blogs.index')->with('success', 'Blog updated successfully.');
+        return redirect()->route('showAllBlog')->with('success', 'Blog updated successfully.');
     }
 
     // Remove the specified blog from the database
     public function destroy($id)
     {
         $blog = Blog::findOrFail($id);
-
+    
         // Delete the blog's image if it exists
         if ($blog->image) {
             unlink(public_path($blog->image));
         }
-
+    
         $blog->delete();
-        return redirect()->route('blogs.index')->with('success', 'Blog deleted successfully.');
+        
+        // Return a JSON response indicating success
+        return response()->json(['success' => 'Blog deleted successfully.']);
     }
+    
 }

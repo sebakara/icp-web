@@ -99,6 +99,31 @@
 <script src="assets/frontend/js/main.js"></script>
 <script src="assets/js/mains.js"></script>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).on('click', '.pagination a', function(e) {
+    e.preventDefault(); // Prevent the default link behavior
+
+    const url = $(this).attr('href'); // Get the URL from the link
+
+    $.ajax({
+      url: url,
+      type: 'GET',
+      dataType: 'json',
+      success: function(data) {
+        // Update the blog container with the new blog items
+        $('#blog-container').html(data.blogs);
+        // Update the pagination links
+        $('#pagination-links').html(data.pagination);
+      },
+      error: function(xhr) {
+        console.log('Error: ', xhr);
+      }
+    });
+  });
+</script>
+
+
 </body>
 
 </html>

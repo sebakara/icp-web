@@ -224,6 +224,18 @@
           </li>
 
           <li>
+            <a href="{{ route('showAllBlog') }}">
+              <i class="bi bi-circle"></i><span>View All Blogs</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="{{ route('courses.ShowAll') }}">
+              <i class="bi bi-circle"></i><span>View All Courses</span>
+            </a>
+          </li>
+
+          <li>
             <a href="{{ route('ShowAllGallery') }}">
               <i class="bi bi-circle"></i><span>Gallery</span>
             </a>
