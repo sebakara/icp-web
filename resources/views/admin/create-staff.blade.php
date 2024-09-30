@@ -214,6 +214,12 @@
           </li>
 
           <li>
+            <a href="{{ route('showAllCertificates') }}">
+              <i class="bi bi-circle"></i><span>View All Certificates</span>
+            </a>
+          </li>
+
+          <li>
             <a href="{{ route('showStudentAndCertificates') }}">
               <i class="bi bi-circle"></i><span>Courses and Students</span>
             </a>

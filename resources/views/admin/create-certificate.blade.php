@@ -221,6 +221,12 @@
           </li>
 
           <li>
+            <a href="{{ route('showAllCertificates') }}">
+              <i class="bi bi-circle"></i><span>View All Certificates</span>
+            </a>
+          </li>
+
+          <li>
             <a href="{{ route('showAllStaff') }}">
               <i class="bi bi-circle"></i><span>View All Team members</span>
             </a>

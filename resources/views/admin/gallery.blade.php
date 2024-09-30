@@ -8,6 +8,8 @@
   <title>Components / Tabs - ICP RWANDA </title>
   <meta content="" name="description">
   <meta content="" name="keywords">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
 
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
@@ -51,7 +53,7 @@
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
-   <!-- <div class="search-bar">
+    <!-- <div class="search-bar">
       <form class="search-form d-flex align-items-center" method="POST" action="#">
         <input type="text" name="query" placeholder="Search" title="Enter search keyword">
         <button type="submit" title="Search"><i class="bi bi-search"></i></button>
@@ -207,6 +209,12 @@
           </li>
 
           <li>
+            <a href="{{ route('showAllCertificates') }}">
+              <i class="bi bi-circle"></i><span>View All Certificates</span>
+            </a>
+          </li>
+
+          <li>
             <a href="{{ route('showAllStaff') }}">
               <i class="bi bi-circle"></i><span>View All Team members</span>
             </a>
@@ -241,7 +249,7 @@
         </a>
       </li><!-- End Profile Page Nav -->
 
-      
+
     </ul>
 
   </aside><!-- End Sidebar-->
@@ -253,7 +261,7 @@
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
-          
+
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -265,7 +273,7 @@
           <div class="card">
             <div class="card-body" style="width: 500px;">
               <h5 class="card-title">Gallery</h5>
-              <ul class="nav nav-tabs" id="myTab" role="tablist" >
+              <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
                   <button class="nav-link active" id="all-tab" data-bs-toggle="tab" data-bs-target="#all" type="button" role="tab" aria-controls="all" aria-selected="true">All</button>
                 </li>
@@ -289,6 +297,32 @@
 
       </div>
     </section>
+
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="imageModalLabel">Image Details</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <img id="modalImage" src="" alt="Selected Image" class="img-fluid mb-2">
+            <div class="d-flex justify-content-between">
+            <!-- <button id="saveButton" class="btn btn-success">Save Changes</button>  -->
+              <button id="deleteButton" class="btn btn-danger">Delete</button>
+            </div> <br>
+            <!-- File upload section -->
+            <!-- <div class="row mb-3">
+              <label for="formFile" class="col-sm-2 col-form-label">Update Image</label>
+              <div class="col-sm-10">
+                <input class="form-control" type="file" id="formFile" name="Image" required>
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+
 
   </main><!-- End #main -->
 

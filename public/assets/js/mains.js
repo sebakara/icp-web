@@ -422,25 +422,50 @@ document.addEventListener('DOMContentLoaded', function () {
     const tabList = document.getElementById('myTab');
     const tabContent = document.getElementById('myTabContent');
     const allTabContent = document.getElementById('all'); // The "All" tab content
+    const modalImage = document.getElementById('modalImage');
+    const editButton = document.getElementById('editButton');
+    const deleteButton = document.getElementById('deleteButton');
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    let selectedPictureId;
+
+    deleteButton.addEventListener('click', function () {
+        if (confirm("Are you sure you want to delete this image?")) {
+            fetch(`/gallery/${selectedPictureId}`, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.success);
+                    fetchPictures(); // Refresh the pictures after deletion
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('imageModal'));
+                    modal.hide(); // Hide the modal
+                })
+                .catch(error => console.error('Error deleting image:', error));
+        }
+    });
 
     function fetchPictures() {
-        fetch('http://127.0.0.1:8000/gallery/all') // Adjust this URL based on your routes
+        fetch('http://127.0.0.1:8000/gallery/all')
             .then(response => response.json())
             .then(data => {
-                tabList.innerHTML = ''; // Clear existing tabs, except "All"
-                tabContent.innerHTML = ''; // Clear existing content, except "All"
+                // Clear existing tabs and content
+                tabList.innerHTML = '';
+                tabContent.innerHTML = '';
 
-                let allImages = []; // Array to hold all images across categories
+                let allImages = [];
 
-                // Create the "All" tab manually since it's the first tab
+                // Create "All" tab
                 const allTab = document.createElement('li');
                 allTab.classList.add('nav-item');
                 allTab.role = 'presentation';
-                allTab.innerHTML = `
-                    <button class="nav-link active" id="all-tab" data-bs-toggle="tab" data-bs-target="#all" type="button" role="tab" aria-controls="all" aria-selected="true">All</button>`;
+                allTab.innerHTML = `<button class="nav-link active" id="all-tab" data-bs-toggle="tab" data-bs-target="#all" type="button" role="tab" aria-controls="all" aria-selected="true">All</button>`;
                 tabList.appendChild(allTab);
 
-                // Add content to the "All" tab (Initially empty, will populate with images later)
                 const allContent = document.createElement('div');
                 allContent.classList.add('tab-pane', 'fade', 'show', 'active');
                 allContent.id = 'all';
@@ -449,21 +474,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 tabContent.appendChild(allContent);
 
                 // Loop through each category
-                Object.keys(data).forEach((category, index) => {
-                    // Add to allImages array
+                Object.keys(data).forEach(category => {
                     allImages = allImages.concat(data[category]);
 
-                    // Create tab for each category
                     const tab = document.createElement('li');
                     tab.classList.add('nav-item');
                     tab.role = 'presentation';
-                    tab.innerHTML = `
-                        <button class="nav-link" id="${category}-tab" data-bs-toggle="tab" data-bs-target="#${category}" type="button" role="tab" aria-controls="${category}" aria-selected="false">
-                            ${category}
-                        </button>`;
+                    tab.innerHTML = `<button class="nav-link" id="${category}-tab" data-bs-toggle="tab" data-bs-target="#${category}" type="button" role="tab" aria-controls="${category}" aria-selected="false">${category}</button>`;
                     tabList.appendChild(tab);
 
-                    // Create tab content for each category
                     const content = document.createElement('div');
                     content.classList.add('tab-pane', 'fade');
                     content.id = category;
@@ -475,31 +494,81 @@ document.addEventListener('DOMContentLoaded', function () {
                         img.src = `/${picture.Image}`;
                         img.alt = picture.Image_category;
                         img.classList.add('img-fluid', 'm-2');
+                        img.dataset.id = picture.id; // Store the picture ID
+                        img.addEventListener('click', () => openImageModal(picture)); // Event listener for modal
                         content.appendChild(img);
                     });
 
                     tabContent.appendChild(content);
                 });
 
-                // Populate the "All" tab with all images
                 allImages.forEach(picture => {
                     const img = document.createElement('img');
                     img.src = `/${picture.Image}`;
                     img.alt = picture.Image_category;
                     img.classList.add('img-fluid', 'm-2');
+                    img.dataset.id = picture.id; // Store the picture ID
+                    img.addEventListener('click', () => openImageModal(picture)); // Event listener for modal
                     allContent.appendChild(img);
                 });
             })
-            .catch(error => console.error('Error fetching pictures:', error))
-            .finally(() => {
-                // Hide the spinner
-                spinner.style.display = 'none';
-            });
+            .catch(error => console.error('Error fetching pictures:', error));
     }
 
-    // Fetch pictures on page load
     fetchPictures();
+
+    function openImageModal(picture) {
+        modalImage.src = `/${picture.Image}`;
+        selectedPictureId = picture.id; // Set the selected picture ID
+
+        // Show the modal
+        const modal = new bootstrap.Modal(document.getElementById('imageModal'));
+        modal.show();
+    }
+
+    // Event listener for the Save Changes button
+    document.getElementById('saveButton').addEventListener('click', function () {
+        console.log("Save button clicked"); // Log when button is clicked
+        const formData = new FormData();
+        const fileInput = document.getElementById('formFile');
+
+        // Check if a file is selected
+        if (fileInput.files.length > 0) {
+            formData.append('Image', fileInput.files[0]);
+            console.log("Image file appended:", fileInput.files[0]); // Append the new image file
+        } else {
+            alert("Please select an image to upload.");
+            return; // Exit if no file is selected
+        }
+
+        console.log(`/gallery/${selectedPictureId}`);
+
+
+        // Make the PUT request to update the image
+        fetch(`/gallery/${selectedPictureId}`, {
+            method: 'PUT',
+            body: formData,
+            headers: {
+                'X-CSRF-TOKEN': csrfToken // Ensure CSRF token is included
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => { throw new Error(text); });
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert(data.success);
+                fetchPictures(); // Refresh the pictures after the update
+                const modal = bootstrap.Modal.getInstance(document.getElementById('imageModal'));
+                modal.hide(); // Hide the modal
+            })
+            .catch(error => console.error('Error saving changes:', error));
+    });
+
 });
+
 
 
 // This is for Customer Support
@@ -602,7 +671,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Handle delete course
     window.deleteCourse = function (id) {
-        fetch(`http://127.0.0.1:8000/courses/delete/${id}`, { // Adjust this URL based on your routes
+        fetch(`http://127.0.0.1:8000/courses/delete/${id}`, { // Adjust this URL based on you routes
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -956,11 +1025,41 @@ document.addEventListener('DOMContentLoaded', function () {
     const certificateList = document.getElementById('certificate-tbody');
     const createCertificateForm = document.getElementById('create-certificate-form');
 
+
+    // Handle delete Certificate
+    window.deleteCertificate = function (id) {
+        fetch(`http://127.0.0.1:8000/certificates/delete/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({ id: id }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                const alertContainer = document.createElement('div');
+                alertContainer.className = 'alert alert-danger bg-danger text-light border-0 alert-dismissible fade show';
+                alertContainer.role = 'alert';
+                alertContainer.innerHTML = `
+                              ${data.success}
+                              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                          `;
+
+                document.querySelector('.section').prepend(alertContainer);
+
+                fetchCertificates()
+
+            })
+    };
+
     // Fetch all certificates and display them
     function fetchCertificates() {
         fetch('/certificates') // Adjust this URL based on your routes
             .then(response => response.json())
             .then(data => {
+                const certificateList = document.getElementById('certificate-tbody');
                 certificateList.innerHTML = '';
                 data.forEach(certificate => {
                     const row = document.createElement('tr');
@@ -969,14 +1068,21 @@ document.addEventListener('DOMContentLoaded', function () {
                         <td>${certificate.program}</td>
                         <td>${certificate.date}</td>
                         <td>
-                            <button class="bi bi-pen" onclick="editCertificate(${certificate.id})">Edit</button>
-                            <button class="bi bi-trash" onclick="deleteCertificate(${certificate.id})">Delete</button>
+                            <a href="${certificate.file_url}" target="_blank">Open certificate</a>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger btn-sm" onclick="deleteCertificate(${certificate.id})"><i class="bi bi-trash"></i></button> 
                         </td>
                     `;
                     certificateList.appendChild(row);
                 });
             });
     }
+
+
+
+    // Call fetchCertificates() to load data on page load
+    fetchCertificates();
 
     // Handle create certificate
     function generateCertificate(studentId, studentName, studentProgram, studentEmail) {

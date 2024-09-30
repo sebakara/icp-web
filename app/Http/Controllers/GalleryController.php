@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Gallery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class GalleryController extends Controller
 {
@@ -132,32 +133,48 @@ class GalleryController extends Controller
         return response()->json($picture);
     }
 
+    public function showEditForm($id)
+    {
+        $picture = Gallery::findOrFail($id);
+        return response()->json($picture); // Return JSON for modal
+    }
+
+
     public function updatePicture(Request $request, $id)
     {
         // Validation
         $request->validate([
-            'Image_category' => 'required|string|max:255',
             'Image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Handle file upload
-        $image = null;
+        // Find the picture
+        $picture = Gallery::findOrFail($id);
+        Log::info('Found picture:', ['id' => $id]);
+
         if ($request->hasFile('Image')) {
+            Log::info('File received:', ['file' => $request->file('Image')]);
+
             $file = $request->file('Image');
             $imageName = time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('assets/img'), $imageName);
-            $image = 'assets/img/' . $imageName;
+
+            if ($file->move(public_path('assets/img'), $imageName)) {
+                $picture->Image = 'assets/img/' . $imageName; // Update path
+                Log::info('File moved successfully:', ['new_image_path' => $picture->Image]);
+            } else {
+                Log::error('File move failed');
+            }
         }
 
-        // Update Picture
-        $picture = Gallery::findOrFail($id);
-        $picture->update([
-            'Image_category' => $request->input('Image_category'),
-            'Image' => $image ?? $picture->Image,
-        ]);
-
-        return redirect()->back()->with('success', 'Picture updated successfully');
+        if ($picture->save()) {
+            Log::info('Picture saved successfully:', ['picture' => $picture]);
+            return response()->json(['success' => 'Picture updated successfully']);
+        } else {
+            Log::error('Failed to save picture');
+            return response()->json(['error' => 'Failed to update picture'], 500);
+        }
     }
+
+
 
     public function deletePicture($id)
     {

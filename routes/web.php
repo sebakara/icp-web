@@ -80,19 +80,22 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/gallery/all', [GalleryController::class, 'getAllPicture'])->name('getAllPicture');
     Route::get('/create-gallery', [GalleryController::class, 'showCreateForm'])->name('showGalleryCreateForm');
     Route::post('/gallery', [GalleryController::class, 'createPicture'])->name('gallery.create');
+    Route::get('/gallery/{id}/edit', [GalleryController::class, 'showEditForm'])->name('gallery.edit');
     Route::put('/gallery/{id}', [GalleryController::class, 'updatePicture'])->name('gallery.update');
     Route::delete('/gallery/{id}', [GalleryController::class, 'deletePicture'])->name('gallery.delete');
 
 
     // Route for Certificate
+    Route::get('/all-certificate', [CertificateController::class, 'showAllCertificates'])->name('showAllCertificates');
     Route::get('/create-certificate', [CertificateController::class, 'showCreateForm'])->name('showCerticateCreateForm');
     Route::post('/certificates/create', [CertificateController::class, 'generate'])->name('certificates.generate');
     Route::post('/certificates/participation/create', [CertificateController::class, 'generateParticipationCertificate'])->name('generateParticipationCertificate.generate');
     Route::post('/certificates/special/create', [CertificateController::class, 'generateSpecialCertificate'])->name('generateSpecialCertificate.generate');
     Route::put('/certificates/{id}', [CertificateController::class, 'updateCertificate'])->name('certificates.update');
-    Route::delete('/certificates/{id}', [CertificateController::class, 'deleteCertificate'])->name('certificates.delete');
-    Route::get('/certificates', [CertificateController::class, 'getAllCertificates'])->name('certificates.getAll');
+    Route::delete('/certificates/delete/{id}', [CertificateController::class, 'deleteCertificate'])->name('certificates.delete');
+    Route::get('/certificates', [CertificateController::class, 'fetchCertificates'])->name('certificates.getAll');
     Route::get('/certificates/{id}', [CertificateController::class, 'getOneCertificate'])->name('certificates.getOne');
+   
     // routes/web.php
 
     Route::get('/student/certificates', [CourseController::class, 'showCoursesWithStudents'])->name('showStudentAndCertificates');
@@ -141,6 +144,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/import', [StudentController::class, 'importStudentWithExcel'])->name('import');
     Route::get('/courses/{id}/edit', [CourseController::class, 'editCourse']);
     Route::put('/courses/{id}/update', [CourseController::class, 'updateCourse']);
+    Route::delete('/courses/delete/{id}', [CourseController::class, 'deleteCourse']);
 });
 Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blogs.show');
 Route::get('/gallery-page', [GalleryController::class, 'displayGallery']);

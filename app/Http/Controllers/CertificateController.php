@@ -76,7 +76,7 @@ class CertificateController extends Controller
             'name' => $data['name'],
             'program' => $data['program'],
             'date' => $data['date'],
-            'file_path' => 'certificates/' . $fileName,
+            'file_path' => 'assets/certificates/' . $fileName,
             'qr_code_path' => 'certificates/' . $qrCodeFilePath,
         ]);
 
@@ -88,6 +88,7 @@ class CertificateController extends Controller
         // Optionally, you can return the file or redirect
         return $pdf->stream('certificate.pdf');
     }
+
 
     // Participation certificate
     public function generateParticipationCertificate(Request $request)
@@ -103,7 +104,7 @@ class CertificateController extends Controller
 
         // Generate a unique file name for the certificate
         $fileName = 'certificate_' . time() . '.pdf';
-        $filePath = 'assets/certificates/participation' . $fileName;
+        $filePath = 'assets/certificates/participation/' . $fileName;
 
         // Generate QR code URL
         $certificateUrl = url('assets/certificates/participation' . $fileName);
@@ -138,7 +139,7 @@ class CertificateController extends Controller
             'name' => $data['name'],
             'program' => $data['program'],
             'date' => $data['date'],
-            'file_path' => 'certificates/participation/' . $fileName,
+            'file_path' => 'assets/certificates/participation/' . $fileName,
             'qr_code_path' => 'certificates/participation/' . $qrCodeFilePath,
         ]);
 
@@ -203,7 +204,7 @@ class CertificateController extends Controller
             'project_name_or_special_award' => $data['project_name_or_special_award'],
             'description' => $data['description'],
             'date' => $data['date'],
-            'file_path' => 'certificates/special/' . $fileName,
+            'file_path' => 'assets/certificates/special/' . $fileName,
             'qr_code_path' => 'certificates/special/' . $qrCodeFilePath,
         ]);
 
@@ -215,6 +216,27 @@ class CertificateController extends Controller
         // Optionally, you can return the file or redirect
         return $pdf->stream('certificate.pdf');
     }
+
+    public function showAllCertificates()
+    {
+        return view('admin.all-certificates'); // Render the Blade template
+    }
+
+    public function fetchCertificates()
+    {
+        $certificates = Certificate::all()->map(function ($certificate) {
+            return [
+                'id' => $certificate->id,
+                'name' => $certificate->name,
+                'program' => $certificate->program,
+                'date' => $certificate->date,
+                'file_url' => Storage::url('public/' . $certificate->file_path), // Generate the URL here
+            ];
+        });
+
+        return response()->json($certificates);
+    }
+
 
     // Fetch All Certificates
     public function getAllCertificates()
