@@ -95,7 +95,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/certificates/delete/{id}', [CertificateController::class, 'deleteCertificate'])->name('certificates.delete');
     Route::get('/certificates', [CertificateController::class, 'fetchCertificates'])->name('certificates.getAll');
     Route::get('/certificates/{id}', [CertificateController::class, 'getOneCertificate'])->name('certificates.getOne');
-   
+
     // routes/web.php
 
     Route::get('/student/certificates', [CourseController::class, 'showCoursesWithStudents'])->name('showStudentAndCertificates');

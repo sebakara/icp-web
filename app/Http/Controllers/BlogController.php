@@ -132,16 +132,16 @@ class BlogController extends Controller
     public function destroy($id)
     {
         $blog = Blog::findOrFail($id);
-    
+
         // Delete the blog's image if it exists
         if ($blog->image) {
             unlink(public_path($blog->image));
         }
-    
+
         $blog->delete();
-        
+
         // Return a JSON response indicating success
         return response()->json(['success' => 'Blog deleted successfully.']);
     }
-    
+
 }

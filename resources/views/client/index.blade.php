@@ -20,7 +20,6 @@
     </div>
   </div>
 </section><!-- End Hero -->
-
 <main id="main">
 
   <!-- ======= Cliens Section ======= -->
@@ -80,13 +79,12 @@
             <img src="{{ asset($blog->image) }}" class="img-fluid" alt="{{ $blog->title }}">
             <div class="card-body">
               <h4 class="card-title">{{ $blog->title }}</h4>
-              <a href="{{ route('blogs.show', ['slug' => $blog->slug]) }}" class="btn btn-primary" style="margin-bottom:1%">Read More</a>
+              <a href="{{ $blog->slug ? route('blogs.show', ['slug' => $blog->slug]) : '#' }}" class="btn btn-primary" style="margin-bottom:1%">Read More</a>
             </div>
           </div>
           @endforeach
         </div>
       </div> <br>
-
       <!-- Pagination Links -->
       <div id="pagination-links">
         {{ $blogs->onEachSide(1)->links('vendor.pagination.bootstrap-4') }}

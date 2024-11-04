@@ -331,7 +331,7 @@
               <div class="card-body">
                 <h4 class="card-title">{{ $blog->title }}</h4>
                 <!-- View Blog -->
-                <a href="{{ route('blogs.showAdmin', ['slug' => $blog->slug]) }}" class="btn btn-primary" style="margin-bottom:1%">
+                <a href="{{ $blog->slug ? route('blogs.showAdmin', ['slug' => $blog->slug]) : '#' }}" class="btn btn-primary" style="margin-bottom:1%">
                   <i class="bi bi-eye"></i>
                 </a>
                 <!-- Use a data attribute to store the blog ID -->
