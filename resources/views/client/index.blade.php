@@ -132,7 +132,9 @@
         @foreach($staffs as $member)
         <div class="col-lg-4" style="margin-top: 1%;">
           <div class="member d-flex align-items-start" data-aos="zoom-in" data-aos-delay="100">
-            <div class="pic"><img src="{{ asset($member->Profile_image) }}" class="img-fluid" style="width: 50px; height: auto; " alt=""></div>
+            <!-- <div class="col-lg-12">ffffff</div> -->
+            <div class="pic">
+            <img src="{{ asset($member->Profile_image) }}" class="img-fluid" alt=""></div>
             <div class="member-info">
               <h4>{{ $member->Full_name }}</h4>
               <span>{{ $member->Position }}</span>

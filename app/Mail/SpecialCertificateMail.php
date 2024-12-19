@@ -11,7 +11,7 @@ class SpecialCertificateMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-   
+
     public $certificateUrl;
 
     public function __construct($certificateUrl)
@@ -21,7 +21,7 @@ class SpecialCertificateMail extends Mailable
 
     public function build()
     {
-        return $this->from('josephmaniragaba9@gmail.com', 'ICP RWANDA')
+        return $this->from('rwandicp@gmail.com', 'ICP RWANDA')
                     ->view('emails.SpecialCertificate')
                     ->with([
                         'certificateUrl' => $this->certificateUrl,
