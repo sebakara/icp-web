@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         <td>${staff.Position}</td>
                         <td>${staff.Biography_description}</td>
                         <td style="width: 120px;">
-                            <button class="btn btn-info btn-sm"  onclick="editStaff(${staff.id})"><i class="bi bi-pen"></i> </button> 
+                            <button class="btn btn-info btn-sm"  onclick="editStaff(${staff.id})"><i class="bi bi-pen"></i> </button>
                             <button  class="btn btn-danger btn-sm" onclick="deleteStaff(${staff.id})"> <i class="bi bi-trash"></i> </button>
                         </td>
                     `;
@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', function () {
             })
     };
 
-    // Handle edit Service 
+    // Handle edit Service
     window.editService = function (id) {
         // Fetch the staff data based on the id
         fetch(`http://127.0.0.1:8000/service/${id}/edit`)
@@ -192,7 +192,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             <td>${icp.Service_title}</td>
                             <td>${icp.Service_description}</td>
                             <td style="width: 120px;">
-                                <button class="btn btn-info btn-sm"  onclick="editService(${icp.id})"><i class="bi bi-pen"></i></button> 
+                                <button class="btn btn-info btn-sm"  onclick="editService(${icp.id})"><i class="bi bi-pen"></i></button>
                                 <button class="btn btn-danger btn-sm"  onclick="deleteICP(${icp.id})"><i class="bi bi-trash"></i></button>
                             </td>
                         `;
@@ -709,7 +709,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         <td>${course.name}</td>
                         <td>${course.description}</td>
                         <td>
-                            <button class="btn btn-info btn-sm"  onclick="editCourse(${course.id}, '${course.name}', '${course.description}')"><i class="bi bi-pen"></i></button> 
+                            <button class="btn btn-info btn-sm"  onclick="editCourse(${course.id}, '${course.name}', '${course.description}')"><i class="bi bi-pen"></i></button>
                             <button class="btn btn-danger btn-sm"  onclick="deleteCourse(${course.id})"><i class="bi bi-trash"></i></button>
                         </td>
                     `;
@@ -888,8 +888,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 <td>${student.biography_description}</td>
                 <td>${courses}</td>
                 <td style="width:150px;">
-                    <button class="btn btn-info btn-sm"  onclick="editStudent(${student.id})"><i class="bi bi-pen"></i></button> 
-                    <button class="btn btn-danger btn-sm"   onclick="deleteStudent(${student.id})"><i class="bi bi-trash"></i></button> 
+                    <button class="btn btn-info btn-sm"  onclick="editStudent(${student.id})"><i class="bi bi-pen"></i></button>
+                    <button class="btn btn-danger btn-sm"   onclick="deleteStudent(${student.id})"><i class="bi bi-trash"></i></button>
                     <button class="btn btn-success btn-sm" onclick="generateCertificate(${student.id}, '${student.full_name}', '${courses}', '${student.email}')"><i class="bi bi-arrow-down-circle"></i></button>
                 </td>
                 `;
@@ -1071,7 +1071,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             <a href="${certificate.file_url}" target="_blank">Open certificate</a>
                         </td>
                         <td>
-                            <button class="btn btn-danger btn-sm" onclick="deleteCertificate(${certificate.id})"><i class="bi bi-trash"></i></button> 
+                            <button class="btn btn-danger btn-sm" onclick="deleteCertificate(${certificate.id})"><i class="bi bi-trash"></i></button>
                         </td>
                     `;
                     certificateList.appendChild(row);

@@ -3,6 +3,7 @@
 /public/storage
 /storage/*.key
 /vendor
+/public/assets/certificates
 .env
 .env.backup
 .phpunit.result.cache
@@ -12,4 +13,6 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 /.idea
-/.vscode
+temp_auto_push.bat
+temp_interactive_push.bat
+.gitignore

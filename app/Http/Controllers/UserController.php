@@ -129,6 +129,8 @@ class UserController extends Controller
         $courses = Course::withCount('students')
         ->orderBy('students_count', 'desc')
         ->get();
+        // var_dump($totalCertificate);
+        // die();
 
         return view('admin.index',  [
             'totalStudents' => $totalStudents,
