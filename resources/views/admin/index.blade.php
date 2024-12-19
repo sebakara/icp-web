@@ -296,7 +296,7 @@
                     </div>
                     <div class="ps-3">
                       <h6>{{ $totalStudents }}</h6>
-                      
+
 
                     </div>
                   </div>
@@ -317,7 +317,7 @@
                     </div>
                     <div class="ps-3">
                       <h6>{{$totalCourses}}</h6>
-                      
+
 
                     </div>
                   </div>
@@ -339,7 +339,7 @@
                     </div>
                     <div class="ps-3">
                       <h6>{{$totalCertificate}}</h6>
-                     
+
 
                     </div>
                   </div>
@@ -352,7 +352,7 @@
             <!-- Reports -->
             <div class="col-12">
               <div class="card">
-           
+
 
                 <div class="card-body">
                   <h5 class="card-title">Reports on Students Enrollments/Joined and Certificate Issued during past 7 days<span>|</span></h5>

@@ -494,8 +494,8 @@
         }
     </script>
 
-    <!-- <button class="btn btn-info btn-sm"  onclick="editStudent(${student.id})"><i class="bi bi-pen"></i></button> 
-<button class="btn btn-danger btn-sm"   onclick="deleteStudent(${student.id})"><i class="bi bi-trash"></i></button> 
+    <!-- <button class="btn btn-info btn-sm"  onclick="editStudent(${student.id})"><i class="bi bi-pen"></i></button>
+<button class="btn btn-danger btn-sm"   onclick="deleteStudent(${student.id})"><i class="bi bi-trash"></i></button>
 <button class="btn btn-success btn-sm"   onclick="generateCertificate(${student.id}, '${student.full_name}', '${courses}')"><i class="bi bi-arrow-down-circle"></i></button> -->
 
 </body>
